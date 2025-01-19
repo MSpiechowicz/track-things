@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="flex h-[56px] items-center justify-center text-white">
+    <footer className="flex h-[64px] items-center justify-center text-white">
       <div className="container mx-auto flex items-center justify-between text-sm">
         <div>
           <p>© 2025 TrackThings. All rights reserved.</p>

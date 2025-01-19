@@ -21,7 +21,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     >
       <body className="h-[100%]">
         <Separator />
-        <div className="mx-auto h-[100%] max-w-7xl">
+        <div className="mx-auto h-[100%] max-w-7xl px-6 xl:px-0">
           <Navigation />
           {children}
           <Footer />
