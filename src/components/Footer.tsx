@@ -5,10 +5,10 @@ export default function Footer() {
     <footer className="flex h-[64px] items-center justify-center text-white">
       <div className="container mx-auto flex items-center justify-between text-sm">
         <div>
-          <p>© 2025 TrackThings. All rights reserved.</p>
+          <p>© 2025 Maciej Spiechowicz. All rights reserved.</p>
         </div>
-        <div className="hidden">
-          <Link href="/terms" className="hover:underline">
+        <div className="">
+          <Link href="/terms-of-service" className="hover:underline">
             Terms of Service
           </Link>
         </div>

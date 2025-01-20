@@ -6,7 +6,7 @@ import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Track Things",
+  title: "track-things",
   description: "Open Source project for handling the tracking of things",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
@@ -15,7 +15,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="en"
-      className={`${GeistSans.variable} h-[100%] overflow-hidden bg-[#1A1A1A]`}
+      className={`${GeistSans.variable} h-[100%] bg-[#1A1A1A]`}
       suppressHydrationWarning
       suppressContentEditableWarning
     >
