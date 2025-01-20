@@ -19,7 +19,7 @@ export default function HomePage() {
             </Button>
           </div>
         </div>
-        <div className="flex items-center justify-center">
+        <div className="hidden md:flex items-center justify-center">
           <Image
             src="/hero-chart.svg"
             alt="Hero Chart"
