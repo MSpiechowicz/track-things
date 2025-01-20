@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Navigation() {
   return (
-    <nav className="flex h-[96px] items-center border-b border-white border-opacity-15 justify-between px-4">
+    <nav className="flex h-[96px] items-center border-b border-white border-opacity-15 justify-between">
       <Link href="/" className="flex flex-shrink-0 items-center">
         <div className="sm:hidden flex text-3xl font-bold">
           <span className="text-white">t</span>

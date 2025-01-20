@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-[calc(100%-168px)] flex-col items-center justify-center text-white">
+    <main className="flex h-full flex-1 flex-col items-center justify-center text-white">
       <Image
         src="/coming-soon.svg"
         alt="Coming Soon"

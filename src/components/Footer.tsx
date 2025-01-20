@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="flex h-[64px] items-center justify-center text-white">
-      <div className="container mx-auto mb-6 flex flex-col justify-between gap-3 text-sm md:mb-0 md:flex-row md:items-center md:gap-0">
+    <footer className="flex h-[64px] items-center justify-center text-white mb-8 md:mb-0">
+      <div className="container mx-auto flex flex-col justify-between gap-3 text-sm md:flex-row md:items-center md:gap-0">
         <p className="order-3 md:order-1">© 2025 Maciej Spiechowicz. All rights reserved.</p>
         <Link href="/terms-of-service" className="order-1 hover:underline md:order-2">
           Terms of Service

@@ -15,15 +15,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="en"
-      className={`${GeistSans.variable} h-[100%] bg-[#1A1A1A]`}
+      className={`${GeistSans.variable} min-h-[100dvh] bg-[#1A1A1A]`}
       suppressHydrationWarning
       suppressContentEditableWarning
     >
-      <body className="h-[100%]">
+      <body className="flex min-h-[100dvh] flex-col">
         <Separator />
-        <div className="mx-auto h-[100%] max-w-7xl px-6 xl:px-0">
+        <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 xl:px-0">
           <Navigation />
-          {children}
+          <div className="flex flex-1 flex-col">
+            {children}
+          </div>
           <Footer />
         </div>
       </body>
