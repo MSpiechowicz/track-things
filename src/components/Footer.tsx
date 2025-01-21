@@ -16,7 +16,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="flex items-center gap-2 hover:opacity-80"
           >
-            <Image src="/github.svg" width={24} height={24} alt="GitHub" />
+            <Image src="/github-white.svg" width={24} height={24} alt="GitHub" />
             <span>GitHub</span>
           </Link>
         </div>

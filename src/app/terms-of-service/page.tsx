@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function TermsOfService() {
   return (
-    <div className="container mx-auto flex min-h-[calc(100%-168px)] justify-center px-4 py-8 text-white">
+    <div className="container mx-auto flex flex-1 justify-center px-4 py-8 text-white">
       <div className="w-full max-w-[80ch]">
         <h1 className="mb-4 text-3xl font-bold text-white">Terms of Service</h1>
         <h2 className="mb-10">Effective date: 20.01.2025</h2>

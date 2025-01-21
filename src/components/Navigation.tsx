@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import { LoginDialog } from "./auth/LoginDialog";
 
 export default function Navigation() {
   return (
@@ -18,9 +19,13 @@ export default function Navigation() {
         </div>
         <span className="ml-2 rounded-full bg-gray-200 px-2 py-1 text-xs text-gray-700">ALPHA</span>
       </Link>
-      <Button>
-        Sign In
-      </Button>
+      <LoginDialog
+        trigger={
+          <Button>
+            Sign In
+          </Button>
+        }
+      />
     </nav>
   );
 }

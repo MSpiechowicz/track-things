@@ -1,3 +1,4 @@
+import { LoginDialog } from "@/components/auth/LoginDialog";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
@@ -14,9 +15,13 @@ export default function HomePage() {
             Simplify your tracking journey with a user-friendly platform that transforms your data into meaningful charts. No technical skills or spreadsheets required.
           </p>
           <div className="flex">
-            <Button>
-              Start Tracking Now
-            </Button>
+            <LoginDialog
+              trigger={
+                <Button>
+                  Start Tracking Now
+                </Button>
+              }
+            />
           </div>
         </div>
         <div className="hidden md:flex items-center justify-center">
