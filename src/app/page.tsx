@@ -1,8 +1,12 @@
-import { LoginDialog } from "@/components/auth/LoginDialog";
+"use client";
+
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
+  const router = useRouter();
+
   return (
     <main className="flex h-full flex-1 flex-col items-center justify-center text-white">
       <div className="flex w-full flex-col items-center gap-8 md:flex-row md:justify-between">
@@ -15,13 +19,9 @@ export default function HomePage() {
             Simplify your tracking journey with a user-friendly platform that transforms your data into meaningful charts. No technical skills or spreadsheets required.
           </p>
           <div className="flex">
-            <LoginDialog
-              trigger={
-                <Button>
-                  Start Tracking Now
-                </Button>
-              }
-            />
+            <Button onClick={() => router.push("/signin")}>
+              Start Tracking Now
+            </Button>
           </div>
         </div>
         <div className="hidden md:flex items-center justify-center">
