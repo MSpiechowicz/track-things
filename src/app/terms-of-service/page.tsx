@@ -113,7 +113,7 @@ export default function TermsOfService() {
         />
       </div>
       <div className="flex justify-center">
-        <Button onClick={() => router.push("/")}>Return to Home</Button>
+        <Button onClick={() => router.push("/")}>Return to Home Page</Button>
       </div>
     </div>
   );
