@@ -25,7 +25,9 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 xl:px-0">
           <Navigation />
           <PageTransition>
-            <div className="flex flex-1 flex-col">{children}</div>
+            <main className="flex flex-1 flex-col items-center justify-center py-8 text-white">
+              {children}
+            </main>
           </PageTransition>
           <Footer />
         </div>
