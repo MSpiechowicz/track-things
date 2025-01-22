@@ -1,12 +1,12 @@
-import TermsOfServiceSection from "@/components/terms-of-service/TermsOfServiceSection";
-import { type Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Terms of Service - track-things",
-  description: "Terms of Service for track-things",
-};
+import TermsOfServiceSection from "@/components/terms-of-service/TermsOfServiceSection";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function TermsOfService() {
+  const router = useRouter();
+
   return (
     <div className="w-full max-w-[80ch]">
       <h1 className="mb-4 text-3xl font-bold text-white">Terms of Service</h1>
@@ -111,6 +111,9 @@ export default function TermsOfService() {
           content="If you have any questions about these Terms, please contact us at contact@track-things.com."
           sectionNumber="10"
         />
+      </div>
+      <div className="flex justify-center">
+        <Button onClick={() => router.push("/")}>Return to Home</Button>
       </div>
     </div>
   );
