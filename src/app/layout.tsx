@@ -1,4 +1,5 @@
 import Footer from "@/components/Footer";
+import { PageTransition } from "@/components/motion/PageTransition";
 import Navigation from "@/components/Navigation";
 import Separator from "@/components/Separator";
 import "@/styles/globals.css";
@@ -23,7 +24,9 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <Separator />
         <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 xl:px-0">
           <Navigation />
-          <div className="flex flex-1 flex-col">{children}</div>
+          <PageTransition>
+            <div className="flex flex-1 flex-col">{children}</div>
+          </PageTransition>
           <Footer />
         </div>
       </body>
