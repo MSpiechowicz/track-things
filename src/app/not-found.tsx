@@ -12,7 +12,7 @@ export default function NotFound() {
       <p className="text-muted-foreground text-center text-lg">
         Sorry, we couldn&apos;t find the page you&apos;re looking for.
       </p>
-      <div className="mt-6">
+      <div className="mt-4">
         <Button onClick={() => router.push("/")}>Return Home</Button>
       </div>
     </main>

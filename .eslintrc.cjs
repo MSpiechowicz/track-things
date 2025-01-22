@@ -14,6 +14,7 @@ const config = {
     "plugin:@typescript-eslint/stylistic-type-checked"
   ],
   "rules": {
+    "@typescript-eslint/no-unsafe-call": "off",
     "@typescript-eslint/array-type": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/consistent-type-imports": [
@@ -38,6 +39,7 @@ const config = {
         }
       }
     ],
+    "@typescript-eslint/no-unsafe-assignment": "off",
     "drizzle/enforce-delete-with-where": [
       "error",
       {

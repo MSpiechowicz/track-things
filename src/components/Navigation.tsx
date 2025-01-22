@@ -13,12 +13,12 @@ export default function Navigation() {
       <Link href="/" className="flex flex-shrink-0 items-center">
         <div className="flex text-3xl font-bold sm:hidden">
           <span className="text-white">t</span>
-          <Image src="/foots.svg" alt="Logo" width={12} height={12} />
+          <Image src="/foots.svg" alt="Logo" width={12} height={12} className="w-auto h-auto" priority />
           <span className="text-blue-600">t</span>
         </div>
         <div className="hidden text-3xl font-bold sm:flex">
           <span className="text-white">track</span>
-          <Image src="/foots.svg" alt="Logo" width={12} height={12} />
+          <Image src="/foots.svg" alt="Logo" width={12} height={12} className="w-auto h-auto" priority />
           <span className="text-blue-600">things</span>
         </div>
         <span className="ml-2 rounded-full bg-gray-200 px-2 py-1 text-xs text-gray-700">ALPHA</span>

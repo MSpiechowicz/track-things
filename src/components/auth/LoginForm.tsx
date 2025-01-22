@@ -2,9 +2,26 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { supabase } from "@/lib/supabase";
 import Image from "next/image";
 import Link from "next/link";
+
 export function LoginForm() {
+  const handleGithubSignIn = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        }
+      });
+
+      if (error) throw error;
+    } catch (error) {
+      console.error("Error signing in with GitHub:", error);
+    }
+  };
+
   return (
     <div className="flex flex-col space-y-6">
       <div className="flex flex-col space-y-4">
@@ -24,7 +41,11 @@ export function LoginForm() {
         </div>
       </div>
       <div className="flex flex-col space-y-3">
-        <Button variant="outline" className="h-11 w-full font-normal">
+        <Button
+          variant="outline"
+          className="h-11 w-full font-normal"
+          onClick={handleGithubSignIn}
+        >
           <Image src="/github-black.svg" alt="GitHub" width={20} height={20} className="mr-1" />
           GitHub
         </Button>

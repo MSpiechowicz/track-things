@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
@@ -23,9 +23,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Separator />
         <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 xl:px-0">
           <Navigation />
-          <div className="flex flex-1 flex-col">
-            {children}
-          </div>
+          <div className="flex flex-1 flex-col">{children}</div>
           <Footer />
         </div>
       </body>
