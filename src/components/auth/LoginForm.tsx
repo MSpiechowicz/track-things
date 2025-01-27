@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/utils/supabase/client";
 import type { Provider } from "@supabase/supabase-js";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,10 +9,11 @@ import { useRouter } from "next/navigation";
 
 export function LoginForm() {
   const router = useRouter();
+
   const handleSignIn = async (provider: Provider) => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
-        provider: provider,
+        provider,
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
         },
