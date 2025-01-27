@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import { PageTransition } from "@/components/motion/PageTransition";
 import Navigation from "@/components/Navigation";
+import { ToastProvider } from "@/components/providers/ToastProvider";
 import Separator from "@/components/Separator";
 import "@/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
@@ -31,6 +32,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           </PageTransition>
           <Footer />
         </div>
+        <ToastProvider />
       </body>
     </html>
   );
