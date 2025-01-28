@@ -66,11 +66,11 @@ export function UserMenu({ user, isMobile }: UserMenuProps) {
       </DropdownMenuLabel>
       <DropdownMenuSeparator className="bg-neutral-200 mx-2" />
       <DropdownMenuItem>
-        <User className="mr-2 h-4 w-4" />
+        <User className="mr-1 h-4 w-4" />
         Account Settings
       </DropdownMenuItem>
       <DropdownMenuItem onClick={() => setShowLogoutDialog(true)}>
-        <LogOut className="mr-2 h-4 w-4" />
+        <LogOut className="mr-1 h-4 w-4" />
         Sign Out
       </DropdownMenuItem>
     </>
