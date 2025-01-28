@@ -2,25 +2,25 @@
 
 import { Button } from "@/components/ui/button";
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { useUserStore } from "@/store/userStore";
 import { supabase } from "@/utils/supabase/client";
 import { useState } from "react";
 
-interface AccountSettingsDialogProps {
+interface UserAccountSettingsProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   currentDisplayName: string | null;
   userId: string;
-  onDisplayNameUpdate: (newName: string) => void;
 }
 
 export function AccountSettingsDialog({
@@ -28,11 +28,11 @@ export function AccountSettingsDialog({
   onOpenChange,
   currentDisplayName,
   userId,
-  onDisplayNameUpdate,
-}: AccountSettingsDialogProps) {
+}: UserAccountSettingsProps) {
   const { toast } = useToast();
-  const [displayName, setDisplayName] = useState(currentDisplayName || "");
+  const [displayName, setDisplayName] = useState(currentDisplayName ?? "");
   const [isLoading, setIsLoading] = useState(false);
+  const setGlobalDisplayName = useUserStore((state) => state.setDisplayName);
 
   const handleSave = async () => {
     if (!displayName.trim()) {
@@ -44,7 +44,8 @@ export function AccountSettingsDialog({
       return;
     }
 
-    setIsLoading(true);
+    //setIsLoading(true);
+
     try {
       const { error } = await supabase
         .from("account_settings")
@@ -53,7 +54,7 @@ export function AccountSettingsDialog({
 
       if (error) throw error;
 
-      onDisplayNameUpdate(displayName.trim());
+      setGlobalDisplayName(displayName.trim());
       toast({
         title: "Settings updated",
         description: "Your display name has been updated successfully.",
@@ -67,7 +68,7 @@ export function AccountSettingsDialog({
         description: "Failed to update display name. Please try again.",
       });
     } finally {
-      setIsLoading(false);
+      //setIsLoading(false);
     }
   };
 
@@ -92,15 +93,11 @@ export function AccountSettingsDialog({
           </div>
         </div>
         <DialogFooter>
-          <Button
-            variant="outline"
-            onClick={() => onOpenChange(false)}
-            disabled={isLoading}
-          >
+          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isLoading}>
             Cancel
           </Button>
-          <Button onClick={handleSave} disabled={isLoading}>
-            {isLoading ? "Saving..." : "Save changes"}
+          <Button onClick={handleSave} disabled={!displayName.trim()}>
+            Save changes
           </Button>
         </DialogFooter>
       </DialogContent>

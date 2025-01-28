@@ -22,7 +22,7 @@ import { supabase } from "@/utils/supabase/client";
 import { LogOut, Menu, Settings, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { AccountSettingsDialog } from "./AccountSettingsDialog";
+import { AccountSettingsDialog } from "./UserAccountSettings";
 
 interface UserMenuProps {
   user: {
