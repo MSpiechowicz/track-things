@@ -20,6 +20,8 @@ export function LoginForm() {
       });
 
       if (error) throw error;
+
+      router.push("/dashboard");
     } catch (error) {
       console.error(`Error signing in with provider: ${provider}`, error);
     }

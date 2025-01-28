@@ -1,11 +1,25 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { getSession } from "@/utils/supabase/session";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function HomePage() {
   const router = useRouter();
+
+  async function checkSessionAndRedirect() {
+    const session = await getSession();
+
+    if (session) {
+      router.push("/dashboard");
+    }
+  }
+
+  useEffect(() => {
+    void checkSessionAndRedirect();
+  }, []);
 
   return (
     <div className="flex h-full w-full flex-1 flex-col items-center justify-center gap-8 md:flex-row md:justify-between">
