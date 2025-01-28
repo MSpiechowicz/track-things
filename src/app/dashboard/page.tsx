@@ -3,12 +3,22 @@
 import DashboardProjects from "@/components/dashboard/DashboardProjects";
 import { Button } from "@/components/ui/button";
 import { useDashboardStore } from "@/store/dashboardStore";
+import { useUserStore } from "@/store/userStore";
 import { DASHBOARD_VIEWS } from "@/utils/contants/dashboardViews";
 import { FolderKanban } from "lucide-react";
-
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function DashboardPage() {
+  const router = useRouter();
   const { currentView, setCurrentView } = useDashboardStore();
+  const { isUserLoggedIn } = useUserStore();
+
+  useEffect(() => {
+    if (!isUserLoggedIn()) {
+      router.push('/signin');
+    }
+  }, [isUserLoggedIn, router]);
 
   function renderView() {
     switch (currentView) {
@@ -17,6 +27,10 @@ export default function DashboardPage() {
       default:
         return <DashboardProjects />;
     }
+  }
+
+  if (!isUserLoggedIn()) {
+    return null;
   }
 
   return (

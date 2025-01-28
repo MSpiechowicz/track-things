@@ -16,6 +16,7 @@ interface UserState {
     email: string | null;
     displayName: string | null;
   };
+  isUserLoggedIn: () => boolean;
 }
 
 export const useUserStore = create<UserState>()(
@@ -35,6 +36,7 @@ export const useUserStore = create<UserState>()(
         email: get().email,
         displayName: get().displayName,
       }),
+      isUserLoggedIn: () => !!get().id,
     }),
     {
       name: "user-storage",
