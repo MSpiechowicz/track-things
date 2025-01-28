@@ -22,11 +22,13 @@ import { supabase } from "@/utils/supabase/client";
 import { LogOut, Menu, Settings, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { AccountSettingsDialog } from "./AccountSettingsDialog";
 
 interface UserMenuProps {
   user: {
     name: string | null;
     email: string | null;
+    id: string;
   };
   isMobile?: boolean;
 }
@@ -35,6 +37,7 @@ export function UserMenu({ user, isMobile }: UserMenuProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
+  const [showAccountSettings, setShowAccountSettings] = useState(false);
 
   const handleSignOut = async () => {
     try {
@@ -55,17 +58,20 @@ export function UserMenu({ user, isMobile }: UserMenuProps) {
     }
   };
 
+  const handleDisplayNameUpdate = (newName: string) => {
+    user.name = newName;
+  };
+
   const menuContent = (
     <>
       <DropdownMenuLabel>
         <div className="flex flex-col">
-            <p className="font-medium">{user.name}</p>
-
+          <p className="font-medium">{user.name}</p>
           <p className="text-xs font-normal">{user.email}</p>
         </div>
       </DropdownMenuLabel>
       <DropdownMenuSeparator className="bg-neutral-200 mx-2" />
-      <DropdownMenuItem>
+      <DropdownMenuItem onClick={() => setShowAccountSettings(true)}>
         <User className="mr-1 h-4 w-4" />
         Account Settings
       </DropdownMenuItem>
@@ -88,6 +94,14 @@ export function UserMenu({ user, isMobile }: UserMenuProps) {
           {menuContent}
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <AccountSettingsDialog
+        open={showAccountSettings}
+        onOpenChange={setShowAccountSettings}
+        currentDisplayName={user.name}
+        userId={user.id}
+        onDisplayNameUpdate={handleDisplayNameUpdate}
+      />
 
       <Dialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
         <DialogContent className="w-[325px] sm:w-full border rounded-xl">

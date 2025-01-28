@@ -10,13 +10,14 @@ import { useEffect, useState } from "react";
 
 export default function Navigation() {
   const router = useRouter();
-  const [user, setUser] = useState<{ name: string | null; email: string | null } | null>(null);
+  const [user, setUser] = useState<{ id: string; name: string | null; email: string | null } | null>(null);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         if (session?.user) {
           setUser({
+            id: session.user.id,
             name: session.user.user_metadata.full_name || session.user.email,
             email: session.user.email ?? null,
           });
@@ -30,6 +31,7 @@ export default function Navigation() {
     void supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         setUser({
+          id: session.user.id,
           name: session.user.user_metadata.full_name || session.user.email,
           email: session.user.email ?? null,
         });
