@@ -17,7 +17,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html
       lang="en"
-      className={`${GeistSans.variable} min-h-[100dvh] bg-[#1A1A1A]`}
+      className={`${GeistSans.variable} min-h-[100dvh] bg-custom-dark`}
       suppressHydrationWarning
       suppressContentEditableWarning
     >

@@ -18,6 +18,7 @@ export function LoginForm() {
           redirectTo: `${window.location.origin}/auth/callback`,
         },
       });
+
       if (error) throw error;
     } catch (error) {
       console.error(`Error signing in with provider: ${provider}`, error);
@@ -32,8 +33,8 @@ export function LoginForm() {
           className="h-11 w-full font-normal"
           onClick={() => handleSignIn("github")}
         >
-          <div className="mr-1 flex h-7 w-7 items-center justify-center rounded-full bg-black">
-            <Github className="text-white" />
+          <div className="mr-1 flex h-7 w-7 items-center justify-center rounded-full bg-custom-dark">
+            <Github size={16} className="text-white" />
           </div>
           Continue with GitHub
         </Button>
@@ -42,8 +43,8 @@ export function LoginForm() {
           className="h-11 w-full font-normal"
           onClick={() => handleSignIn("google")}
         >
-          <div className="mr-1 flex h-7 w-7 items-center justify-center rounded-full bg-black">
-            <Mail className="text-white" />
+          <div className="mr-1 flex h-7 w-7 items-center justify-center rounded-full bg-custom-dark">
+            <Mail size={16} className="text-white" />
           </div>
           Continue with Google
         </Button>
