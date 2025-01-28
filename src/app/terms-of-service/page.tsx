@@ -112,7 +112,7 @@ export default function TermsOfService() {
           sectionNumber="10"
         />
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center mb-8 sm:mb-0">
         <Button onClick={() => router.push("/")}>Return to Home Page</Button>
       </div>
     </div>

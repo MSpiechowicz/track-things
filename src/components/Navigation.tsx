@@ -85,7 +85,7 @@ export default function Navigation() {
         <DialogContent className="w-[325px] sm:w-full border rounded-xl">
           <DialogHeader>
             <DialogTitle className="text-2xl">Sign Out</DialogTitle>
-            <DialogDescription className="text-lg">
+            <DialogDescription className="text-lg text-neutral-600">
               Are you sure you want to sign out of your account?
             </DialogDescription>
           </DialogHeader>
