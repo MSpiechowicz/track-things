@@ -3,33 +3,30 @@ interface SubContent {
   content: string;
 }
 
-interface TermsOfServiceSectionProps {
+interface PolicySectionProps {
   title: string;
   content: string;
   subcontent?: SubContent[];
   sectionNumber: string;
 }
 
-export default function TermsOfServiceSection({
+export default function PolicySection({
   title,
   content,
   subcontent,
   sectionNumber,
-}: Readonly<TermsOfServiceSectionProps>) {
+}: PolicySectionProps) {
   return (
     <section className="mb-8">
       <h2 className="mb-4 text-2xl font-semibold">
         {sectionNumber}. {title}
       </h2>
       <p className="mb-4 max-w-[80ch]">{content}</p>
-      {subcontent && subcontent.length > 0 && (
-        <ul className="max-w-[80ch] list-none space-y-2">
+      {subcontent && (
+        <ul className="list-inside list-disc space-y-4 pl-4">
           {subcontent.map((item, index) => (
             <li key={index}>
-              <span className="font-bold">
-                {sectionNumber}.{index + 1}. {item.title}:
-              </span>{" "}
-              {item.content}
+              <span className="font-semibold">{item.title}:</span> {item.content}
             </li>
           ))}
         </ul>

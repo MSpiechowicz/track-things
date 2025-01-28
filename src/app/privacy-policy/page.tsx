@@ -1,6 +1,6 @@
 "use client";
 
-import PrivacyPolicySection from "@/components/privacy-policy/PrivacyPolicySection";
+import PolicySection from "@/components/shared/PolicySection";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
@@ -12,12 +12,12 @@ export default function PrivacyPolicy() {
       <h1 className="mb-4 text-3xl font-bold text-white">Privacy Policy</h1>
       <h2 className="mb-10">Last updated: 20.01.2025</h2>
       <div className="prose prose-invert max-w-none">
-        <PrivacyPolicySection
+        <PolicySection
           title="Introduction"
           content="This Privacy Policy describes how track-things ('we', 'us', or 'our') collects, uses, and protects your personal information when you use our service."
           sectionNumber="1"
         />
-        <PrivacyPolicySection
+        <PolicySection
           title="Information We Collect"
           content="We collect information that you provide directly to us when using the Service:"
           subcontent={[
@@ -32,7 +32,7 @@ export default function PrivacyPolicy() {
           ]}
           sectionNumber="2"
         />
-        <PrivacyPolicySection
+        <PolicySection
           title="How We Use Your Information"
           content="We use the collected information for the following purposes:"
           subcontent={[
@@ -51,7 +51,7 @@ export default function PrivacyPolicy() {
           ]}
           sectionNumber="3"
         />
-        <PrivacyPolicySection
+        <PolicySection
           title="Data Storage and Security"
           content="We use Supabase for secure data storage and authentication. All data is encrypted and stored securely."
           subcontent={[
@@ -66,7 +66,7 @@ export default function PrivacyPolicy() {
           ]}
           sectionNumber="4"
         />
-        <PrivacyPolicySection
+        <PolicySection
           title="Third-Party Services"
           content="We use third-party services for authentication:"
           subcontent={[
@@ -81,7 +81,7 @@ export default function PrivacyPolicy() {
           ]}
           sectionNumber="5"
         />
-        <PrivacyPolicySection
+        <PolicySection
           title="Your Rights"
           content="You have the following rights regarding your personal data:"
           subcontent={[
@@ -100,7 +100,7 @@ export default function PrivacyPolicy() {
           ]}
           sectionNumber="6"
         />
-        <PrivacyPolicySection
+        <PolicySection
           title="Contact Us"
           content="If you have any questions about this Privacy Policy, please contact us at privacy@track-things.com"
           sectionNumber="7"
