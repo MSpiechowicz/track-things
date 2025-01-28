@@ -5,12 +5,13 @@ drop function if exists public.handle_updated_at();
 
 -- Create profiles table
 create table if not exists public.profiles (
-  id uuid primary key references auth.users(id) on delete cascade,
+  id uuid not null references auth.users(id) on delete cascade,
   full_name text,
   email text unique,
   avatar_url text,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null,
-  updated_at timestamp with time zone default timezone('utc'::text, now()) not null
+  updated_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  primary key (id)
 );
 
 -- Enable RLS for profiles
@@ -100,3 +101,41 @@ $$ language plpgsql security definer;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
+
+-- Function to handle existing users
+create or replace function public.handle_existing_users()
+returns void as $$
+declare
+  existing_user record;
+begin
+  for existing_user in
+    select u.id, u.email, u.raw_user_meta_data
+    from auth.users u
+    left join public.profiles p on u.id = p.id
+    where p.id is null
+  loop
+    -- Insert into profiles
+    insert into public.profiles (id, full_name, email, avatar_url)
+    values (
+      existing_user.id,
+      existing_user.raw_user_meta_data->>'full_name',
+      existing_user.raw_user_meta_data->>'email',
+      existing_user.raw_user_meta_data->>'avatar_url'
+    );
+
+    -- Insert into account_settings if not exists
+    insert into public.account_settings (user_id, display_name)
+    values (
+      existing_user.id,
+      existing_user.raw_user_meta_data->>'full_name'
+    )
+    on conflict (user_id) do nothing;
+  end loop;
+end;
+$$ language plpgsql security definer;
+
+-- Execute the function for existing users
+select public.handle_existing_users();
+
+-- Drop the function after execution (optional)
+drop function if exists public.handle_existing_users();
