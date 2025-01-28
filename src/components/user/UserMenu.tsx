@@ -65,12 +65,16 @@ export function UserMenu({ isMobile }: { isMobile: boolean }) {
       </DropdownMenuLabel>
       <DropdownMenuSeparator className="mx-2 my-2 bg-neutral-200" />
       <div className="flex flex-col gap-1">
-      <DropdownMenuItem onClick={() => setShowAccountSettings(true)}>
-        <User className="mr-1 h-4 w-4" />
-        Account Settings
-      </DropdownMenuItem>
-      <DropdownMenuItem onClick={() => setShowLogoutDialog(true)}>
-        <LogOut className="mr-1 h-4 w-4" />
+        <DropdownMenuItem onClick={() => setShowAccountSettings(true)} className="text-base">
+          <div className="mr-1 flex h-7 w-7 items-center justify-center rounded-full bg-black">
+            <User size={16} className="text-white" />
+          </div>
+          Account Settings
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setShowLogoutDialog(true)} className="text-base">
+          <div className="mr-1 flex h-7 w-7 items-center justify-center rounded-full bg-black">
+            <LogOut size={16} className="text-white" />
+          </div>
           Sign Out
         </DropdownMenuItem>
       </div>

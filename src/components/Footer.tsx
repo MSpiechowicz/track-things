@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { Github } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -21,7 +21,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="flex items-center gap-2 hover:opacity-80"
           >
-            <Image src="/github-white.svg" width={20} height={20} alt="GitHub" />
+            <Github className="h-5 w-5" />
             <span>GitHub</span>
           </Link>
         </div>

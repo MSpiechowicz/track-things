@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/utils/supabase/client";
 import type { Provider } from "@supabase/supabase-js";
-import Image from "next/image";
+import { Github, Mail } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -32,7 +32,9 @@ export function LoginForm() {
           className="h-11 w-full font-normal"
           onClick={() => handleSignIn("github")}
         >
-          <Image src="/github-black.svg" alt="GitHub" width={20} height={20} className="mr-1" />
+          <div className="mr-1 flex h-7 w-7 items-center justify-center rounded-full bg-black">
+            <Github className="text-white" />
+          </div>
           Continue with GitHub
         </Button>
         <Button
@@ -40,7 +42,9 @@ export function LoginForm() {
           className="h-11 w-full font-normal"
           onClick={() => handleSignIn("google")}
         >
-          <Image src="/google.svg" alt="Google" width={20} height={20} className="mr-1" />
+          <div className="mr-1 flex h-7 w-7 items-center justify-center rounded-full bg-black">
+            <Mail className="text-white" />
+          </div>
           Continue with Google
         </Button>
       </div>
