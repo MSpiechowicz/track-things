@@ -82,14 +82,14 @@ export default function Navigation() {
       </nav>
 
       <Dialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
-        <DialogContent>
+        <DialogContent className="w-[325px] sm:w-full border rounded-xl">
           <DialogHeader>
-            <DialogTitle>Sign Out</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-2xl">Sign Out</DialogTitle>
+            <DialogDescription className="text-lg">
               Are you sure you want to sign out of your account?
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter>
+          <DialogFooter className="flex flex-col sm:flex-row gap-2 mt-4">
             <Button
               variant="outline"
               onClick={() => setShowLogoutDialog(false)}
