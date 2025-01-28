@@ -18,12 +18,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
+import { useUserStore } from "@/store/userStore";
 import { supabase } from "@/utils/supabase/client";
 import { LogOut, Menu, Settings, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AccountSettingsDialog } from "./UserAccountSettings";
-import { useUserStore } from "@/store/userStore";
 
 export function UserMenu({ isMobile }: { isMobile: boolean }) {
   const router = useRouter();
@@ -59,19 +59,21 @@ export function UserMenu({ isMobile }: { isMobile: boolean }) {
     <>
       <DropdownMenuLabel>
         <div className="flex flex-col">
-          <p className="font-medium">{name}</p>
-          <p className="text-xs font-normal">{email}</p>
+          <p className="text-lg font-medium">{name}</p>
+          <p className="text-sm font-normal">{email}</p>
         </div>
       </DropdownMenuLabel>
-      <DropdownMenuSeparator className="mx-2 bg-neutral-200" />
+      <DropdownMenuSeparator className="mx-2 my-2 bg-neutral-200" />
+      <div className="flex flex-col gap-1">
       <DropdownMenuItem onClick={() => setShowAccountSettings(true)}>
         <User className="mr-1 h-4 w-4" />
         Account Settings
       </DropdownMenuItem>
       <DropdownMenuItem onClick={() => setShowLogoutDialog(true)}>
         <LogOut className="mr-1 h-4 w-4" />
-        Sign Out
-      </DropdownMenuItem>
+          Sign Out
+        </DropdownMenuItem>
+      </div>
     </>
   );
 
@@ -83,7 +85,7 @@ export function UserMenu({ isMobile }: { isMobile: boolean }) {
             {isMobile ? <Menu className="h-5 w-5" /> : <Settings className="h-5 w-5" />}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuContent align="end" className="w-full p-2">
           {menuContent}
         </DropdownMenuContent>
       </DropdownMenu>
@@ -100,12 +102,12 @@ export function UserMenu({ isMobile }: { isMobile: boolean }) {
       <Dialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
         <DialogContent className="w-[325px] rounded-xl border sm:w-full">
           <DialogHeader>
-            <DialogTitle className="text-2xl">Sign Out</DialogTitle>
-            <DialogDescription className="text-lg text-neutral-600">
+            <DialogTitle className="text-xl">Sign Out</DialogTitle>
+            <DialogDescription className="text-base text-neutral-600">
               Are you sure you want to sign out of your account?
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="mt-4 flex flex-col gap-2 sm:flex-row">
+          <DialogFooter className="mt-4 flex flex-col gap-3 sm:gap-2 sm:flex-row">
             <Button variant="outline" onClick={() => setShowLogoutDialog(false)}>
               Cancel
             </Button>

@@ -64,14 +64,14 @@ export function AccountSettingsDialog({ open, onOpenChange, userId }: UserAccoun
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[325px] rounded-xl border sm:w-full">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Account Settings</DialogTitle>
-          <DialogDescription className="text-lg text-neutral-600">
+          <DialogTitle className="text-xl">Account Settings</DialogTitle>
+          <DialogDescription className="text-base text-neutral-600">
             Below you can adjust your personal account information.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid gap-2">
-            <Label htmlFor="displayName" className="text-lg">
+            <Label htmlFor="displayName" className="text-base">
               Display Name
             </Label>
             <Input
@@ -83,7 +83,7 @@ export function AccountSettingsDialog({ open, onOpenChange, userId }: UserAccoun
             />
           </div>
         </div>
-        <DialogFooter className="mt-2 flex flex-col gap-2 sm:flex-row">
+        <DialogFooter className="mt-2 flex flex-col gap-3 sm:gap-2 sm:flex-row">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
