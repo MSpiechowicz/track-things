@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useUserStore } from "@/store/userStore";
-import { supabase } from "@/utils/supabase/client";
+import { updateAccountSettingsDisplayName } from "@/utils/supabase/accountSettings";
 import { useState } from "react";
 
 interface UserAccountSettingsProps {
@@ -23,19 +23,13 @@ interface UserAccountSettingsProps {
   userId: string;
 }
 
-export function AccountSettingsDialog({
-  open,
-  onOpenChange,
-  currentDisplayName,
-  userId,
-}: UserAccountSettingsProps) {
+export function AccountSettingsDialog({ open, onOpenChange, userId }: UserAccountSettingsProps) {
   const { toast } = useToast();
-  const [displayName, setDisplayName] = useState(currentDisplayName ?? "");
-  const [isLoading, setIsLoading] = useState(false);
-  const setGlobalDisplayName = useUserStore((state) => state.setDisplayName);
+  const { displayName, setDisplayName } = useUserStore();
+  const [inputDisplayName, setInputDisplayName] = useState(displayName ?? "");
 
-  const handleSave = async () => {
-    if (!displayName.trim()) {
+  function checkIfDisplayNameIsNotEmpty() {
+    if (!inputDisplayName.trim()) {
       toast({
         variant: "destructive",
         title: "Invalid name",
@@ -43,60 +37,57 @@ export function AccountSettingsDialog({
       });
       return;
     }
+  }
 
-    //setIsLoading(true);
+  async function handleSave() {
+    checkIfDisplayNameIsNotEmpty();
 
-    try {
-      const { error } = await supabase
-        .from("account_settings")
-        .update({ display_name: displayName.trim() })
-        .eq("user_id", userId);
+    const result = await updateAccountSettingsDisplayName(userId, inputDisplayName.trim());
 
-      if (error) throw error;
-
-      setGlobalDisplayName(displayName.trim());
+    if (result) {
       toast({
         title: "Settings updated",
         description: "Your display name has been updated successfully.",
       });
       onOpenChange(false);
-    } catch (error) {
-      console.error("Error updating display name:", error);
+      setDisplayName(inputDisplayName.trim());
+    } else {
       toast({
         variant: "destructive",
         title: "Error",
         description: "Failed to update display name. Please try again.",
       });
-    } finally {
-      //setIsLoading(false);
     }
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="w-[325px] rounded-xl border sm:w-full">
         <DialogHeader>
-          <DialogTitle>Account Settings</DialogTitle>
-          <DialogDescription>
-            Update your account settings here. Click save when you're done.
+          <DialogTitle className="text-2xl">Account Settings</DialogTitle>
+          <DialogDescription className="text-lg text-neutral-600">
+            Below you can adjust your personal account information.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid gap-2">
-            <Label htmlFor="displayName">Display Name</Label>
+            <Label htmlFor="displayName" className="text-lg">
+              Display Name
+            </Label>
             <Input
               id="displayName"
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
+              value={inputDisplayName}
+              onChange={(e) => setInputDisplayName(e.target.value)}
               placeholder="Enter your display name"
+              className="text-lg"
             />
           </div>
         </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isLoading}>
+        <DialogFooter className="mt-2 flex flex-col gap-2 sm:flex-row">
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button onClick={handleSave} disabled={!displayName.trim()}>
+          <Button onClick={handleSave} disabled={!inputDisplayName?.trim()}>
             Save changes
           </Button>
         </DialogFooter>
