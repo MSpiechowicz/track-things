@@ -12,7 +12,7 @@ export function LoginForm() {
 
   const handleSignIn = async (provider: Provider) => {
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
@@ -21,7 +21,9 @@ export function LoginForm() {
 
       if (error) throw error;
 
-      router.push("/dashboard");
+      if (data) {
+        router.push('/dashboard');
+      }
     } catch (error) {
       console.error(`Error signing in with provider: ${provider}`, error);
     }
@@ -33,7 +35,7 @@ export function LoginForm() {
         <Button
           variant="outline"
           className="h-11 w-full font-normal"
-          onClick={() => handleSignIn("github")}
+          onClick={async () => await handleSignIn("github")}
         >
           <div className="mr-1 flex h-7 w-7 items-center justify-center rounded-full bg-custom-dark">
             <Github size={16} className="text-white" />
@@ -43,7 +45,7 @@ export function LoginForm() {
         <Button
           variant="outline"
           className="h-11 w-full font-normal"
-          onClick={() => handleSignIn("google")}
+          onClick={async () => await handleSignIn("google")}
         >
           <div className="mr-1 flex h-7 w-7 items-center justify-center rounded-full bg-custom-dark">
             <Mail size={16} className="text-white" />
