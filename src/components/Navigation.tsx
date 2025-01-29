@@ -7,7 +7,6 @@ import { fetchAccountSettingsDisplayName } from "@/utils/supabase/accountSetting
 import { supabase } from "@/utils/supabase/client";
 import { type Session } from "@supabase/supabase-js";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -62,9 +61,18 @@ export default function Navigation() {
     void initializeAuth();
   }, []);
 
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (id !== null) {
+      window.location.href = '/dashboard';
+    } else {
+      window.location.href = '/';
+    }
+  };
+
   return (
     <nav className="flex h-[96px] items-center justify-between border-b border-white border-opacity-15">
-      <Link href="/" className="flex flex-shrink-0 items-center">
+      <div onClick={handleLogoClick} className="flex flex-shrink-0 items-center cursor-pointer">
         <div className="flex text-3xl font-bold sm:hidden">
           <span className="text-white">t</span>
           <Image
@@ -90,7 +98,7 @@ export default function Navigation() {
           <span className="text-blue-600">things</span>
         </div>
         <span className="ml-2 rounded-full bg-gray-200 px-2 py-1 text-xs text-gray-700">ALPHA</span>
-      </Link>
+      </div>
       {id !== null ? (
         <div className="flex items-center gap-4 text-white">
           <span className="hidden text-lg sm:block">{displayName}</span>
