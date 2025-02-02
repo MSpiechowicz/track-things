@@ -1,31 +1,38 @@
-# Track Things
+# sv
 
-This is an open source project for tracking things. It is bootstrapped with the help of [T3 Stack](https://create.t3.gg/).
+Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
-## What is the Tech Stack?
+## Creating a project
 
-Currently, the tech stack is:
-
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [PostgreSQL](https://www.postgresql.org)
-- [Supabase](https://supabase.com)
-
-## What is the purpose of this project?
-
-This project is a personal project for tracking things. It is built with the goal of learning new technologies and practices.
-
-## How do I run this project?
-
-To run this project, you need to have Node.js and PostgreSQL installed. Then, you can run the following commands:
+If you're seeing this, you've probably already done this step. Congrats!
 
 ```bash
-npm install
-npm run dev
+# create a new project in the current directory
+npx sv create
+
+# create a new project in my-app
+npx sv create my-app
 ```
 
-## How do I deploy this?
+## Developing
 
-This project is deployed on [Vercel](https://vercel.com).
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+
+```bash
+npm run dev
+
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
+
+## Building
+
+To create a production version of your app:
+
+```bash
+npm run build
+```
+
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.

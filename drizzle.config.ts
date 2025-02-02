@@ -1,12 +1,14 @@
-import { type Config } from "drizzle-kit";
+import { defineConfig } from "drizzle-kit";
 
-import { env } from "@/env";
-
-export default {
-  schema: "./src/server/db/schema.ts",
+export default defineConfig({
   dialect: "postgresql",
+	schema: "./src/lib/db/schema.ts",
+	out: "./supabase/migrations",
   dbCredentials: {
-    url: env.DATABASE_URL,
+    host: "localhost",
+    port: 54321,
+    user: "postgres",
+    password: "postgres",
+    database: "supabase",
   },
-  tablesFilter: ["track-things_*"],
-} satisfies Config;
+});
