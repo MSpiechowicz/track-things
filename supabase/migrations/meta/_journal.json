@@ -8,6 +8,20 @@
       "when": 1738506301261,
       "tag": "0000_busy_preak",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1738519005948,
+      "tag": "0001_skinny_power_pack",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1738519149836,
+      "tag": "0002_black_scrambler",
+      "breakpoints": true
     }
   ]
 }

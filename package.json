@@ -15,7 +15,8 @@
     "test:unit": "vitest",
     "test": "npm run test:unit -- --run",
     "db:generate": "drizzle-kit generate",
-    "supabase:reset": "supabase db reset"
+    "supabase:reset": "supabase db reset",
+    "supabase:status": "supabase status"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.5",
