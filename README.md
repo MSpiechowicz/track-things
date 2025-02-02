@@ -1,31 +1,72 @@
-# Track Things
+# Welcome to TanStack.com!
 
-This is an open source project for tracking things. It is bootstrapped with the help of [T3 Stack](https://create.t3.gg/).
+This site is built with TanStack Router!
 
-## What is the Tech Stack?
+- [TanStack Router Docs](https://tanstack.com/router)
 
-Currently, the tech stack is:
+It's deployed automagically with Netlify!
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [PostgreSQL](https://www.postgresql.org)
-- [Supabase](https://supabase.com)
+- [Netlify](https://netlify.com/)
 
-## What is the purpose of this project?
+## Development
 
-This project is a personal project for tracking things. It is built with the goal of learning new technologies and practices.
+From your terminal:
 
-## How do I run this project?
-
-To run this project, you need to have Node.js and PostgreSQL installed. Then, you can run the following commands:
-
-```bash
-npm install
-npm run dev
+```sh
+pnpm install
+pnpm dev
 ```
 
-## How do I deploy this?
+This starts your app in development mode, rebuilding assets on file changes.
 
-This project is deployed on [Vercel](https://vercel.com).
+## Editing and previewing the docs of TanStack projects locally
+
+The documentations for all TanStack projects except for `React Charts` are hosted on [https://tanstack.com](https://tanstack.com), powered by this TanStack Router app.
+In production, the markdown doc pages are fetched from the GitHub repos of the projects, but in development they are read from the local file system.
+
+Follow these steps if you want to edit the doc pages of a project (in these steps we'll assume it's [`TanStack/form`](https://github.com/tanstack/form)) and preview them locally :
+
+1. Create a new directory called `tanstack`.
+
+```sh
+mkdir tanstack
+```
+
+2. Enter the directory and clone this repo and the repo of the project there.
+
+```sh
+cd tanstack
+git clone git@github.com:TanStack/tanstack.com.git
+git clone git@github.com:TanStack/form.git
+```
+
+> [!NOTE]
+> Your `tanstack` directory should look like this:
+>
+> ```
+> tanstack/
+>    |
+>    +-- form/
+>    |
+>    +-- tanstack.com/
+> ```
+
+> [!WARNING]
+> Make sure the name of the directory in your local file system matches the name of the project's repo. For example, `tanstack/form` must be cloned into `form` (this is the default) instead of `some-other-name`, because that way, the doc pages won't be found.
+
+3. Enter the `tanstack/tanstack.com` directory, install the dependencies and run the app in dev mode:
+
+```sh
+cd tanstack.com
+pnpm i
+# The app will run on https://localhost:3000 by default
+pnpm dev
+```
+
+4. Now you can visit http://localhost:3000/form/latest/docs/overview in the browser and see the changes you make in `tanstack/form/docs`.
+
+> [!NOTE]
+> The updated pages need to be manually reloaded in the browser.
+
+> [!WARNING]
+> You will need to update the `docs/config.json` file (in the project's repo) if you add a new doc page!
