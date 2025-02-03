@@ -1,19 +1,20 @@
 <script lang="ts">
-  import { Button } from "$lib/components/ui/button";
+	import { goto } from "$app/navigation";
+	import { Button } from "$lib/components/ui/button";
 
   const { id, displayName } = $props();
 
   function handleLogoClick(e: MouseEvent) {
     e.preventDefault();
-    if (id) {
-      window.location.href = '/dashboard';
-    } else {
-      window.location.href = '/';
-    }
+		if (id) {
+			goto('/dashboard');
+		} else {
+			goto('/');
+		}
   };
 </script>
 
-<nav class="flex h-[96px] items-center justify-between border-b border-white border-opacity-15">
+<nav class="flex h-[96px] items-center justify-between border-b border-white/15">
   <Button
     onclick={handleLogoClick}
     variant="link"

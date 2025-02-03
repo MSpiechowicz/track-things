@@ -52,7 +52,6 @@
   "dependencies": {
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.48.1",
-    "@tabler/icons-svelte": "^3.29.0",
     "drizzle-orm": "^0.39.1",
     "postgres": "^3.4.5"
   }
