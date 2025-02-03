@@ -27,7 +27,7 @@
     </p>
     <div class="flex">
       <Button
-        onclick={async () => userProfile ? goto('/dashboard') : goto('/signin')}
+        onclick={async () => userProfile ? goto('/dashboard') : goto('/auth/login')}
         variant="default"
       >
         Start Tracking Now
