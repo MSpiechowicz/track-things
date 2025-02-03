@@ -4,7 +4,7 @@
   const { id, displayName } = $props();
 </script>
 
-<nav class="flex h-[96px] items-center justify-between border-b border-white/15">
+<nav class="flex h-[96px] items-center justify-between border-b border-white/15 md:px-8">
   <a
     href={id ? '/dashboard' : '/'}
     class="flex flex-shrink-0 items-center cursor-pointer hover:no-underline"
