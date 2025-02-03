@@ -1,23 +1,12 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
 	import { Button } from "$lib/components/ui/button";
 
   const { id, displayName } = $props();
-
-  function handleLogoClick(e: MouseEvent) {
-    e.preventDefault();
-		if (id) {
-			goto('/dashboard');
-		} else {
-			goto('/');
-		}
-  };
 </script>
 
 <nav class="flex h-[96px] items-center justify-between border-b border-white/15">
-  <Button
-    onclick={handleLogoClick}
-    variant="link"
+  <a
+    href={id ? '/dashboard' : '/'}
     class="flex flex-shrink-0 items-center cursor-pointer hover:no-underline"
   >
     <div class="flex text-3xl font-bold sm:hidden">
@@ -43,7 +32,7 @@
       <span class="text-blue-600">things</span>
     </div>
     <span class="ml-2 rounded-full bg-gray-200 px-2 py-1 text-xs text-gray-700">ALPHA</span>
-  </Button>
+  </a>
   {#if id !== null}
     <div class="flex items-center gap-4 text-white">
       <span class="hidden text-lg sm:block">{displayName}</span>
