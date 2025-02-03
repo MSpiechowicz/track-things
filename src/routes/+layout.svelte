@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
+	import { page } from '$app/state';
 	import PageNavigation from '$lib/components/PageNavigation.svelte';
 	import PageSeparator from '$lib/components/PageSeparator.svelte';
+	import PageTransition from '$lib/components/PageTransition.svelte';
 	import '../app.css';
 
 	const { data: propsData, children } = $props();
 	const { supabase, session, userProfile } = propsData;
-
-	//const { userProfile } = propsData;
 
 	$effect(() => {
 		const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
@@ -24,5 +24,9 @@
 
 <div class="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 xl:px-0">
 	<PageNavigation id={userProfile?.id} displayName={userProfile?.name} />
-	{@render children()}
+	<main class="flex flex-1 flex-col items-center justify-center py-8 text-white">
+		<PageTransition pathname={page.url.pathname}>
+			{@render children()}
+		</PageTransition>
+	</main>
 </div>
