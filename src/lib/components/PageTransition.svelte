@@ -7,8 +7,7 @@
 
 {#key pathname}
 	<div
-		in:fade={{ duration: 150, delay: 150 }}
-		out:fade={{ duration: 150 }}
+		in:fade={{ duration: 150, delay: 0 }}
 	>
 		{@render children()}
 	</div>

@@ -5,6 +5,7 @@
 	import PageNavigation from '$lib/components/PageNavigation.svelte';
 	import PageSeparator from '$lib/components/PageSeparator.svelte';
 	import PageTransition from '$lib/components/PageTransition.svelte';
+	import { Toaster } from '$lib/components/ui/sonner';
 	import '../app.css';
 
 	const { data: propsData, children } = $props();
@@ -40,4 +41,5 @@
 		</PageTransition>
 	</main>
 	<PageFooter />
+  <Toaster />
 </div>
