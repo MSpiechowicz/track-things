@@ -3,9 +3,9 @@
 	import { Button } from '$lib/components/ui/button';
 </script>
 
-<div class="flex flex-col max-w-[80ch]">
+<div class="flex flex-1 flex-col">
 	<h1 class="mb-4 text-3xl font-bold text-white">Terms of Service</h1>
-	<h2 class="mb-10">Effective date: 20.01.2025</h2>
+	<h2 class="mb-10">Last updated: 20.01.2025</h2>
 	<div class="prose prose-invert max-w-none">
 		<PagePolicySection
 			title="Introduction"
