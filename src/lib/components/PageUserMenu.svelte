@@ -13,7 +13,6 @@
 	import IconMenu from '$lib/components/svg/IconMenu.svelte';
 	import IconSettings from '$lib/components/svg/IconSettings.svelte';
 
-	import { accountSettings } from '$lib/stores/accountSettingStore.svelte';
 
 	const { id, name, email, displayName, isMobile = false } = $props();
 </script>
@@ -73,8 +72,8 @@ import { AccountSettingsDialog } from "./UserAccountSettings";-->
   };-->
 
 <DropdownMenu>
-	<DropdownMenuTrigger asChild>
-		<Button size="icon" onclick={() => accountSettings.show = true}>
+	<DropdownMenuTrigger asChild let:builder>
+		<Button size="icon" builders={[builder]}>
 			{#if isMobile}
 				<IconMenu additionalClass="h-5 w-5" />
 			{:else}
@@ -82,7 +81,7 @@ import { AccountSettingsDialog } from "./UserAccountSettings";-->
 			{/if}
 		</Button>
 	</DropdownMenuTrigger>
-	<DropdownMenuContent align="end" class="w-full p-2">
+	<DropdownMenuContent align="end" class="p-2">
 		<PageUserMenuContent {name} {email} />
 	</DropdownMenuContent>
 </DropdownMenu>

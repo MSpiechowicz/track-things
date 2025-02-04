@@ -1,16 +1,14 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 
-  const { pathname, children } = $props();
+	const { pathname, children } = $props();
 	// Use the full pathname as the key for the transition
 </script>
 
 {#key pathname}
 	<div
-  in:fade={{
-    delay: 0,
-    duration: 300,
-  }}
+		in:fade={{ duration: 150, delay: 150 }}
+		out:fade={{ duration: 150 }}
 	>
 		{@render children()}
 	</div>
