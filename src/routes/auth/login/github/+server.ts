@@ -13,11 +13,9 @@ export const GET = async (event: RequestEvent) => {
     },
   });
 
-  console.log(data.url);
-
   if (data.url) {
     redirect(307, data.url);
   }
 
-  redirect(307, '/auth/error');
+  redirect(307, '/auth/auth-code-error');
 }

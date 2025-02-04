@@ -24,8 +24,13 @@
 <PageSeparator />
 
 <div class="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 xl:px-0">
-	<PageNavigation id={userProfile?.id} displayName={userProfile?.name} />
-	<main class="flex flex-1 flex-col items-center justify-center py-8 md:px-8 text-white">
+	<PageNavigation
+		id={userProfile?.id}
+		displayName={userProfile?.name}
+		email={userProfile?.email}
+		name={userProfile?.name}
+	/>
+	<main class="flex flex-1 flex-col items-center justify-center py-8 text-white md:px-8">
 		<PageTransition pathname={page.url.pathname}>
 			{@render children()}
 		</PageTransition>
