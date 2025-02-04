@@ -8,14 +8,16 @@
 	import { Toaster } from '$lib/components/ui/sonner';
 	import '../app.css';
 
-	const { data: propsData, children } = $props();
-	const { supabase, session, userProfile } = propsData;
+	const { data, children } = $props();
+	const { supabase, session, userProfile } = $derived(data);
 
 	$effect(() => {
 		const { data } = supabase.auth.onAuthStateChange(async (event) => {
 			if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
 				// Verify the user's authentication status
-				const { data: { user } } = await supabase.auth.getUser();
+				const {
+					data: { user }
+				} = await supabase.auth.getUser();
 				if (user?.id !== session?.user?.id) {
 					invalidate('supabase:auth');
 				}
@@ -41,5 +43,5 @@
 		</PageTransition>
 	</main>
 	<PageFooter />
-  <Toaster />
+	<Toaster />
 </div>
