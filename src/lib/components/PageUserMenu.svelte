@@ -6,11 +6,14 @@
 		DropdownMenuTrigger
 	} from '$lib/components/ui/dropdown-menu';
 
+	import PageAccountSettings from '$lib/components/PageAccountSettings.svelte';
 	import PageUserMenuContent from '$lib/components/PageUserMenuContent.svelte';
 	import PageUserMenuDialog from '$lib/components/PageUserMenuDialog.svelte';
 
 	import IconMenu from '$lib/components/svg/IconMenu.svelte';
 	import IconSettings from '$lib/components/svg/IconSettings.svelte';
+
+	import { accountSettings } from '$lib/stores/accountSettingStore.svelte';
 
 	const { id, name, email, displayName, isMobile = false } = $props();
 </script>
@@ -71,7 +74,7 @@ import { AccountSettingsDialog } from "./UserAccountSettings";-->
 
 <DropdownMenu>
 	<DropdownMenuTrigger asChild>
-		<Button size="icon">
+		<Button size="icon" onclick={() => accountSettings.show = true}>
 			{#if isMobile}
 				<IconMenu additionalClass="h-5 w-5" />
 			{:else}
@@ -84,13 +87,11 @@ import { AccountSettingsDialog } from "./UserAccountSettings";-->
 	</DropdownMenuContent>
 </DropdownMenu>
 
-<!--{id && (
-        <AccountSettingsDialog
-          open={showAccountSettings}
-          onOpenChange={setShowAccountSettings}
-          currentDisplayName={displayName}
-          userId={id}
-        />
-      )}-->
+{#if id}
+	<PageAccountSettings
+		currentDisplayName={displayName}
+		userId={id}
+	/>
+{/if}
 
 <PageUserMenuDialog />

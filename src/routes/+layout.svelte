@@ -11,9 +11,13 @@
 	const { supabase, session, userProfile } = propsData;
 
 	$effect(() => {
-		const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
-			if (newSession?.expires_at !== session?.expires_at) {
-				invalidate('supabase:auth');
+		const { data } = supabase.auth.onAuthStateChange(async (event) => {
+			if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
+				// Verify the user's authentication status
+				const { data: { user } } = await supabase.auth.getUser();
+				if (user?.id !== session?.user?.id) {
+					invalidate('supabase:auth');
+				}
 			}
 		});
 
