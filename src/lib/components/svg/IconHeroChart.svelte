@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let additionalClass = "";
+  export let additionalClass: string = "";
 </script>
 
 <svg xmlns="http://www.w3.org/2000/svg"

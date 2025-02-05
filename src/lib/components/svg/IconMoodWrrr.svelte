@@ -13,8 +13,10 @@
 	stroke-width="2"
 	stroke-linecap="round"
 	stroke-linejoin="round"
-	class="icon icon-tabler icons-tabler-outline icon-tabler-user {additionalClass}"
+	class="icon icon-tabler icons-tabler-outline icon-tabler-mood-wrrr {additionalClass}"
 	><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path
-		d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"
-	/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg
+		d="M12 21a9 9 0 1 1 0 -18a9 9 0 0 1 0 18z"
+	/><path d="M8 16l1 -1l1.5 1l1.5 -1l1.5 1l1.5 -1l1 1" /><path
+		d="M8.5 11.5l1.5 -1.5l-1.5 -1.5"
+	/><path d="M15.5 11.5l-1.5 -1.5l1.5 -1.5" /></svg
 >

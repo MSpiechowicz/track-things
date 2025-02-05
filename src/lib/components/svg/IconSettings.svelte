@@ -1,6 +1,6 @@
 <script lang="ts">
-	export let strokeColor = '#FFF';
-	export let additionalClass = '';
+	export let strokeColor: string = "#FFF";
+	export let additionalClass: string = "";
 </script>
 
 <svg
