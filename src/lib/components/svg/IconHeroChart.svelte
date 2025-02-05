@@ -1,5 +1,7 @@
 <script lang="ts">
-  export let additionalClass: string = "";
+  import { defaultAdditionalClass } from "./defaults";
+
+  export let additionalClass: string = defaultAdditionalClass;
 </script>
 
 <svg xmlns="http://www.w3.org/2000/svg"

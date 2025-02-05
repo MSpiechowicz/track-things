@@ -1,6 +1,8 @@
 <script lang="ts">
-  export let strokeColor: string = "#FFF";
-  export let additionalClass: string = "";
+  import { defaultAdditionalClass, defaultStrokeColor } from "./defaults";
+
+  export let strokeColor: string = defaultStrokeColor;
+  export let additionalClass: string = defaultAdditionalClass;
 </script>
 
 <svg
