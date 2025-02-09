@@ -5,23 +5,30 @@
   const { duration = 1500 } = $props();
 
   $effect(() => {
-    let startTime = performance.now();
+    const startTime = performance.now();
 
-    let frame = requestAnimationFrame(function update(time) {
-			frame = requestAnimationFrame(update);
+    let animationFrame: number;
 
-			timer.setProgress(Math.min(((time - startTime) / duration) * 60, 100));
+    function animate() {
+      const currentTime = performance.now();
+      const elapsedTime = currentTime - startTime;
 
-			startTime = time;
+      // Calculate percentage of time used (elapsed time vs max duration)
+      const progressPercentage = (elapsedTime / duration) * 100;
 
-      if (timer.progress >= 100) {
-        cancelAnimationFrame(frame);
+      // Ensure we don't exceed 100%
+      timer.setProgress(Math.min(progressPercentage, 100));
+
+      if (elapsedTime < duration) {
+        animationFrame = requestAnimationFrame(animate);
+      } else {
+        timer.setProgress(100); // Ensure we end at exactly 100%
       }
-    });
+    }
 
-		return () => {
-			cancelAnimationFrame(frame);
-		};
+    animationFrame = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrame);
   });
 </script>
 

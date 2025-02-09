@@ -4,7 +4,7 @@ class Timer {
   isNotFinished = $state(true);
 
   setProgress(value: number) {
-    this.progress += Math.min(Math.max(value, 0), 100);
+    this.progress = value;
 
     if (this.progress >= 100) {
       setTimeout(() => {
