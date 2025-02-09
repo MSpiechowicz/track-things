@@ -17,5 +17,5 @@ export const GET = async (event: RequestEvent) => {
     redirect(307, data.url);
   }
 
-  redirect(307, '/auth/auth-code-error');
+  redirect(307, '/auth/error');
 }
