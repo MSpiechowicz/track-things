@@ -5,12 +5,6 @@
 
 	const { data } = $props();
   const { userProfile } = $derived(data);
-
-  $effect(() => {
-    if (userProfile) {
-      goto('/dashboard');
-    }
-  });
 </script>
 
 <div class="flex h-full w-full flex-1 flex-col items-center justify-center gap-12 md:flex-row md:justify-between">

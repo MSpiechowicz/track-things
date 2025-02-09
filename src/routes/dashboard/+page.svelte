@@ -6,30 +6,15 @@
 	import { DASHBOARD_VIEWS } from '$lib/constants';
 	import { dashboardStore } from '$lib/stores/dashboardStore.svelte';
 	import { timer } from '$lib/stores/timerStore.svelte';
+
 	const { data } = $props();
 	const { userProfile } = $derived(data);
-
-	//let { progress, isFinished } = useElapsedTime(1500);
-
-	//console.log('progress', progress);
-
-  let progress = $state(0);
-  let isFinished = $state(false);
 
 	$effect(() => {
 		if (!userProfile || !userProfile.id) {
 			goto('/auth/login');
 		}
 	});
-
-	//function renderView() {
-	//	switch (dashboardStore.currentView) {
-	//		case DASHBOARD_VIEWS.PROJECTS:
-	//			return () => PageDashboardProjects;
-	//		default:
-	//			return () => PageDashboardProjects;
-	//	}
-	//}
 </script>
 
 {#if timer.isNotFinished}
