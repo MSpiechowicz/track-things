@@ -13,16 +13,12 @@
 	import { Label } from '$lib/components/ui/label';
 	import { toast } from 'svelte-sonner';
 	import { dialog } from '$lib/stores/dialogStore.svelte';
+	import { userStore } from '$lib/stores/userStore.svelte';
 
-	const { userId, currentDisplayName, currentHideEmail } = $props();
-
-	const uniqueId = `displayName-${userId}-${crypto.randomUUID()}`;
-
-	let inputDisplayName = $state(currentDisplayName);
-	let checkboxHideEmail = $state(currentHideEmail);
+	const uniqueId = `displayName-${userStore.id}-${crypto.randomUUID()}`;
 
 	async function handleSave() {
-		if (!inputDisplayName.trim()) {
+		if (!userStore.displayName?.trim()) {
 			toast.error('Invalid name', {
 				description: 'Display name cannot be empty.'
 			});
@@ -30,7 +26,7 @@
 		}
 
 		const result = await fetch(
-			`/api/v1/profiles/update?displayName=${inputDisplayName.trim()}&hideEmail=${checkboxHideEmail}`,
+			`/api/v1/profiles/update?displayName=${userStore.displayName.trim()}&hideEmail=${userStore.hideEmail}`,
 			{
 				method: 'POST',
 				headers: {
@@ -44,8 +40,6 @@
 				description: 'Your display name has been updated successfully.'
 			});
 			dialog.showAccountSettings = false;
-			inputDisplayName = inputDisplayName.trim();
-			checkboxHideEmail = checkboxHideEmail;
 		} else {
 			toast.error('Error', {
 				description: 'Failed to update display name. Please try again.'
@@ -67,8 +61,8 @@
 				<Label for={uniqueId} class="text-base">Display Name</Label>
 				<Input
 					id={uniqueId}
-					value={inputDisplayName}
-					on:input={(e: Event) => (inputDisplayName = (e.target as HTMLInputElement).value)}
+					value={userStore.displayName}
+					on:input={(e: Event) => (userStore.displayName = (e.target as HTMLInputElement).value.trim())}
 					placeholder="Enter your display name"
 					class="text-lg"
 					autofocus={false}
@@ -78,9 +72,9 @@
 		<div class="flex items-center space-x-2">
 			<Checkbox
 				id="hide-email"
-				checked={checkboxHideEmail}
+				checked={userStore.hideEmail}
 				onCheckedChange={(checked: boolean | 'indeterminate') =>
-					(checkboxHideEmail = checked === true)}
+					(userStore.hideEmail = checked === true)}
 			/>
 			<Label
 				for="hide-email"
@@ -91,7 +85,7 @@
 		</div>
 		<DialogFooter class="mt-2 flex flex-col gap-3 sm:flex-row sm:gap-2">
 			<Button variant="outline" onclick={() => (dialog.showAccountSettings = false)}>Cancel</Button>
-			<Button onclick={handleSave} disabled={!inputDisplayName?.trim()}>Save changes</Button>
+			<Button onclick={handleSave} disabled={!userStore.displayName}>Save changes</Button>
 		</DialogFooter>
 	</DialogContent>
 </Dialog>

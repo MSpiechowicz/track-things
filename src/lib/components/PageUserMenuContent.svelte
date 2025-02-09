@@ -5,18 +5,17 @@
 		DropdownMenuSeparator
 	} from '$lib/components/ui/dropdown-menu';
 	import { dialog } from '$lib/stores/dialogStore.svelte';
+  import { userStore } from '$lib/stores/userStore.svelte';
 
 	import IconUserConfig from '$lib/components/svg/IconUserConfig.svelte';
 	import IconUserSignOut from '$lib/components/svg/IconUserSignOut.svelte';
-
-	const { displayName, hideEmail, email } = $props();
 </script>
 
 <DropdownMenuLabel>
 	<div class="flex flex-col">
-		<p class="text-lg font-medium">{displayName}</p>
-    {#if hideEmail === false}
-      <p class="text-sm font-normal">{email}</p>
+		<p class="text-lg font-medium">{userStore.displayName}</p>
+    {#if userStore.hideEmail === false}
+      <p class="text-sm font-normal">{userStore.email}</p>
     {/if}
 	</div>
 </DropdownMenuLabel>

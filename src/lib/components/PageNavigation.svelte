@@ -1,14 +1,14 @@
 <script lang="ts">
-	import PageUserMenu from '$lib/components/PageUserMenu.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import IconFoots from './svg/IconFoots.svelte';
+	import { userStore } from '$lib/stores/userStore.svelte';
 
-	const { id, displayName, email, hideEmail } = $props();
+	import PageUserMenu from '$lib/components/PageUserMenu.svelte';
+	import IconFoots from './svg/IconFoots.svelte';
 </script>
 
 <nav class="flex h-[96px] items-center justify-between border-b border-white/15 md:px-8">
 	<a
-		href={id ? '/dashboard' : '/'}
+		href={userStore.id ? '/dashboard' : '/'}
 		data-sveltekit-reload
 		class="flex flex-shrink-0 cursor-pointer items-center hover:no-underline"
 	>
@@ -28,16 +28,16 @@
 		</div>
 		<span class="ml-2 rounded-full bg-gray-200 px-2 py-1 text-xs text-gray-700">ALPHA</span>
 	</a>
-	{#if id}
+	{#if userStore.id}
 		<div class="flex items-center gap-2 text-white">
 			<Button variant="link" href="/dashboard" data-sveltekit-reload class="text-white"
 				>Dashboard</Button
 			>
 			<div class="hidden sm:block">
-				<PageUserMenu {id} {displayName} {email} {hideEmail} />
+        <PageUserMenu />
 			</div>
 			<div class="sm:hidden">
-				<PageUserMenu {id} {displayName} {email} {hideEmail} isMobile={true} />
+        <PageUserMenu isMobile={true} />
 			</div>
 		</div>
 	{:else}

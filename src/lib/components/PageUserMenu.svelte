@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
+  import { userStore } from '$lib/stores/userStore.svelte';
 	import {
 		DropdownMenu,
 		DropdownMenuContent,
@@ -13,7 +14,7 @@
 	import IconMenu from '$lib/components/svg/IconMenu.svelte';
 	import IconSettings from '$lib/components/svg/IconSettings.svelte';
 
-	const { id, email, displayName, hideEmail, isMobile = false } = $props();
+  const { isMobile = false } = $props();
 </script>
 
 <DropdownMenu>
@@ -27,16 +28,12 @@
 		</Button>
 	</DropdownMenuTrigger>
 	<DropdownMenuContent align="end" class="p-2">
-		<PageUserMenuContent {displayName} {hideEmail} {email} />
+		<PageUserMenuContent />
 	</DropdownMenuContent>
 </DropdownMenu>
 
-{#if id}
-	<PageAccountSettings
-		currentDisplayName={displayName}
-		currentHideEmail={hideEmail}
-		userId={id}
-	/>
+{#if userStore.id}
+  <PageAccountSettings />
 {/if}
 
 <PageUserMenuDialog />
