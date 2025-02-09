@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { defaultStrokeColor, defaultAdditionalClass } from "./defaults";
+  import { defaultAdditionalClass, defaultStrokeColor } from "./defaults";
 
   export let strokeColor: string = defaultStrokeColor;
   export let additionalClass: string = defaultAdditionalClass;
@@ -12,7 +12,7 @@
 	viewBox="0 0 24 24"
 	fill="none"
 	stroke={strokeColor}
-	stroke-width="2"
+	stroke-width="1"
 	stroke-linecap="round"
 	stroke-linejoin="round"
 	class="icon icon-tabler icons-tabler-outline icon-tabler-ghost-2 {additionalClass}"

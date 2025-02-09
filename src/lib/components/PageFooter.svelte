@@ -1,7 +1,3 @@
-<script lang="ts">
-  import IconGithubBrand from '$lib/components/svg/IconGithubBrand.svelte';
-</script>
-
 <footer class="flex h-[64px] items-center justify-center text-white mb-8 md:mb-0 md:px-8">
   <div class="flex flex-1 flex-col justify-between gap-3 text-sm md:flex-row md:items-center md:gap-0">
     <p class="order-3 md:order-1">© 2025 Maciej Spiechowicz. All rights reserved.</p>
@@ -20,9 +16,6 @@
         rel="noopener noreferrer"
         class="flex items-center gap-2 hover:opacity-80"
       >
-        <div class="flex h-7 w-7 items-center justify-center rounded-full bg-white">
-          <IconGithubBrand strokeColor="black" additionalClass="w-4 h-4" />
-        </div>
         <span>GitHub</span>
       </a>
     </div>
