@@ -20,23 +20,22 @@
 
 	let inputDisplayName = $state(currentDisplayName);
 
-	function checkIfDisplayNameIsNotEmpty() {
-		if (!inputDisplayName.trim()) {
+	async function handleSave() {
+    if (!inputDisplayName.trim()) {
 			toast.error('Invalid name', {
 				description: 'Display name cannot be empty.'
 			});
 			return;
 		}
-	}
 
-	async function handleSave() {
-		checkIfDisplayNameIsNotEmpty();
+		const result = await fetch(`/api/v1/profiles/update?displayName=${inputDisplayName.trim()}`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
 
-		//const result = await updateAccountSettingsDisplayName(userId, inputDisplayName.trim());
-
-		const result = true;
-
-		if (result) {
+		if (result.ok) {
 			toast.success('Settings updated', {
 				description: 'Your display name has been updated successfully.'
 			});

@@ -29,6 +29,13 @@
       "when": 1739113771194,
       "tag": "0003_high_rhino",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1739117375830,
+      "tag": "0004_warm_shaman",
+      "breakpoints": true
     }
   ]
 }
