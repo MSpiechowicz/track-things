@@ -1,6 +1,7 @@
 <script lang="ts">
 	import PageUserMenu from '$lib/components/PageUserMenu.svelte';
 	import { Button } from '$lib/components/ui/button';
+	import IconFoots from './svg/IconFoots.svelte';
 
 	const { id, displayName, email, name } = $props();
 </script>
@@ -13,24 +14,16 @@
 	>
 		<div class="flex text-3xl font-bold sm:hidden">
 			<span class="text-white">t</span>
-			<img
-				src="https://550azscrsk.ufs.sh/f/5uPOqSj68BeJOovyMb4dm9u4r1nX7PQVMvkYiSZTRCFLb8jx"
-				alt="Logo foots"
-				width={12}
-				height={12}
-				class="h-auto w-auto"
-			/>
+      <div class="flex justify-center items-center">
+        <IconFoots />
+      </div>
 			<span class="text-blue-600">t</span>
 		</div>
 		<div class="hidden text-3xl font-bold sm:flex">
 			<span class="text-white">track</span>
-			<img
-				src="https://550azscrsk.ufs.sh/f/5uPOqSj68BeJOovyMb4dm9u4r1nX7PQVMvkYiSZTRCFLb8jx"
-				alt="Logo"
-				width={12}
-				height={12}
-				class="h-auto w-auto"
-			/>
+      <div class="flex justify-center items-center">
+        <IconFoots additionalClass="h-auto w-auto" />
+      </div>
 			<span class="text-blue-600">things</span>
 		</div>
 		<span class="ml-2 rounded-full bg-gray-200 px-2 py-1 text-xs text-gray-700">ALPHA</span>

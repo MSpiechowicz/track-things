@@ -67,6 +67,7 @@
 					on:change={(e: Event) => (inputDisplayName = (e.target as HTMLInputElement).value)}
 					placeholder="Enter your display name"
 					class="text-lg"
+					autofocus={false}
 				/>
 			</div>
 		</div>
