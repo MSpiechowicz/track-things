@@ -63,7 +63,7 @@
 				<Input
 					id={uniqueId}
 					value={inputDisplayName}
-					on:change={(e: Event) => (inputDisplayName = (e.target as HTMLInputElement).value)}
+					on:input={(e: Event) => (inputDisplayName = (e.target as HTMLInputElement).value)}
 					placeholder="Enter your display name"
 					class="text-lg"
 					autofocus={false}
