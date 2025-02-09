@@ -36,6 +36,13 @@
       "when": 1739117375830,
       "tag": "0004_warm_shaman",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1739135540520,
+      "tag": "0005_lazy_mandroid",
+      "breakpoints": true
     }
   ]
 }

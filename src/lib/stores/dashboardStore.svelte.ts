@@ -1,5 +1,9 @@
 import { DASHBOARD_VIEWS } from "$lib/constants";
 
-export const dashboardStore = $state({
+interface DashboardStore {
+  currentView: typeof DASHBOARD_VIEWS[keyof typeof DASHBOARD_VIEWS];
+}
+
+export const dashboardStore = $state<DashboardStore>({
   currentView: DASHBOARD_VIEWS.PROJECTS,
 });

@@ -6,13 +6,13 @@ export const profilesTable = pgTable('profiles', {
 	email: text('email').notNull(),
 	avatarUrl: text('avatar_url').notNull(),
 	createdAt: timestamp('created_at').notNull().defaultNow(),
-	updatedAt: timestamp('updated_at').notNull().defaultNow()
+	updatedAt: timestamp('updated_at').notNull().defaultNow(),
 }).enableRLS();
 
 export const profileSettingsTable = pgTable('profile_settings', {
 	id: uuid('id').primaryKey().defaultRandom(),
 	profileId: uuid('profile_id')
-		.references(() => profilesTable.id)
+		.references(() => profilesTable.id, { onDelete: 'cascade' })
 		.notNull(),
 	displayName: text('display_name'),
 	hideEmail: boolean('hide_email').default(false),

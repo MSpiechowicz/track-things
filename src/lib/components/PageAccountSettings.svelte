@@ -11,9 +11,11 @@
 	} from '$lib/components/ui/dialog';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
-	import { toast } from 'svelte-sonner';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { userStore } from '$lib/stores/userStore.svelte';
+	import { toast } from 'svelte-sonner';
+
+	import PageDeleteAccount from '$lib/components/PageDeleteAccount.svelte';
 
 	const uniqueId = `displayName-${userStore.id}-${crypto.randomUUID()}`;
 
@@ -48,7 +50,10 @@
 	}
 </script>
 
-<Dialog open={dialogStore.showAccountSettings} onOpenChange={() => (dialogStore.showAccountSettings = false)}>
+<Dialog
+	open={dialogStore.showAccountSettings}
+	onOpenChange={() => (dialogStore.showAccountSettings = false)}
+>
 	<DialogContent class="w-[325px] rounded-xl border sm:w-full">
 		<DialogHeader>
 			<DialogTitle class="text-xl">Account Settings</DialogTitle>
@@ -62,7 +67,8 @@
 				<Input
 					id={uniqueId}
 					value={userStore.displayName}
-					on:input={(e: Event) => (userStore.displayName = (e.target as HTMLInputElement).value.trim())}
+					on:input={(e: Event) =>
+						(userStore.displayName = (e.target as HTMLInputElement).value.trim())}
 					placeholder="Enter your display name"
 					class="text-lg"
 					autofocus={false}
@@ -83,9 +89,24 @@
 				Hide email from public profile
 			</Label>
 		</div>
-		<DialogFooter class="mt-2 flex flex-col gap-3 sm:flex-row sm:gap-2">
-			<Button variant="outline" onclick={() => (dialogStore.showAccountSettings = false)}>Cancel</Button>
+		<div class="mt-4 border-t pt-2">
+			<span
+				>You can <Button
+					variant="link"
+					onclick={() => (dialogStore.showDeleteAccount = true)}
+					class="cursor-pointer p-0 font-bold"
+				>
+					delete your account
+				</Button> and all of its associated data at any given time. Please note that this action is irreversible.</span
+			>
+		</div>
+		<DialogFooter class="mt-4 flex flex-col gap-3 sm:flex-row sm:gap-2">
+			<Button variant="outline" onclick={() => (dialogStore.showAccountSettings = false)}
+				>Cancel</Button
+			>
 			<Button onclick={handleSave} disabled={!userStore.displayName}>Save changes</Button>
 		</DialogFooter>
 	</DialogContent>
 </Dialog>
+
+<PageDeleteAccount />

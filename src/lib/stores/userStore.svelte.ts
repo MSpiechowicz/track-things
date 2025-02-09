@@ -4,6 +4,7 @@ interface UserStore {
   email: string | undefined;
   displayName: string | undefined;
   hideEmail: boolean | undefined;
+  clearData: () => void;
 }
 
 export const userStore = $state<UserStore>({
@@ -12,4 +13,11 @@ export const userStore = $state<UserStore>({
   email: undefined,
   displayName: undefined,
   hideEmail: false,
+  clearData: () => {
+    userStore.id = undefined;
+    userStore.name = undefined;
+    userStore.email = undefined;
+    userStore.displayName = undefined;
+    userStore.hideEmail = false;
+  }
 });
