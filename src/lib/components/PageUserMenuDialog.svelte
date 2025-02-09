@@ -8,10 +8,10 @@
 		DialogHeader,
 		DialogTitle
 	} from '$lib/components/ui/dialog';
-	import { dialog } from '$lib/stores/dialogStore.svelte';
+	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 </script>
 
-<Dialog open={dialog.showLogout} onOpenChange={() => (dialog.showLogout = false)}>
+<Dialog open={dialogStore.showLogout} onOpenChange={() => (dialogStore.showLogout = false)}>
 	<DialogContent class="w-[325px] rounded-xl border sm:w-full">
 		<DialogHeader>
 			<DialogTitle class="text-xl">Sign Out</DialogTitle>
@@ -20,7 +20,7 @@
 			</DialogDescription>
 		</DialogHeader>
 		<DialogFooter class="mt-4 flex flex-col gap-3 sm:flex-row sm:gap-2">
-			<Button variant="outline" onclick={() => (dialog.showLogout = false)}>Cancel</Button>
+			<Button variant="outline" onclick={() => (dialogStore.showLogout = false)}>Cancel</Button>
 			<Button variant="destructive" href="/auth/logout">Sign Out</Button>
 		</DialogFooter>
 	</DialogContent>

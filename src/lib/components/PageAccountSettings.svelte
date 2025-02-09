@@ -12,7 +12,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import { toast } from 'svelte-sonner';
-	import { dialog } from '$lib/stores/dialogStore.svelte';
+	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { userStore } from '$lib/stores/userStore.svelte';
 
 	const uniqueId = `displayName-${userStore.id}-${crypto.randomUUID()}`;
@@ -39,7 +39,7 @@
 			toast.success('Settings updated', {
 				description: 'Your display name has been updated successfully.'
 			});
-			dialog.showAccountSettings = false;
+			dialogStore.showAccountSettings = false;
 		} else {
 			toast.error('Error', {
 				description: 'Failed to update display name. Please try again.'
@@ -48,7 +48,7 @@
 	}
 </script>
 
-<Dialog open={dialog.showAccountSettings} onOpenChange={() => (dialog.showAccountSettings = false)}>
+<Dialog open={dialogStore.showAccountSettings} onOpenChange={() => (dialogStore.showAccountSettings = false)}>
 	<DialogContent class="w-[325px] rounded-xl border sm:w-full">
 		<DialogHeader>
 			<DialogTitle class="text-xl">Account Settings</DialogTitle>
@@ -84,7 +84,7 @@
 			</Label>
 		</div>
 		<DialogFooter class="mt-2 flex flex-col gap-3 sm:flex-row sm:gap-2">
-			<Button variant="outline" onclick={() => (dialog.showAccountSettings = false)}>Cancel</Button>
+			<Button variant="outline" onclick={() => (dialogStore.showAccountSettings = false)}>Cancel</Button>
 			<Button onclick={handleSave} disabled={!userStore.displayName}>Save changes</Button>
 		</DialogFooter>
 	</DialogContent>

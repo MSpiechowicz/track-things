@@ -1,3 +1,3 @@
-export const dropdownMenu = $state({
+export const dropdownMenuStore = $state({
   showUserMenu: false,
 });

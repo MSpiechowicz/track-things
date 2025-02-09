@@ -4,7 +4,7 @@
 		DropdownMenuLabel,
 		DropdownMenuSeparator
 	} from '$lib/components/ui/dropdown-menu';
-	import { dialog } from '$lib/stores/dialogStore.svelte';
+	import { dialogStore } from '$lib/stores/dialogStore.svelte';
   import { userStore } from '$lib/stores/userStore.svelte';
 
 	import IconUserConfig from '$lib/components/svg/IconUserConfig.svelte';
@@ -24,14 +24,14 @@
 
 <div class="flex flex-col gap-1">
 	<DropdownMenuItem
-		onclick={() => (dialog.showAccountSettings = true)}
+		onclick={() => (dialogStore.showAccountSettings = true)}
 		class="flex items-center gap-2 text-base"
 	>
 		<IconUserConfig additionalClass="w-5 h-5" strokeColor="black" />
 		Account Settings
 	</DropdownMenuItem>
 	<DropdownMenuItem
-		onclick={() => (dialog.showLogout = true)}
+		onclick={() => (dialogStore.showLogout = true)}
 		class="flex items-center gap-2 text-base"
 	>
 		<IconUserSignOut additionalClass="w-5 h-5" strokeColor="black" />

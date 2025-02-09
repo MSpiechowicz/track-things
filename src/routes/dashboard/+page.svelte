@@ -5,7 +5,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { DASHBOARD_VIEWS } from '$lib/constants';
 	import { dashboardStore } from '$lib/stores/dashboardStore.svelte';
-	import { timer } from '$lib/stores/timerStore.svelte';
+	import { timer } from '$lib/utils/timer.svelte.js';
 
 	const { data } = $props();
 	const { userProfile } = $derived(data);
