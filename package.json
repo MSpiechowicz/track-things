@@ -16,6 +16,8 @@
     "test": "npm run test:unit -- --run",
     "db:generate": "drizzle-kit generate",
     "supabase:reset": "supabase db reset",
+    "supabase:stop": "supabase stop",
+    "supabase:start": "supabase start",
     "supabase:status": "supabase status"
   },
   "devDependencies": {
