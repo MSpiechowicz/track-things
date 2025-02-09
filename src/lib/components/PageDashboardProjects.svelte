@@ -1,12 +1,11 @@
 <script lang="ts">
   import { Button } from '$lib/components/ui/button';
+  import { DASHBOARD_VIEWS } from "$lib/constants";
   import DashboardContainer from "./PageDashboardContainer.svelte";
   import Ghost from "./svg/IconGhost2.svelte";
-
-  const { title } = $props();
 </script>
 
-<DashboardContainer title={title}>
+<DashboardContainer title={DASHBOARD_VIEWS.PROJECTS}>
   <div class="mt-24 flex flex-1 flex-col items-center gap-4 text-center">
     <Ghost additionalClass="!h-24 !w-24" />
     <div class="space-y-2">
