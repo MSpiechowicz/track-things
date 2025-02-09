@@ -5,7 +5,7 @@
 		DropdownMenuSeparator
 	} from '$lib/components/ui/dropdown-menu';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
-  import { userStore } from '$lib/stores/userStore.svelte';
+	import { userStore } from '$lib/stores/userStore.svelte';
 
 	import IconUserConfig from '$lib/components/svg/IconUserConfig.svelte';
 	import IconUserSignOut from '$lib/components/svg/IconUserSignOut.svelte';
@@ -13,10 +13,8 @@
 
 <DropdownMenuLabel>
 	<div class="flex flex-col">
-		<p class="text-lg font-medium">{userStore.displayName}</p>
-    {#if userStore.hideEmail === false}
-      <p class="text-sm font-normal">{userStore.email}</p>
-    {/if}
+		<p class="text-lg font-bold">{userStore.displayName}</p>
+		<p class="text-sm font-normal">{userStore.email}</p>
 	</div>
 </DropdownMenuLabel>
 
@@ -32,7 +30,7 @@
 	</DropdownMenuItem>
 	<DropdownMenuItem
 		onclick={() => (dialogStore.showLogout = true)}
-		class="flex items-center gap-2 text-base"
+		class="flex items-center gap-2 text-base mb-1"
 	>
 		<IconUserSignOut additionalClass="w-5 h-5" strokeColor="black" />
 		Sign Out
