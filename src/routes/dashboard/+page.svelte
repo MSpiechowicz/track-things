@@ -44,7 +44,6 @@
 				class="text-white"
 				onclick={() => (dashboardStore.currentView = DASHBOARD_VIEWS.PROJECTS)}
 			>
-				<!--<FolderKanban class="!h-5 !w-5" />-->
 				<span class="text-lg font-medium">{DASHBOARD_VIEWS.PROJECTS}</span>
 			</Button>
 		</div>

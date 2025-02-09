@@ -7,8 +7,10 @@ class Timer {
     this.progress += Math.min(Math.max(value, 0), 100);
 
     if (this.progress >= 100) {
-      this.isFinished = true;
-      this.isNotFinished = false;
+      setTimeout(() => {
+        this.isFinished = true;
+        this.isNotFinished = false;
+      }, 100);
     }
   }
 

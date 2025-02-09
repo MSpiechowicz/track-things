@@ -26,8 +26,8 @@
 </script>
 
 <div class="flex h-full w-full items-center justify-center">
-  <div class="w-[60%] max-w-md">
-    <Progress value={timer.progress} />
+  <div class="min-w-[200px] max-w-md">
+    <Progress value={Math.round(timer.progress)} />
     <div class="mt-1 flex items-center justify-between">
       <p class="text-sm text-gray-400">Loading...</p>
       <p class="text-sm text-gray-400">{timer.progress.toFixed(0)}%</p>
