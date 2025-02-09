@@ -18,7 +18,8 @@
     "supabase:reset": "supabase db reset",
     "supabase:stop": "supabase stop",
     "supabase:start": "supabase start",
-    "supabase:status": "supabase status"
+    "supabase:status": "supabase status",
+    "supabase:studio": "open http://127.0.0.1:54323"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.6",
