@@ -1,6 +1,6 @@
 import { db } from "$lib/db";
 import { eq } from "drizzle-orm";
-import { profilesTable } from "../db/schema";
+import { profileSettingsTable, profilesTable } from "../db/schema";
 
 export const getOrCreateUserProfile = async (locals: App.Locals) => {
   const { user } = await locals.safeGetUser();
@@ -13,8 +13,16 @@ export const getOrCreateUserProfile = async (locals: App.Locals) => {
     where: eq(profilesTable.id, user.id),
   });
 
+  const currentProfileSettings = await db.query.profileSettingsTable.findFirst({
+    where: eq(profileSettingsTable.profileId, user.id),
+  });
+
   if (currentProfile) {
-    return currentProfile;
+    return {
+      ...currentProfile,
+      displayName: currentProfileSettings?.displayName || currentProfile.name,
+      hideEmail: currentProfileSettings?.hideEmail || false,
+    };
   }
 
   await db.insert(profilesTable).values({
@@ -30,5 +38,9 @@ export const getOrCreateUserProfile = async (locals: App.Locals) => {
     where: eq(profilesTable.id, user.id),
   });
 
-  return newProfile;
+  return {
+    ...newProfile,
+    displayName: newProfile?.name,
+    hideEmail: false,
+  };
 }

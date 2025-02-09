@@ -9,13 +9,15 @@
 	import IconUserConfig from '$lib/components/svg/IconUserConfig.svelte';
 	import IconUserSignOut from '$lib/components/svg/IconUserSignOut.svelte';
 
-	const { name, email } = $props();
+	const { displayName, hideEmail, email } = $props();
 </script>
 
 <DropdownMenuLabel>
 	<div class="flex flex-col">
-		<p class="text-lg font-medium">{name}</p>
-		<p class="text-sm font-normal">{email}</p>
+		<p class="text-lg font-medium">{displayName}</p>
+    {#if hideEmail === false}
+      <p class="text-sm font-normal">{email}</p>
+    {/if}
 	</div>
 </DropdownMenuLabel>
 

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
+	import { Checkbox } from '$lib/components/ui/checkbox';
 	import {
 		Dialog,
 		DialogContent,
@@ -11,29 +12,32 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import { toast } from 'svelte-sonner';
-
 	import { dialog } from '$lib/stores/dialogStore.svelte';
 
-	const { userId, currentDisplayName } = $props();
+	const { userId, currentDisplayName, currentHideEmail } = $props();
 
 	const uniqueId = `displayName-${userId}-${crypto.randomUUID()}`;
 
 	let inputDisplayName = $state(currentDisplayName);
+	let checkboxHideEmail = $state(currentHideEmail);
 
 	async function handleSave() {
-    if (!inputDisplayName.trim()) {
+		if (!inputDisplayName.trim()) {
 			toast.error('Invalid name', {
 				description: 'Display name cannot be empty.'
 			});
 			return;
 		}
 
-		const result = await fetch(`/api/v1/profiles/update?displayName=${inputDisplayName.trim()}`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
+		const result = await fetch(
+			`/api/v1/profiles/update?displayName=${inputDisplayName.trim()}&hideEmail=${checkboxHideEmail}`,
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				}
 			}
-		});
+		);
 
 		if (result.ok) {
 			toast.success('Settings updated', {
@@ -41,6 +45,7 @@
 			});
 			dialog.showAccountSettings = false;
 			inputDisplayName = inputDisplayName.trim();
+			checkboxHideEmail = checkboxHideEmail;
 		} else {
 			toast.error('Error', {
 				description: 'Failed to update display name. Please try again.'
@@ -69,6 +74,20 @@
 					autofocus={false}
 				/>
 			</div>
+		</div>
+		<div class="flex items-center space-x-2">
+			<Checkbox
+				id="hide-email"
+				checked={checkboxHideEmail}
+				onCheckedChange={(checked: boolean | 'indeterminate') =>
+					(checkboxHideEmail = checked === true)}
+			/>
+			<Label
+				for="hide-email"
+				class="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+			>
+				Hide email from public profile
+			</Label>
 		</div>
 		<DialogFooter class="mt-2 flex flex-col gap-3 sm:flex-row sm:gap-2">
 			<Button variant="outline" onclick={() => (dialog.showAccountSettings = false)}>Cancel</Button>

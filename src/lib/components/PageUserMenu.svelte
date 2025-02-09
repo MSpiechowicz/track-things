@@ -13,7 +13,7 @@
 	import IconMenu from '$lib/components/svg/IconMenu.svelte';
 	import IconSettings from '$lib/components/svg/IconSettings.svelte';
 
-	const { id, name, email, displayName, isMobile = false } = $props();
+	const { id, email, displayName, hideEmail, isMobile = false } = $props();
 </script>
 
 <DropdownMenu>
@@ -27,13 +27,14 @@
 		</Button>
 	</DropdownMenuTrigger>
 	<DropdownMenuContent align="end" class="p-2">
-		<PageUserMenuContent {name} {email} />
+		<PageUserMenuContent {displayName} {hideEmail} {email} />
 	</DropdownMenuContent>
 </DropdownMenu>
 
 {#if id}
 	<PageAccountSettings
 		currentDisplayName={displayName}
+		currentHideEmail={hideEmail}
 		userId={id}
 	/>
 {/if}

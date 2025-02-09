@@ -3,7 +3,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import IconFoots from './svg/IconFoots.svelte';
 
-	const { id, displayName, email, name } = $props();
+	const { id, displayName, email, hideEmail } = $props();
 </script>
 
 <nav class="flex h-[96px] items-center justify-between border-b border-white/15 md:px-8">
@@ -34,10 +34,10 @@
 				>Dashboard</Button
 			>
 			<div class="hidden sm:block">
-				<PageUserMenu {id} {displayName} {email} {name} />
+				<PageUserMenu {id} {displayName} {email} {hideEmail} />
 			</div>
 			<div class="sm:hidden">
-				<PageUserMenu {id} {displayName} {email} {name} isMobile={true} />
+				<PageUserMenu {id} {displayName} {email} {hideEmail} isMobile={true} />
 			</div>
 		</div>
 	{:else}

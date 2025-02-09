@@ -24,7 +24,7 @@
 				}
 			}
 		});
-
+    console.log('userProfile', userProfile);
 		return () => data.subscription.unsubscribe();
 	});
 </script>
@@ -34,9 +34,9 @@
 <div class="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 xl:px-0">
 	<PageNavigation
 		id={userProfile?.id}
-		displayName={userProfile?.name}
+		displayName={userProfile?.displayName}
 		email={userProfile?.email}
-		name={userProfile?.name}
+		hideEmail={userProfile?.hideEmail}
 	/>
 	<main class="flex flex-1 flex-col items-center justify-center py-8 text-white md:px-8">
 		<PageTransition pathname={page.url.pathname}>
