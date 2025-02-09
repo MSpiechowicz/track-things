@@ -9,7 +9,7 @@
 	import '../app.css';
 
 	const { data, children } = $props();
-	const { supabase, session, userProfile } = $derived(data);
+	const { supabase, userProfile } = $derived(data);
 
 	$effect(() => {
 		const { data } = supabase.auth.onAuthStateChange(async (event) => {
@@ -18,7 +18,8 @@
 				const {
 					data: { user }
 				} = await supabase.auth.getUser();
-				if (user?.id !== session?.user?.id) {
+
+				if (user?.id !== userProfile?.id || !userProfile || !user) {
 					invalidate('supabase:auth');
 				}
 			}

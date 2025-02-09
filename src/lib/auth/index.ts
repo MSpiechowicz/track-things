@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { profilesTable } from "../db/schema";
 
 export const getOrCreateUserProfile = async (locals: App.Locals) => {
-  const { user } = await locals.safeGetSession();
+  const { user } = await locals.safeGetUser();
 
   if (!user) {
     return;

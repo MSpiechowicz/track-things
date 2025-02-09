@@ -2,13 +2,12 @@ import { getOrCreateUserProfile } from '$lib/auth';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ locals, cookies }) => {
-	const { session } = await locals.safeGetSession();
+	const { user } = await locals.safeGetUser();
 
 	// Only get profile if we have a valid session
-	const userProfile = session?.user ? await getOrCreateUserProfile(locals) : null;
+	const userProfile = user ? await getOrCreateUserProfile(locals) : null;
 
 	return {
-		session,
 		userProfile,
 		cookies: cookies.getAll()
 	};
