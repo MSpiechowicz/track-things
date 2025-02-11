@@ -15,11 +15,14 @@
     "test:unit": "vitest",
     "test": "npm run test:unit -- --run",
     "db:generate": "drizzle-kit generate",
+    "supabase:login": "supabase login",
+    "supabase:logout": "supabase logout",
     "supabase:reset": "supabase db reset",
     "supabase:stop": "supabase stop",
     "supabase:start": "supabase start",
     "supabase:status": "supabase status",
-    "supabase:studio": "open http://127.0.0.1:54323"
+    "supabase:studio": "open http://127.0.0.1:54323",
+    "supabase:functions:serve": "supabase functions serve user-self-deletion"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.6",

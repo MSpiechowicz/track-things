@@ -6,9 +6,10 @@ export const POST = async ({ locals }) => {
 	}
 
 	try {
-		// TODO: delete user with the admin api without exposing the SUPABASE_SERVICE_ROLE_KEY
-		//const { error: authError } = await locals.supabase.auth.admin.deleteUser(user.id);
-		//if (authError) throw authError;
+		// TODO: check against example https://blog.mansueli.com/supabase-user-self-deletion-empower-users-with-edge-functions
+		const { error: deleteError } = await locals.supabase.functions.invoke('user-self-deletion');
+
+		if (deleteError) throw deleteError;
 
 		const { error: profileError } = await locals.supabase
 			.from('profiles')
