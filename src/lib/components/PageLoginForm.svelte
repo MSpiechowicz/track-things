@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { Button } from '$lib/components/ui/button';
+
 	import IconGithubBrand from '$lib/components/svg/IconGithubBrand.svelte';
 	import IconMail from '$lib/components/svg/IconMail.svelte';
-	import { Button } from '$lib/components/ui/button';
 
 	const socialLogins = [
 		{
@@ -21,7 +22,7 @@
 <div class="flex flex-col space-y-6">
 	<div class="flex flex-col space-y-3">
 		{#each socialLogins as { icon: Icon, text, href }}
-			<Button variant="outline" class="h-11 w-full font-normal" onclick={async () => goto(href)}>
+			<Button variant="outline" class="h-11 w-full font-normal" href={href} data-sveltekit-reload>
 				<div class="bg-custom-dark mr-1 flex h-7 w-7 items-center justify-center rounded-full">
 					<svelte:component this={Icon} />
 				</div>
