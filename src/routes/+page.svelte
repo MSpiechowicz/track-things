@@ -7,7 +7,7 @@
   const { userProfile } = $derived(data);
 </script>
 
-<div class="flex h-full w-full flex-1 flex-col items-center justify-center gap-12 md:flex-row md:justify-between">
+<div class="flex flex-1 flex-col items-center justify-center gap-12 md:flex-row md:justify-between">
   <div class="flex max-w-2xl flex-col gap-6">
     <h1 class="flex flex-col text-4xl font-bold md:text-5xl lg:text-6xl">
       <span>Effortless Tracking</span>
