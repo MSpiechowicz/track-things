@@ -3,6 +3,6 @@
 </script>
 
 <div class="mt-2 flex flex-1 flex-col">
-  <h2 class="text-2xl font-medium">{title}</h2>
+  <h2 class="text-2xl font-bold">{title}</h2>
   {@render children()}
 </div>

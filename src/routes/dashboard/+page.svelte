@@ -26,7 +26,7 @@
 {/if}
 
 {#if timer.isFinished}
-	<div class="flex h-full w-full gap-8">
+	<div class="flex flex-1 gap-8">
 		<div class="w-[20%] min-w-[250px]">
 			<div class="flex flex-col items-start gap-1">
 				{#each [{ view: DASHBOARD_VIEWS.PROJECTS, icon: IconDataBricks }, { view: DASHBOARD_VIEWS.TEAM_SETTINGS, icon: IconUserGroup }] as { view, icon: Icon }}
