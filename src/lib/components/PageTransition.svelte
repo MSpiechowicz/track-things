@@ -8,7 +8,7 @@
 {#key pathname}
 	<div
 		in:fade={{ duration: 150, delay: 0 }}
-    class="flex flex-1 items-center"
+    class="flex flex-1 w-full h-full"
 	>
 		{@render children()}
 	</div>

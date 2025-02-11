@@ -1,3 +1,4 @@
 export const DASHBOARD_VIEWS = {
-  PROJECTS: "projects",
+  PROJECTS: "Projects",
+  TEAM_SETTINGS: "Team Settings",
 } as const;
