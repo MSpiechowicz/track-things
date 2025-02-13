@@ -2,7 +2,7 @@ CREATE TABLE "project_collaborators" (
   "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   "project_id" uuid NOT NULL,
   "profile_id" uuid NOT NULL,
-  "email" text NOT NULL,
+  "emails" text[] NOT NULL,
   "created_at" timestamp DEFAULT now() NOT NULL,
   "updated_at" timestamp DEFAULT now() NOT NULL
 );
