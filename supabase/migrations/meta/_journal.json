@@ -43,6 +43,13 @@
       "when": 1739135540520,
       "tag": "0005_lazy_mandroid",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1739436752074,
+      "tag": "0006_naive_rocket_racer",
+      "breakpoints": true
     }
   ]
 }
