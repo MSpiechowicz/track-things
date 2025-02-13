@@ -1,4 +1,4 @@
-import { boolean, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
+import { boolean, date, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 
 export const profilesTable = pgTable('profiles', {
 	id: uuid('id').primaryKey(),
@@ -6,7 +6,7 @@ export const profilesTable = pgTable('profiles', {
 	email: text('email').notNull(),
 	avatarUrl: text('avatar_url').notNull(),
 	createdAt: timestamp('created_at').notNull().defaultNow(),
-	updatedAt: timestamp('updated_at').notNull().defaultNow(),
+	updatedAt: timestamp('updated_at').notNull().defaultNow()
 }).enableRLS();
 
 export const profileSettingsTable = pgTable('profile_settings', {
@@ -52,6 +52,21 @@ export const projectCollaboratorsTable = pgTable('project_collaborators', {
 		.references(() => profilesTable.id, { onDelete: 'cascade' })
 		.notNull(),
 	email: text('email').notNull(),
+	createdAt: timestamp('created_at').notNull().defaultNow(),
+	updatedAt: timestamp('updated_at').notNull().defaultNow()
+}).enableRLS();
+
+export const projectCalendarEventsTable = pgTable('project_calendar_events', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	projectId: uuid('project_id')
+		.references(() => projectsTable.id, { onDelete: 'cascade' })
+		.notNull(),
+	eventName: text('event_name').notNull(),
+	eventType: text('event_type').notNull(),
+	eventColor: text('event_color').notNull(),
+	eventDescription: text('event_description'),
+	startDate: date('start_date').notNull(),
+	endDate: date('end_date').notNull(),
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	updatedAt: timestamp('updated_at').notNull().defaultNow()
 }).enableRLS();
