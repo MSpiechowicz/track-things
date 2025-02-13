@@ -1,0 +1,1 @@
+ALTER TABLE "team_settings" ALTER COLUMN "project_ids" DROP NOT NULL;

@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { FormControl, FormField, FormFieldErrors } from '$lib/components/ui/form';
+	import { FormControl, FormField, FormFieldErrors, FormLabel } from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
+	import { teamStore } from '$lib/stores/teamStore.svelte';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { z } from 'zod';
 
 	const schema = z.object({
-		name: z.string().min(3, 'Team name is required, and must be at least 3 characters long')
+		name: z.string().min(3, 'This field is required, and must be at least 3 characters long')
 	});
 
 	const form = superForm(
@@ -19,10 +19,20 @@
 		{
 			validators: zodClient(schema),
 			onResult: async (event) => {
-				console.log(event.result.type);
-			},
-			onError: async (event) => {
-				toast.error(event.result.error.message);
+				switch (event.result.type) {
+					case 'success':
+						teamStore.id = event.result.data?.id;
+
+						toast.success('Success', {
+							description: 'Your team has been created successfully.'
+						});
+						break;
+					case 'error':
+						toast.error('Error', {
+							description: 'We were unable to create your team. Please try again.'
+						});
+						break;
+				}
 			}
 		}
 	);
@@ -38,10 +48,9 @@
 	</p>
 	<form method="POST" action="/api/v1/team-settings/create" class="mt-6 space-y-8" use:enhance>
 		<FormField {form} name="name" let:errors>
-			<FormControl>
-				<Label for="name">Team Name</Label>
+			<FormControl let:attrs>
+				<FormLabel class={errors.length > 0 ? '!text-red-500' : ''}>Team Name</FormLabel>
 				<Input
-					id="name"
 					bind:value={$formData.name}
 					class="text-md mt-1 max-w-sm text-black focus-visible:{errors.length > 0
 						? 'ring-red-500'
@@ -50,6 +59,7 @@
 						: 'ring-2 ring-blue-600'}"
 					placeholder="Enter team name"
 					autocomplete="off"
+					{...attrs}
 				/>
 			</FormControl>
 			<FormFieldErrors class="text-red-500" />

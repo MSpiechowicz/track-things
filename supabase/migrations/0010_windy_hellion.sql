@@ -25,7 +25,8 @@ ADD
   CONSTRAINT "team_members_profile_id_profiles_id_fk" FOREIGN KEY ("profile_id") REFERENCES "public"."profiles"("id") ON DELETE cascade ON UPDATE no action;
 
 --> statement-breakpoint
-ALTER TABLE "team_settings" DROP COLUMN "team_ids";
+ALTER TABLE
+  "team_settings" DROP COLUMN "team_ids";
 
 --> statement-breakpoint
 CREATE POLICY "View team members" ON team_members FOR
@@ -78,18 +79,7 @@ CREATE POLICY "Delete team members" ON team_members FOR DELETE USING (
 --> statement-breakpoint
 CREATE POLICY "View team settings" ON team_settings FOR
 SELECT
-  USING (
-    auth.uid() = profile_id
-    OR EXISTS (
-      SELECT
-        1
-      FROM
-        team_members
-      WHERE
-        team_members.team_id = team_settings.id
-        AND team_members.profile_id = auth.uid()
-    )
-  );
+  USING (auth.uid() = profile_id);
 
 --> statement-breakpoint
 CREATE POLICY "Create team settings" ON team_settings FOR
