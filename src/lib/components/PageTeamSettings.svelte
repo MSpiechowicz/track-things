@@ -20,9 +20,14 @@
 		}
 	}
 
+	let teamSettings = $derived(teamSettingsStore.data);
+
+	$effect.pre(() => {
+		loadTeamSettings();
+	});
+
 	$effect(() => {
 		timer.reset();
-		loadTeamSettings();
 	});
 </script>
 
@@ -32,10 +37,10 @@
 			<PageProgressBar />
 		</div>
 	{/if}
-	{#if timer.isFinished && teamSettingsStore.data.length === 0}
+	{#if timer.isFinished && teamSettings.length === 0}
 		<PageTeamSettingsCreate />
 	{/if}
-	{#if timer.isFinished && teamSettingsStore.data.length > 0}
+	{#if timer.isFinished && teamSettings.length > 0}
 		<PageTeamSettingsList />
 	{/if}
 </DashboardContainer>
