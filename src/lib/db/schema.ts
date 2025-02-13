@@ -31,6 +31,18 @@ export const projectsTable = pgTable('projects', {
 	updatedAt: timestamp('updated_at').notNull().defaultNow()
 }).enableRLS();
 
+export const projectsRecentTable = pgTable('projects_recent', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	profileId: uuid('profile_id')
+		.references(() => profilesTable.id, { onDelete: 'cascade' })
+		.notNull(),
+	projectId: uuid('project_id')
+		.references(() => projectsTable.id, { onDelete: 'cascade' })
+		.notNull(),
+	createdAt: timestamp('created_at').notNull().defaultNow(),
+	updatedAt: timestamp('updated_at').notNull().defaultNow()
+}).enableRLS();
+
 export const projectCollaboratorsTable = pgTable('project_collaborators', {
 	id: uuid('id').primaryKey().defaultRandom(),
 	projectId: uuid('project_id')
