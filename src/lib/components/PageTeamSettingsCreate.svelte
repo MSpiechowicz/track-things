@@ -27,7 +27,7 @@
 							description: 'Your team has been created successfully.'
 						});
 						break;
-					case 'error':
+					case 'failure':
 						toast.error('Error', {
 							description: 'We were unable to create your team. Please try again.'
 						});
@@ -43,10 +43,9 @@
 <div class="max-w-[80ch]">
 	<h2 class="mt-6 text-xl font-medium">Create New Team</h2>
 	<p class="text-sm text-neutral-400">
-		Before you can start using the Team Settings, you need to first create a new team. Please fill
-		out the required fields below.
+		Please fill out the required fields below in order to create a new team.
 	</p>
-	<form method="POST" action="/api/v1/team-settings/create" class="mt-6 space-y-8" use:enhance>
+	<form method="POST" action="/api/v1/team-settings/create" class="mt-6 space-y-8" use:enhance data-sveltekit-reload>
 		<FormField {form} name="name" let:errors>
 			<FormControl let:attrs>
 				<FormLabel class={errors.length > 0 ? '!text-red-500' : ''}>Team Name</FormLabel>

@@ -43,6 +43,20 @@ export const actions: Actions = {
 				});
 			}
 
+			const { data: dataTeamExists } = await locals.supabase
+				.from('team_settings')
+				.select('id')
+				.eq('profile_id', user.id)
+				.eq('name', name)
+				.maybeSingle();
+
+			if (dataTeamExists) {
+				return fail(400, {
+					form,
+					message: 'Team already exists'
+				});
+			}
+
 			const { data, error: teamError } = await locals.supabase
 				.from('team_settings')
 				.insert({
