@@ -70,3 +70,28 @@ export const projectCalendarEventsTable = pgTable('project_calendar_events', {
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	updatedAt: timestamp('updated_at').notNull().defaultNow()
 }).enableRLS();
+
+export const teamSettingsTable = pgTable('team_settings', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	profileId: uuid('profile_id')
+		.references(() => profilesTable.id, { onDelete: 'cascade' })
+		.notNull(),
+	name: text('name').notNull(),
+  projectIds: uuid('project_ids').array().notNull(),
+	createdAt: timestamp('created_at').notNull().defaultNow(),
+	updatedAt: timestamp('updated_at').notNull().defaultNow()
+}).enableRLS();
+
+export const teamMembersTable = pgTable('team_members', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	teamId: uuid('team_id')
+		.references(() => teamSettingsTable.id, { onDelete: 'cascade' })
+		.notNull(),
+	profileId: uuid('profile_id')
+		.references(() => profilesTable.id, { onDelete: 'cascade' })
+		.notNull(),
+	email: text('email').notNull(),
+	joinedAt: timestamp('joined_at').notNull().defaultNow(),
+	createdAt: timestamp('created_at').notNull().defaultNow(),
+	updatedAt: timestamp('updated_at').notNull().defaultNow()
+}).enableRLS();

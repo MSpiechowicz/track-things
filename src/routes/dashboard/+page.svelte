@@ -7,6 +7,7 @@
 
 	import PageDashboardProjects from '$lib/components/PageDashboardProjects.svelte';
 	import PageProgressBar from '$lib/components/PageProgressBar.svelte';
+	import PageTeamSettings from '$lib/components/PageTeamSettings.svelte';
 
 	import IconDataBricks from '$lib/components/svg/IconDataBricks.svelte';
 	import IconUserGroup from '$lib/components/svg/IconUserGroup.svelte';
@@ -44,6 +45,9 @@
 		</div>
 		{#if dashboardStore.currentView === DASHBOARD_VIEWS.PROJECTS}
 			<PageDashboardProjects />
+		{/if}
+		{#if dashboardStore.currentView === DASHBOARD_VIEWS.TEAM_SETTINGS}
+			<PageTeamSettings />
 		{/if}
 	</div>
 {/if}
