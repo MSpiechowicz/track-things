@@ -25,6 +25,9 @@ ADD
   CONSTRAINT "team_members_profile_id_profiles_id_fk" FOREIGN KEY ("profile_id") REFERENCES "public"."profiles"("id") ON DELETE cascade ON UPDATE no action;
 
 --> statement-breakpoint
+ALTER TABLE "team_settings" DROP COLUMN "team_ids";
+
+--> statement-breakpoint
 CREATE POLICY "View team members" ON team_members FOR
 SELECT
   USING (

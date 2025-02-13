@@ -8,6 +8,7 @@
 	import PageDashboardProjects from '$lib/components/PageDashboardProjects.svelte';
 	import PageProgressBar from '$lib/components/PageProgressBar.svelte';
 	import PageTeamSettings from '$lib/components/PageTeamSettings.svelte';
+	import PageTeamSettingsCreate from '$lib/components/PageTeamSettingsCreate.svelte';
 
 	import IconDataBricks from '$lib/components/svg/IconDataBricks.svelte';
 	import IconUserGroup from '$lib/components/svg/IconUserGroup.svelte';
@@ -34,7 +35,7 @@
 					<Button
 						variant="ghost"
 						class={`text-white hover:text-black [&_svg]:stroke-white hover:[&_svg]:stroke-black
-							${dashboardStore.currentView === view ? 'bg-white text-black [&_svg]:stroke-black' : ''}`}
+							${dashboardStore.currentView.startsWith(view) ? 'bg-white text-black [&_svg]:stroke-black' : ''}`}
 						onclick={() => (dashboardStore.currentView = view)}
 					>
 						<Icon additionalClass="h-5 w-5" />
@@ -48,6 +49,9 @@
 		{/if}
 		{#if dashboardStore.currentView === DASHBOARD_VIEWS.TEAM_SETTINGS}
 			<PageTeamSettings />
+		{/if}
+		{#if dashboardStore.currentView === DASHBOARD_VIEWS.TEAM_SETTINGS_CREATE}
+			<PageTeamSettingsCreate />
 		{/if}
 	</div>
 {/if}
