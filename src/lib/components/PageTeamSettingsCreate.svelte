@@ -3,21 +3,16 @@
 	import { FormControl, FormField, FormFieldErrors, FormLabel } from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import { teamStore } from '$lib/stores/teamStore.svelte';
+	import { teamSettingsCreateSchemaValidator } from '$lib/validators/teamSettingsCreateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
-	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { z } from 'zod';
-
-	const schema = z.object({
-		name: z.string().min(3, 'This field is required, and must be at least 3 characters long')
-	});
 
 	const form = superForm(
 		{
 			name: ''
 		},
 		{
-			validators: zodClient(schema),
+			validators: teamSettingsCreateSchemaValidator,
 			onResult: async (event) => {
 				switch (event.result.type) {
 					case 'success':
@@ -45,7 +40,13 @@
 	<p class="text-sm text-neutral-400">
 		Please fill out the required fields below in order to create a new team.
 	</p>
-	<form method="POST" action="/api/v1/team-settings/create" class="mt-6 space-y-8" use:enhance data-sveltekit-reload>
+	<form
+		method="POST"
+		action="/api/v1/team-settings/create"
+		class="mt-6 space-y-8"
+		use:enhance
+		data-sveltekit-reload
+	>
 		<FormField {form} name="name" let:errors>
 			<FormControl let:attrs>
 				<FormLabel class={errors.length > 0 ? '!text-red-500' : ''}>Team Name</FormLabel>

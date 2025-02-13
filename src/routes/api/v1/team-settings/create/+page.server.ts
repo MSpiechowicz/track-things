@@ -1,22 +1,11 @@
+import { teamSettingsCreateSchemaValidator } from '$lib/validators/teamSettingsCreateSchemaValidator';
 import { fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
-import { z } from 'zod';
-import type { Actions, PageServerLoad } from './$types';
-
-const formSchema = z.object({
-	name: z.string().min(3, 'This field is required, and must be at least 3 characters long')
-});
-
-export const load: PageServerLoad = async () => {
-	return {
-		form: await superValidate(zod(formSchema))
-	};
-};
+import type { Actions } from './$types';
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {
-		const form = await superValidate(request, zod(formSchema));
+		const form = await superValidate(request, teamSettingsCreateSchemaValidator);
 
 		if (!form.valid) {
 			return fail(400, {
