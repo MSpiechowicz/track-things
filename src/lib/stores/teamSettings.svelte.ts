@@ -6,4 +6,6 @@ type TeamSetting = {
 
 export const teamSettingsStore = $state({
   data: [] as TeamSetting[],
+  deleteTeamSettingId: null as number | null,
+  deleteTeamSettingName: null as string | null,
 });

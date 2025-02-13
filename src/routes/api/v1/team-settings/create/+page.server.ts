@@ -54,7 +54,7 @@ export const actions: Actions = {
 					created_at: new Date(),
 					updated_at: new Date()
 				})
-				.select('id')
+				.select('id, name, updated_at')
 				.single();
 
 			if (teamError) throw teamError;
@@ -62,6 +62,8 @@ export const actions: Actions = {
 			return {
 				success: true,
 				id: data.id,
+				name: data.name,
+				updated_at: data.updated_at,
 				form
 			};
 		} catch (error) {

@@ -2,7 +2,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { FormControl, FormField, FormFieldErrors, FormLabel } from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
-	import { teamStore } from '$lib/stores/teamStore.svelte';
+	import { teamSettingsStore } from '$lib/stores/teamSettings.svelte';
 	import { teamSettingsCreateSchemaValidator } from '$lib/validators/teamSettingsCreateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
@@ -16,7 +16,11 @@
 			onResult: async (event) => {
 				switch (event.result.type) {
 					case 'success':
-						teamStore.id = event.result.data?.id;
+						teamSettingsStore.data.push({
+							id: event.result.data?.id,
+							name: event.result.data?.name,
+							updated_at: event.result.data?.updated_at
+						});
 
 						toast.success('Success', {
 							description: 'Your team has been created successfully.'
