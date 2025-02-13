@@ -34,7 +34,7 @@
 				{#each [{ view: DASHBOARD_VIEWS.PROJECTS, icon: IconDataBricks }, { view: DASHBOARD_VIEWS.TEAM_SETTINGS, icon: IconUserGroup }] as { view, icon: Icon }}
 					<Button
 						variant="ghost"
-						class={`text-white hover:text-black [&_svg]:stroke-white hover:[&_svg]:stroke-black
+						class={`flex w-[200px] justify-start text-white hover:text-black [&_svg]:stroke-white hover:[&_svg]:stroke-black
 							${dashboardStore.currentView.startsWith(view) ? 'bg-white text-black [&_svg]:stroke-black' : ''}`}
 						onclick={() => (dashboardStore.currentView = view)}
 					>
