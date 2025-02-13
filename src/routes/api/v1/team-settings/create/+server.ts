@@ -6,8 +6,8 @@ export const POST = async ({ request, locals }) => {
 	}
 
 	try {
-		const url = new URL(request.url);
-		const name = url.searchParams.get('name');
+		const formData = await request.formData();
+		const name = formData.get('name')?.toString();
 
 		if (!name) {
 			return new Response(JSON.stringify({ error: 'Missing required fields' }), { status: 400 });

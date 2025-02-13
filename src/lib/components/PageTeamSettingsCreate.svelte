@@ -1,55 +1,45 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { } from '$lib/components/ui/form';
+	import { FormControl, FormField } from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import { DASHBOARD_VIEWS } from '$lib/constants';
-	import { dashboardStore } from '$lib/stores/dashboardStore.svelte';
-	import { teamStore } from '$lib/stores/teamStore.svelte';
+	import { superForm } from "sveltekit-superforms";
+	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { z } from 'zod';
 	import { toast } from 'svelte-sonner';
 
-	async function handleCreateTeam() {
-		const response = await fetch('/api/v1/team-settings/create?name=' + teamStore.name, {
-			method: 'POST'
-		});
+	import FormDescription from './ui/form/form-description.svelte';
+	import FormFieldErrors from './ui/form/form-field-errors.svelte';
 
-		if (response.ok) {
-			toast.success('Success!', {
-				description: 'Team created successfully'
-			});
+  const schema = z.object({
+    name: z.string().min(3, 'Team name is required and cannot be empty')
+  });
 
-			dashboardStore.currentView = DASHBOARD_VIEWS.TEAM_SETTINGS;
-		} else {
-			toast.error('Error!', {
-				description: 'Failed to create team'
-			});
-		}
-	}
-</script>
+  const form = superForm({
+		name: ''
+  }, {
+    validators: zodClient(schema),
+    onResult: async (event) => {
+      console.log(event.result.type);
+    },
+    onError: async (event) => {
+      toast.error(event.result.error.message);
+    }
+  });
 
-<div class="mt-8 flex max-w-[80ch] flex-1 flex-col">
-	<h2 class="mb-2 text-xl font-medium">Create New Team</h2>
-	<p class="mb-6 text-sm text-neutral-500">
-		In order to be able to use the Team Settings, you need first to create a new team. Please fill
-		in the required information below.
-	</p>
-	<div class="space-y-8">
-		<div class="space-y-6">
-			<div class="space-y-2">
-				<Label for="name">Team Name</Label>
-				<Input
-					id="name"
-					type="text"
-					bind:value={teamStore.name}
-					placeholder="Enter team name"
-					class="text-md mt-2 max-w-sm text-black focus-visible:ring-blue-600 focus-visible:ring-offset-0"
-					aria-invalid={!teamStore.name.trim()}
-					aria-errormessage="name-error"
-				/>
-			</div>
-			<Button onclick={handleCreateTeam} disabled={!teamStore.name.trim()}>
-				Create New Team
-			</Button>
-		</div>
-	</div>
-</div>
+  const { form: formData, enhance } = form;
+  </script>
+
+<form method="POST" action="/api/v1/team-settings/create" class="space-y-4" use:enhance>
+  <FormField
+    {form}
+    name="name">
+    <FormControl>
+      <Input bind:value={$formData.name} class="text-black focus-visible:ring-blue-600 focus-visible:ring-offset-0" />
+    </FormControl>
+    <FormDescription>
+      This is the name of the team that will be used to identify the team in the system.
+    </FormDescription>
+    <FormFieldErrors />
+  </FormField>
+  <Button type="submit" disabled={$formData.name.length < 3}>Create New Team</Button>
+</form>
