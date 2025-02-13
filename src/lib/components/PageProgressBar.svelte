@@ -32,7 +32,7 @@
   });
 </script>
 
-<div class="flex flex-1 items-center justify-center">
+<div class="flex flex-1 justify-center">
   <div class="min-w-[200px] max-w-md">
     <Progress value={Math.round(timer.progress)} />
     <div class="mt-1 flex items-center justify-between">
