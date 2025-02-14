@@ -2,7 +2,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { FormControl, FormField, FormFieldErrors, FormLabel } from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
-	import { teamSettingsStore } from '$lib/stores/teamSettings.svelte';
+	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
 	import { teamSettingsCreateSchemaValidator } from '$lib/validators/teamSettingsCreateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';

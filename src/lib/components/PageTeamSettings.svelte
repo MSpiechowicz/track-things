@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { DASHBOARD_VIEWS } from '$lib/constants';
-	import { teamSettingsStore } from '$lib/stores/teamSettings.svelte';
+	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
 	import { timer } from '$lib/utils/progressTimer.svelte';
 
 	import DashboardContainer from './PageDashboardContainer.svelte';
 	import PageProgressBar from './PageProgressBar.svelte';
 	import PageTeamSettingsCreate from './PageTeamSettingsCreate.svelte';
+	import PageTeamSettingsEdit from './PageTeamSettingsUpdate.svelte';
 	import PageTeamSettingsList from './PageTeamSettingsList.svelte';
+	import PageTeamSettingsUpdate from './PageTeamSettingsUpdate.svelte';
 
 	async function loadTeamSettings() {
 		try {
@@ -37,10 +39,13 @@
 			<PageProgressBar />
 		</div>
 	{/if}
-	{#if timer.isFinished && teamSettings.length === 0}
-		<PageTeamSettingsCreate />
-	{/if}
-	{#if timer.isFinished && teamSettings.length > 0}
-		<PageTeamSettingsList />
+	{#if timer.isFinished}
+		{#if teamSettingsStore.updateView}
+			<PageTeamSettingsUpdate />
+		{:else if teamSettings.length === 0}
+			<PageTeamSettingsCreate />
+		{:else}
+			<PageTeamSettingsList />
+		{/if}
 	{/if}
 </DashboardContainer>

@@ -9,7 +9,7 @@
 		DialogTitle
 	} from '$lib/components/ui/dialog';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
-	import { teamSettingsStore } from '$lib/stores/teamSettings.svelte';
+	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
 	import { toast } from "svelte-sonner";
 
   async function handleDelete(id: number | null) {

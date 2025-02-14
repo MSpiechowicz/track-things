@@ -9,7 +9,7 @@
 		TableRow
 	} from '$lib/components/ui/table';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
-	import { teamSettingsStore } from '$lib/stores/teamSettings.svelte';
+	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
 
 	import PageTeamSettingsDeleteDialog from '$lib/components/PageTeamSettingsDeleteDialog.svelte';
 	import IconPencil from '$lib/components/svg/IconPencil.svelte';
@@ -38,7 +38,11 @@
 					<TableCell>{entry.name}</TableCell>
 					<TableCell>{new Date(entry.updated_at).toLocaleDateString()}</TableCell>
 					<TableCell class="flex gap-2">
-						<Button variant="secondary" size="icon">
+						<Button variant="secondary" size="icon" onclick={() => {
+							teamSettingsStore.updateTeamSettingId = entry.id;
+							teamSettingsStore.updateTeamSettingName = entry.name;
+              teamSettingsStore.updateView = true;
+						}} data-sveltekit-reload>
 							<IconPencil additionalClass="h-4 w-4" strokeColor="black" />
 						</Button>
 						<Button
