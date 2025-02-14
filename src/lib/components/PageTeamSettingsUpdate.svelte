@@ -92,12 +92,13 @@
 			</FormControl>
 			<FormFieldErrors class="text-red-500" />
 		</FormField>
-		<div class="flex flex-row items-center gap-2">
+		<div class="flex flex-row items-center gap-4">
 			<Button
-				variant="secondary"
+				variant="outline"
 				onclick={() => {
 					teamSettingsStore.updateView = false;
 				}}
+				class="text-black"
 			>
 				Cancel
 			</Button>

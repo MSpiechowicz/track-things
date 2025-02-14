@@ -6,20 +6,18 @@
 	import DashboardContainer from './PageDashboardContainer.svelte';
 	import PageProgressBar from './PageProgressBar.svelte';
 	import PageTeamSettingsCreate from './PageTeamSettingsCreate.svelte';
-	import PageTeamSettingsEdit from './PageTeamSettingsUpdate.svelte';
 	import PageTeamSettingsList from './PageTeamSettingsList.svelte';
 	import PageTeamSettingsUpdate from './PageTeamSettingsUpdate.svelte';
 
 	async function loadTeamSettings() {
-		try {
-			const response = await fetch('/api/v1/team-settings/get/all');
-			if (!response.ok) throw new Error('Failed to fetch team settings');
-			const data = await response.json();
-			teamSettingsStore.data = data.teamSettings;
-		} catch (error) {
-			console.error('Error loading team settings:', error);
-			// You might want to add proper error handling here
+		const response = await fetch('/api/v1/team-settings/get/all');
+
+		if (!response.ok) {
+			throw new Error('Failed to fetch team settings');
 		}
+
+		const data = await response.json();
+		teamSettingsStore.data = data.teamSettings;
 	}
 
 	let teamSettings = $derived(teamSettingsStore.data);

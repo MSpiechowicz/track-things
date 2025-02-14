@@ -15,9 +15,16 @@
 	import IconPencil from '$lib/components/svg/IconPencil.svelte';
 	import IconTrash from '$lib/components/svg/IconTrash.svelte';
 
-	function handleEdit(id: number) {
-		// Implement edit functionality
-		console.log('Edit team setting:', id);
+	function handleEdit(id: number, name: string) {
+		teamSettingsStore.updateTeamSettingId = id;
+		teamSettingsStore.updateTeamSettingName = name;
+		teamSettingsStore.updateView = true;
+	}
+
+	function handleDelete(id: number, name: string) {
+		teamSettingsStore.deleteTeamSettingId = id;
+		teamSettingsStore.deleteTeamSettingName = name;
+		dialogStore.showTeamSettingsDelete = true;
 	}
 </script>
 
@@ -38,21 +45,17 @@
 					<TableCell>{entry.name}</TableCell>
 					<TableCell>{new Date(entry.updated_at).toLocaleDateString()}</TableCell>
 					<TableCell class="flex gap-2">
-						<Button variant="secondary" size="icon" onclick={() => {
-							teamSettingsStore.updateTeamSettingId = entry.id;
-							teamSettingsStore.updateTeamSettingName = entry.name;
-              teamSettingsStore.updateView = true;
-						}} data-sveltekit-reload>
+						<Button
+							variant="secondary"
+							size="icon"
+							onclick={() => handleEdit(entry.id, entry.name)}
+						>
 							<IconPencil additionalClass="h-4 w-4" strokeColor="black" />
 						</Button>
 						<Button
 							variant="destructive"
 							size="icon"
-							onclick={() => {
-								teamSettingsStore.deleteTeamSettingId = entry.id;
-								teamSettingsStore.deleteTeamSettingName = entry.name;
-								dialogStore.showTeamSettingsDelete = true;
-							}}
+							onclick={() => handleDelete(entry.id, entry.name)}
 						>
 							<IconTrash additionalClass="h-4 w-4 text-white" />
 						</Button>
