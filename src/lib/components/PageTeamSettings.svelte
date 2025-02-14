@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { DASHBOARD_VIEWS } from '$lib/constants';
 	import { teamSettingsStore } from '$lib/stores/teamSettings.svelte';
-	import { timer } from '$lib/utils/timer.svelte';
+	import { timer } from '$lib/utils/progressTimer.svelte';
 
 	import DashboardContainer from './PageDashboardContainer.svelte';
 	import PageProgressBar from './PageProgressBar.svelte';

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Progress } from "$lib/components/ui/progress";
-  import { timer } from "$lib/utils/timer.svelte";
+  import { timer } from "$lib/utils/progressTimer.svelte";
 
   const { duration = 1500 } = $props();
 
