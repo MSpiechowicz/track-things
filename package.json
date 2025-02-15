@@ -21,8 +21,9 @@
     "supabase:stop": "supabase stop",
     "supabase:start": "supabase start",
     "supabase:status": "supabase status",
+    "supabase:deploy": "supabase functions deploy",
     "supabase:studio": "open http://127.0.0.1:54323",
-    "supabase:functions:serve": "supabase functions serve user-self-deletion"
+    "supabase:functions:serve": "supabase functions serve"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.6",
