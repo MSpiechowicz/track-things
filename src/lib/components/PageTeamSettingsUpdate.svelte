@@ -154,7 +154,7 @@
 										teamMembersStore.currentMemberName = member.name;
 										teamMembersStore.currentMemberEmail = member.email;
 										teamMembersStore.currentMemberTeamId = teamSettingsStore.currentTeamId;
-										dialogStore.showTeamMembersDelete = true;
+										dialogStore.showTeamMembersDeleteDialog = true;
 									}}
 								>
 									<IconTrash additionalClass="h-4 w-4" />
@@ -172,7 +172,7 @@
 						class="p-0 text-white"
 						onclick={() => {
 							teamMembersStore.currentMemberTeamId = teamSettingsStore.currentTeamId ?? '';
-							dialogStore.showTeamMembersCreate = true;
+							dialogStore.showTeamMembersCreateDialog = true;
 						}}
 					>
 						here

@@ -24,7 +24,7 @@
 	function handleDelete(id: string, name: string) {
 		teamSettingsStore.currentTeamId = id;
 		teamSettingsStore.currentTeamName = name;
-		dialogStore.showTeamSettingsDelete = true;
+		dialogStore.showTeamSettingsDeleteDialog = true;
 	}
 </script>
 

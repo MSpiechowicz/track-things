@@ -22,14 +22,14 @@
 
 <div class="flex flex-col gap-1">
 	<DropdownMenuItem
-		onclick={() => (dialogStore.showAccountSettings = true)}
+		onclick={() => (dialogStore.showAccountSettingsDialog = true)}
 		class="flex items-center gap-2 text-base"
 	>
 		<IconUserConfig additionalClass="w-5 h-5" strokeColor="black" />
 		Account Settings
 	</DropdownMenuItem>
 	<DropdownMenuItem
-		onclick={() => (dialogStore.showLogout = true)}
+		onclick={() => (dialogStore.showLogoutDialog = true)}
 		class="flex items-center gap-2 text-base mb-1"
 	>
 		<IconUserSignOut additionalClass="w-5 h-5" strokeColor="black" />

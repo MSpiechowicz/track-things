@@ -36,8 +36,8 @@
 </script>
 
 <Dialog
-	open={dialogStore.showDeleteAccount}
-	onOpenChange={(open) => (dialogStore.showDeleteAccount = open)}
+	open={dialogStore.showDeleteAccountDialog}
+	onOpenChange={(open) => (dialogStore.showDeleteAccountDialog = open)}
 >
 	<DialogContent>
 		<DialogHeader>
@@ -47,7 +47,7 @@
 			</DialogDescription>
 		</DialogHeader>
 		<DialogFooter class="mt-4 flex flex-col gap-3 sm:flex-row sm:gap-2">
-			<Button variant="outline" onclick={() => (dialogStore.showDeleteAccount = false)}>
+			<Button variant="outline" onclick={() => (dialogStore.showDeleteAccountDialog = false)}>
 				Cancel
 			</Button>
 			<Button variant="destructive" onclick={handleDeleteAccount}>Delete Account</Button>

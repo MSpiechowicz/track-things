@@ -28,7 +28,7 @@
       teamSettingsStore.data = teamSettingsStore.data.filter(entry => entry.id !== id);
       teamSettingsStore.currentTeamId = null;
       teamSettingsStore.currentTeamName = null;
-      dialogStore.showTeamSettingsDelete = false;
+      dialogStore.showTeamSettingsDeleteDialog = false;
 
       toast.success("Success", {
         description: "Your team settings has been deleted successfully."
@@ -41,7 +41,7 @@
   }
 </script>
 
-<Dialog open={dialogStore.showTeamSettingsDelete} onOpenChange={() => (dialogStore.showTeamSettingsDelete = false)}>
+<Dialog open={dialogStore.showTeamSettingsDeleteDialog} onOpenChange={() => (dialogStore.showTeamSettingsDeleteDialog = false)}>
 	<DialogContent class="w-[325px] rounded-xl border sm:w-full">
 		<DialogHeader>
 			<DialogTitle class="text-xl">Delete Team Settings</DialogTitle>
@@ -50,7 +50,7 @@
 			</DialogDescription>
 		</DialogHeader>
 		<DialogFooter class="mt-4 flex flex-col gap-3 sm:flex-row sm:gap-2">
-			<Button variant="outline" onclick={() => (dialogStore.showTeamSettingsDelete = false)}>Cancel</Button>
+			<Button variant="outline" onclick={() => (dialogStore.showTeamSettingsDeleteDialog = false)}>Cancel</Button>
 			<Button variant="destructive" onclick={() => handleDelete(teamSettingsStore.currentTeamId)}>Delete</Button>
 		</DialogFooter>
 	</DialogContent>

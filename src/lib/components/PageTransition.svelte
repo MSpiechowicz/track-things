@@ -2,7 +2,6 @@
 	import { fade } from 'svelte/transition';
 
 	const { pathname, children } = $props();
-	// Use the full pathname as the key for the transition
 </script>
 
 {#key pathname}

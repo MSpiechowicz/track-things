@@ -1,26 +1,18 @@
-interface DialogStore {
-  showLogout: boolean;
-  showAccountSettings: boolean;
-  showDeleteAccount: boolean;
-  showTeamSettingsDelete: boolean;
-  showTeamMembersCreate: boolean;
-  showTeamMembersDelete: boolean;
-  closeAll: () => void;
-}
+import type { DialogStore } from '$lib/types/dialogStore';
 
 export const dialogStore = $state<DialogStore>({
-  showLogout: false,
-  showAccountSettings: false,
-  showDeleteAccount: false,
-	showTeamSettingsDelete: false,
-	showTeamMembersCreate: false,
-	showTeamMembersDelete: false,
+  showLogoutDialog: false,
+  showAccountSettingsDialog: false,
+  showDeleteAccountDialog: false,
+	showTeamSettingsDeleteDialog: false,
+	showTeamMembersCreateDialog: false,
+	showTeamMembersDeleteDialog: false,
 	closeAll: () => {
-		dialogStore.showLogout = false;
-		dialogStore.showAccountSettings = false;
-		dialogStore.showDeleteAccount = false;
-		dialogStore.showTeamSettingsDelete = false;
-		dialogStore.showTeamMembersCreate = false;
-		dialogStore.showTeamMembersDelete = false;
+		dialogStore.showLogoutDialog = false;
+		dialogStore.showAccountSettingsDialog = false;
+		dialogStore.showDeleteAccountDialog = false;
+		dialogStore.showTeamSettingsDeleteDialog = false;
+		dialogStore.showTeamMembersCreateDialog = false;
+		dialogStore.showTeamMembersDeleteDialog = false;
 	}
 });

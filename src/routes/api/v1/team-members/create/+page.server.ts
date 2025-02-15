@@ -69,7 +69,7 @@ export const actions: Actions = {
           permissions: 'Edit',
 					created_at: new Date()
 				})
-				.select('id, email, created_at')
+				.select('id, email, created_at, permissions')
 				.single();
 
 			if (teamError) {
@@ -85,6 +85,7 @@ export const actions: Actions = {
         name: response.data.name,
 				email: data.email,
 				created_at: data.created_at,
+        permissions: data.permissions,
 				form
 			};
 		} catch (error) {

@@ -51,7 +51,7 @@
             });
           }
 
-          dialogStore.showTeamMembersCreate = false;
+          dialogStore.showTeamMembersCreateDialog = false;
 
 					toast.success('Success', {
 						description: 'Your team has been updated successfully.'
@@ -75,10 +75,10 @@
 </script>
 
 <Dialog
-	open={dialogStore.showTeamMembersCreate}
+	open={dialogStore.showTeamMembersCreateDialog}
 	onOpenChange={() => {
     console.log('onOpenChange');
-		dialogStore.showTeamMembersCreate = false;
+		dialogStore.showTeamMembersCreateDialog = false;
 		form.reset();
 		teamMembersStore.currentMemberEmail = null;
 		//teamMembersStore.currentMemberTeamId = null;
@@ -104,7 +104,7 @@
 				<FormControl let:attrs>
 					<FormLabel class="text-md !text-black">Email</FormLabel>
 					<FormDescription class="mb-4 text-sm text-neutral-400">
-						This is the email address of the team member you wish to add.
+						This is the email address of a new team member for your reference.
 					</FormDescription>
 					<Input
 						bind:value={$formData.email}
@@ -124,7 +124,7 @@
 				<Button
 					variant="outline"
 					onclick={() => {
-						dialogStore.showTeamMembersCreate = false;
+						dialogStore.showTeamMembersCreateDialog = false;
 						form.reset();
 						teamMembersStore.currentMemberEmail = null;
 						teamMembersStore.currentMemberTeamId = null;

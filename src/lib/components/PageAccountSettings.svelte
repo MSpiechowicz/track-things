@@ -41,7 +41,7 @@
 			toast.success('Settings updated', {
 				description: 'Your display name has been updated successfully.'
 			});
-			dialogStore.showAccountSettings = false;
+			dialogStore.showAccountSettingsDialog = false;
 		} else {
 			toast.error('Error', {
 				description: 'Failed to update display name. Please try again.'
@@ -51,8 +51,8 @@
 </script>
 
 <Dialog
-	open={dialogStore.showAccountSettings}
-	onOpenChange={() => (dialogStore.showAccountSettings = false)}
+	open={dialogStore.showAccountSettingsDialog}
+	onOpenChange={() => (dialogStore.showAccountSettingsDialog = false)}
 >
 	<DialogContent class="w-[325px] rounded-xl border sm:w-full">
 		<DialogHeader>
@@ -93,7 +93,10 @@
 			<span
 				>You can <Button
 					variant="link"
-					onclick={() => (dialogStore.showDeleteAccount = true)}
+					onclick={() => {
+						dialogStore.showDeleteAccountDialog = true;
+						dialogStore.showAccountSettingsDialog = false;
+					}}
 					class="cursor-pointer p-0 font-bold"
 				>
 					delete your account
@@ -101,7 +104,7 @@
 			>
 		</div>
 		<DialogFooter class="mt-4 flex flex-col gap-3 sm:flex-row sm:gap-2">
-			<Button variant="outline" onclick={() => (dialogStore.showAccountSettings = false)}
+			<Button variant="outline" onclick={() => (dialogStore.showAccountSettingsDialog = false)}
 				>Cancel</Button
 			>
 			<Button onclick={handleSave} disabled={!userStore.displayName}>Save changes</Button>

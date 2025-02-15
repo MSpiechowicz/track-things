@@ -32,7 +32,7 @@
 				(entry) => entry.email !== email
 			);
 			teamMembersStore.data = teamMembersStore.data.filter((entry) => entry.email !== email);
-			dialogStore.showTeamMembersDelete = false;
+			dialogStore.showTeamMembersDeleteDialog = false;
 
 			toast.success('Success', {
 				description: 'Your team member has been deleted successfully.'
@@ -46,8 +46,8 @@
 </script>
 
 <Dialog
-	open={dialogStore.showTeamMembersDelete}
-	onOpenChange={() => (dialogStore.showTeamMembersDelete = false)}
+	open={dialogStore.showTeamMembersDeleteDialog}
+	onOpenChange={() => (dialogStore.showTeamMembersDeleteDialog = false)}
 >
 	<DialogContent class="w-[325px] rounded-xl border sm:w-full">
 		<DialogHeader>
@@ -59,7 +59,7 @@
 			</DialogDescription>
 		</DialogHeader>
 		<DialogFooter class="mt-4 flex flex-col gap-3 sm:flex-row sm:gap-2">
-			<Button variant="outline" onclick={() => (dialogStore.showTeamMembersDelete = false)}
+			<Button variant="outline" onclick={() => (dialogStore.showTeamMembersDeleteDialog = false)}
 				>Cancel</Button
 			>
 			<Button
