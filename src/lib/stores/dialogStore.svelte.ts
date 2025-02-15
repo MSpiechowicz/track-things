@@ -1,6 +1,6 @@
-import type { DialogStore } from '$lib/types/dialogStore';
+import type { DialogStoreType } from '$lib/types/dialogStoreType';
 
-export const dialogStore = $state<DialogStore>({
+export const dialogStore = $state<DialogStoreType>({
   showLogoutDialog: false,
   showAccountSettingsDialog: false,
   showDeleteAccountDialog: false,

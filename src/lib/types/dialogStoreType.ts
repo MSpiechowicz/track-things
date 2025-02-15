@@ -1,4 +1,4 @@
-export type DialogStore = {
+export type DialogStoreType = {
 	showLogoutDialog: boolean;
 	showAccountSettingsDialog: boolean;
 	showDeleteAccountDialog: boolean;
