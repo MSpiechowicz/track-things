@@ -20,7 +20,7 @@ serve(async (req: Request) => {
 
 		const supabaseAdmin = createClient(
 			Deno.env.get('SUPABASE_URL') ?? '',
-			Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+			Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 		);
 
 		// Query the profiles and profile_settings tables to get the user's name
@@ -30,8 +30,13 @@ serve(async (req: Request) => {
 			.eq('email', email)
 			.single();
 
-		if (profileError) throw profileError;
-		if (!profiles) throw new Error('Profile not found');
+		if (profileError) {
+			throw profileError;
+		}
+
+		if (!profiles) {
+			throw new Error('User does not exist');
+		}
 
 		return new Response(
 			JSON.stringify({
@@ -44,12 +49,9 @@ serve(async (req: Request) => {
 			}
 		);
 	} catch (error) {
-		return new Response(
-			JSON.stringify({ error: error.message }),
-			{
-				headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-				status: 400
-			}
-		);
+		return new Response(JSON.stringify({ error: error.message }), {
+			headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+			status: 400
+		});
 	}
 });
