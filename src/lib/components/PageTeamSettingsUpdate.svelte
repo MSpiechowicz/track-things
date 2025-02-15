@@ -47,15 +47,18 @@
 						teamSettingsStore.data[existingIndex] = {
 							id: event.result.data?.id,
 							name: event.result.data?.name,
-							updated_at: event.result.data?.updated_at
+							updated_at: event.result.data?.updated_at,
+							members: teamMembersStore.data
 						};
 					} else {
 						teamSettingsStore.data.push({
 							id: event.result.data?.id,
 							name: event.result.data?.name,
-							updated_at: event.result.data?.updated_at
+							updated_at: event.result.data?.updated_at,
+							members: teamMembersStore.data
 						});
 					}
+          console.log(teamSettingsStore.data);
 
 					teamSettingsStore.showUpdateView = false;
 

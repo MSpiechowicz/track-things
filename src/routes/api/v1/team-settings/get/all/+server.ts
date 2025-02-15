@@ -12,9 +12,11 @@ export const GET = async ({ locals }) => {
 			.eq('profile_id', user.id)
 			.order('updated_at', { ascending: false });
 
-		if (teamSettingsError) throw teamSettingsError;
+		if (teamSettingsError) {
+			throw teamSettingsError;
+		}
 
-		return new Response(JSON.stringify({ teamSettings: data }), { status: 200 });
+		return new Response(JSON.stringify({ data }), { status: 200 });
 	} catch (error) {
 		console.error('Get all projects error:', error);
 		return new Response(JSON.stringify({ error: 'Failed to get all projects' }), { status: 500 });

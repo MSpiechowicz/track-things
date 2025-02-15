@@ -34,6 +34,7 @@
 			<TableRow>
 				<TableHead class="w-[100px]">ID</TableHead>
 				<TableHead>Name</TableHead>
+				<TableHead>Members</TableHead>
 				<TableHead>Last Updated</TableHead>
 				<TableHead class="w-[100px]">Actions</TableHead>
 			</TableRow>
@@ -43,6 +44,7 @@
 				<TableRow>
 					<TableCell>{index + 1}</TableCell>
 					<TableCell>{entry.name}</TableCell>
+					<TableCell>{entry.members?.length ?? 0}</TableCell>
 					<TableCell>{new Date(entry.updated_at).toLocaleDateString()}</TableCell>
 					<TableCell class="flex gap-2">
 						<Button

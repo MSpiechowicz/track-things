@@ -19,7 +19,8 @@
 						teamSettingsStore.data.push({
 							id: event.result.data?.id,
 							name: event.result.data?.name,
-							updated_at: event.result.data?.updated_at
+							updated_at: event.result.data?.updated_at,
+							members: []
 						});
 
 						toast.success('Success', {

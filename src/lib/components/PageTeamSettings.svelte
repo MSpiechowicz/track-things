@@ -10,14 +10,35 @@
 	import PageTeamSettingsUpdate from './PageTeamSettingsUpdate.svelte';
 
 	async function loadTeamSettings() {
-		const response = await fetch('/api/v1/team-settings/get/all');
+		const responseTeamSettings = await fetch('/api/v1/team-settings/get/all');
 
-		if (!response.ok) {
+		if (!responseTeamSettings.ok) {
 			throw new Error('Failed to fetch team settings');
 		}
 
-		const data = await response.json();
-		teamSettingsStore.data = data.teamSettings;
+		try {
+			const resultTeamSettings = await responseTeamSettings.json();
+
+			teamSettingsStore.data = resultTeamSettings.data;
+
+			for (const teamSetting of teamSettingsStore.data) {
+				const responseTeamMembers = await fetch(
+					`/api/v1/team-members/get/all?teamId=${teamSetting.id}`
+				);
+
+				if (!responseTeamMembers.ok) {
+					throw new Error(`Failed to fetch team members for the team ${teamSetting.id}`);
+				}
+
+				const resultTeamMembers = await responseTeamMembers.json();
+
+				if (resultTeamMembers.data) {
+					teamSetting.members = resultTeamMembers.data;
+				}
+			}
+		} catch (error) {
+			console.error('Error loading team settings:', error);
+		}
 	}
 
 	let teamSettings = $derived(teamSettingsStore.data);
