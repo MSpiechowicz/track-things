@@ -1,14 +1,5 @@
-type TeamSetting = {
-  id: string;
-  name: string;
-  updated_at: string;
-};
-
-type TeamMember = {
-  id: string;
-  email: string;
-  created_at: string;
-};
+import type { TeamMember } from '$lib/types/teamMember';
+import type { TeamSetting } from '$lib/types/teamSettings';
 
 export const teamSettingsStore = $state({
   data: [] as TeamSetting[],
@@ -21,6 +12,4 @@ export const teamSettingsStore = $state({
   deleteTeamMemberEmail: null as string | null,
   updateTeamSettingId: null as string | null,
   updateTeamSettingName: null as string | null,
-  updateTeamSettingEmails: [] as string[] | null,
-  updateTeamSettingMembers: [] as TeamMember[] | null,
 });

@@ -30,8 +30,7 @@
   const form = superForm(
 		{
 			id: teamSettingsStore.updateTeamSettingId ?? '',
-			name: teamSettingsStore.updateTeamSettingName ?? '',
-			emails: teamSettingsStore.updateTeamSettingEmails ?? []
+			name: teamSettingsStore.updateTeamSettingName ?? ''
 		},
 		{
 			validators: teamSettingsUpdateSchemaValidator,

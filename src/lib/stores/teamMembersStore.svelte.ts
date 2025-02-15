@@ -1,10 +1,4 @@
-export type TeamMember = {
-  id: string;
-  name: string;
-  email: string;
-  created_at: string;
-  permissions: string;
-};
+import type { TeamMember } from '$lib/types/teamMember';
 
 export const teamMembersStore = $state({
   data: [] as TeamMember[],
