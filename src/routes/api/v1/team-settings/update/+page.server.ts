@@ -25,8 +25,11 @@ export const actions: Actions = {
 		try {
 			const name = form.data.name;
       const id = form.data.id;
+      const emails = form.data.emails;
 
-			if (!name) {
+      console.log(emails);
+
+			if (!name || !id) {
 				return fail(400, {
 					form,
 					message: 'Missing required fields'
