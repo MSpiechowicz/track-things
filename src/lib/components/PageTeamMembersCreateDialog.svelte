@@ -45,7 +45,7 @@
             teamMembersStore.data.push({
               id: event.result.data?.id,
               email: event.result.data?.email,
-              joined_at: event.result.data?.created_at
+              created_at: event.result.data?.created_at
             });
           }
 

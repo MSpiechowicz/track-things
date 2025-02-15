@@ -47,12 +47,26 @@ export const actions: Actions = {
 				});
 			}
 
+      const response = await locals.supabase.functions.invoke('user-get-name', {
+        method: 'POST',
+        body: JSON.stringify({ email })
+      });
+
+      if (!response || !response.data) {
+        return fail(500, {
+          form,
+          message: 'Failed to get user'
+        });
+      }
+
 			const { data, error: teamError } = await locals.supabase
 				.from('team_members')
 				.insert({
 					email: email,
+          name: response.data.name,
 					team_id: teamId,
 					profile_id: user.id,
+          permissions: 'edit',
 					created_at: new Date()
 				})
 				.select('id, email, created_at')
@@ -68,6 +82,7 @@ export const actions: Actions = {
 			return {
 				success: true,
 				id: data.id,
+        name: response.data.name,
 				email: data.email,
 				created_at: data.created_at,
 				form

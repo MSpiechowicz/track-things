@@ -145,8 +145,9 @@
 					{#each teamMembersStore.data as member, index}
 						<TableRow>
 							<TableCell>{index + 1}</TableCell>
+							<TableCell>{member.name}</TableCell>
 							<TableCell>{member.email}</TableCell>
-							<TableCell>{new Date(member.joined_at).toLocaleDateString()}</TableCell>
+							<TableCell>{new Date(member.created_at).toLocaleDateString()}</TableCell>
 							<TableCell>
 								<Button variant="destructive" size="icon" on:click={() => console.log('remove')}>
 									<IconTrash additionalClass="h-4 w-4" />

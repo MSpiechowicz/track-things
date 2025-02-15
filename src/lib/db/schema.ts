@@ -90,8 +90,9 @@ export const teamMembersTable = pgTable('team_members', {
 	profileId: uuid('profile_id')
 		.references(() => profilesTable.id, { onDelete: 'cascade' })
 		.notNull(),
+  name: text('name'),
 	email: text('email').notNull(),
-	joinedAt: timestamp('joined_at').notNull().defaultNow(),
+  permissions: text('permissions').notNull().default('edit'),
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	updatedAt: timestamp('updated_at').notNull().defaultNow()
 }).enableRLS();

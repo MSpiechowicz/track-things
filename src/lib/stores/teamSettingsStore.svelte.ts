@@ -7,7 +7,7 @@ type TeamSetting = {
 type TeamMember = {
   id: string;
   email: string;
-  joined_at: string;
+  created_at: string;
 };
 
 export const teamSettingsStore = $state({
