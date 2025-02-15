@@ -6,12 +6,12 @@ export const GET = async ({ locals, request }) => {
 	}
 
 	try {
-    const url = new URL(request.url);
-    const teamId = url.searchParams.get('teamId');
+		const url = new URL(request.url);
+		const teamId = url.searchParams.get('teamId');
 
 		const { data, error: membersError } = await locals.supabase
 			.from('team_members')
-			.select('id, name, email, created_at')
+			.select('id, name, email, created_at, permissions')
 			.eq('team_id', teamId)
 			.order('created_at', { ascending: false });
 
@@ -20,6 +20,8 @@ export const GET = async ({ locals, request }) => {
 		return new Response(JSON.stringify({ success: true, data }), { status: 200 });
 	} catch (error) {
 		console.error('Get all team members error:', error);
-		return new Response(JSON.stringify({ error: 'Failed to get all team members' }), { status: 500 });
+		return new Response(JSON.stringify({ error: 'Failed to get all team members' }), {
+			status: 500
+		});
 	}
 };

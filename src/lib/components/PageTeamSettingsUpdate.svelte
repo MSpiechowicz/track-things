@@ -148,6 +148,7 @@
 							<TableCell>{member.name}</TableCell>
 							<TableCell>{member.email}</TableCell>
 							<TableCell>{new Date(member.created_at).toLocaleDateString()}</TableCell>
+							<TableCell>{member.permissions}</TableCell>
 							<TableCell>
 								<Button variant="destructive" size="icon" on:click={() => console.log('remove')}>
 									<IconTrash additionalClass="h-4 w-4" />

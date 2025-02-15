@@ -66,7 +66,7 @@ export const actions: Actions = {
           name: response.data.name,
 					team_id: teamId,
 					profile_id: user.id,
-          permissions: 'edit',
+          permissions: 'Edit',
 					created_at: new Date()
 				})
 				.select('id, email, created_at')
