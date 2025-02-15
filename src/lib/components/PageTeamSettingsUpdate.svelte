@@ -17,6 +17,7 @@
 		TableHeader,
 		TableRow
 	} from '$lib/components/ui/table';
+	import { dashboardStore } from '$lib/stores/dashboardStore.svelte';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamMembersStore } from '$lib/stores/teamMembersStore.svelte';
 	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
@@ -26,7 +27,6 @@
 
 	import PageTeamMembersCreateDialog from '$lib/components/PageTeamMembersCreateDialog.svelte';
 	import PageTeamMembersDeleteDialog from '$lib/components/PageTeamMembersDeleteDialog.svelte';
-	import IconArrowBack from '$lib/components/svg/IconArrowBack.svelte';
 	import IconUserPlus from '$lib/components/svg/IconUserPlus.svelte';
 
 	const form = superForm(
@@ -91,6 +91,12 @@
 
 	$effect(() => {
 		getAllTeamMembers();
+
+		dashboardStore.isChildView = true;
+		dashboardStore.goBack = () => {
+			teamSettingsStore.showUpdateView = false;
+			dashboardStore.isChildView = false;
+		};
 
 		$formData.name = teamSettingsStore.currentTeamName ?? '';
 		$formData.id = teamSettingsStore.currentTeamId ?? '';
@@ -205,17 +211,6 @@
 			</div>
 		{/if}
 	</div>
-
-	<Button
-		variant="secondary"
-		class="mt-6 max-w-fit text-black"
-		onclick={() => {
-			teamSettingsStore.showUpdateView = false;
-		}}
-	>
-		<IconArrowBack additionalClass="!h-5 !w-5" strokeColor="black" />
-		Go Back
-	</Button>
 </div>
 
 <PageTeamMembersCreateDialog />
