@@ -44,8 +44,10 @@
             teamMembersStore.data = [];
             teamMembersStore.data.push({
               id: event.result.data?.id,
+              name: event.result.data?.name,
               email: event.result.data?.email,
-              created_at: event.result.data?.created_at
+              created_at: event.result.data?.created_at,
+              permissions: event.result.data?.permissions
             });
           }
 

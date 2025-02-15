@@ -93,15 +93,11 @@
 	});
 </script>
 
-<div class="max-w-[80ch]">
-	<!--<h2 class="mt-6 text-xl font-medium">Edit Team</h2>
-	<p class="text-sm text-neutral-400">
-		Please fill out the required fields below in order to update your team.
-	</p>-->
+<div class="flex flex-1">
 	<form
 		method="POST"
 		action="/api/v1/team-settings/update"
-		class="mt-6 space-y-8"
+		class="mt-6 space-y-8 w-full"
 		use:enhance
 		id="update-team-form"
 		data-sveltekit-reload
@@ -138,6 +134,7 @@
 						<TableHead>Name</TableHead>
 						<TableHead>Email</TableHead>
 						<TableHead>Joined Date</TableHead>
+						<TableHead>Permissions</TableHead>
 						<TableHead class="w-16">Actions</TableHead>
 					</TableRow>
 				</TableHeader>
