@@ -25,9 +25,6 @@ export const actions: Actions = {
 		try {
 			const name = form.data.name;
       const id = form.data.id;
-      const emails = form.data.emails;
-
-      console.log(emails);
 
 			if (!name || !id) {
 				return fail(400, {
