@@ -10,25 +10,28 @@
 	} from '$lib/components/ui/dialog';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
+	import { teamMembersStore } from '$lib/stores/teamMembersStore.svelte';
 	import { toast } from 'svelte-sonner';
 
-	async function handleDelete(id: number | null) {
-		if (!id) {
+	async function handleDelete(email: string | null, teamId: string | null) {
+		if (!email || !teamId) {
 			toast.error('Error', {
-				description: 'We are unable to delete this team member due to invalid ID.'
+				description: 'We are unable to delete this team member due to invalid email or team ID.'
 			});
 			return;
 		}
 
-		const response = await fetch(`/api/v1/team-members/delete?id=${id}`, {
-			method: 'POST'
+		const response = await fetch(`/api/v1/team-members/delete?email=${email}&teamId=${teamId}`, {
+			method: 'DELETE'
 		});
 
-		if (response.ok) {
-			teamSettingsStore.members = teamSettingsStore.members.filter((entry) => entry.id !== id);
-			teamSettingsStore.deleteTeamMemberId = null;
-			teamSettingsStore.deleteTeamMemberName = null;
-			teamSettingsStore.deleteTeamMemberEmail = null;
+		const result = await response.json();
+
+		if (result.success) {
+			teamSettingsStore.members = teamSettingsStore.members.filter(
+				(entry) => entry.email !== email
+			);
+			teamMembersStore.data = teamMembersStore.data.filter((entry) => entry.email !== email);
 			dialogStore.showTeamMembersDelete = false;
 
 			toast.success('Success', {
@@ -51,7 +54,7 @@
 			<DialogTitle class="text-xl">Delete Team Member</DialogTitle>
 			<DialogDescription class="text-base text-neutral-600">
 				Are you sure you want to delete member <span class="font-bold"
-					>{teamSettingsStore.deleteTeamMemberName}</span
+					>{teamMembersStore.currentMemberName}</span
 				> from your team?
 			</DialogDescription>
 		</DialogHeader>
@@ -61,7 +64,8 @@
 			>
 			<Button
 				variant="destructive"
-				onclick={() => handleDelete(teamSettingsStore.deleteTeamMemberId)}>Delete</Button
+				onclick={() => handleDelete(teamMembersStore.currentMemberEmail, teamMembersStore.currentMemberTeamId)}
+				>Delete</Button
 			>
 		</DialogFooter>
 	</DialogContent>

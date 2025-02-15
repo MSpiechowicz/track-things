@@ -25,8 +25,9 @@
 	import { superForm } from 'sveltekit-superforms';
 
 	import PageTeamMembersCreateDialog from '$lib/components/PageTeamMembersCreateDialog.svelte';
+	import PageTeamMembersDeleteDialog from '$lib/components/PageTeamMembersDeleteDialog.svelte';
 
-	const form = superForm(
+  const form = superForm(
 		{
 			id: teamSettingsStore.updateTeamSettingId ?? '',
 			name: teamSettingsStore.updateTeamSettingName ?? '',
@@ -82,7 +83,6 @@
 		const result = await response.json();
 
 		teamMembersStore.data = result.data;
-    console.log('team members store', teamMembersStore.data);
 	}
 
 	$effect(() => {
@@ -150,7 +150,17 @@
 							<TableCell>{new Date(member.created_at).toLocaleDateString()}</TableCell>
 							<TableCell>{member.permissions}</TableCell>
 							<TableCell>
-								<Button variant="destructive" size="icon" on:click={() => console.log('remove')}>
+								<Button
+									variant="destructive"
+									size="icon"
+									onclick={() => {
+										teamMembersStore.currentMemberId = member.id;
+										teamMembersStore.currentMemberName = member.name;
+										teamMembersStore.currentMemberEmail = member.email;
+										teamMembersStore.currentMemberTeamId = teamSettingsStore.updateTeamSettingId;
+										dialogStore.showTeamMembersDelete = true;
+									}}
+								>
 									<IconTrash additionalClass="h-4 w-4" />
 								</Button>
 							</TableCell>
@@ -165,11 +175,7 @@
 						variant="link"
 						class="p-0 text-white"
 						onclick={() => {
-							console.log('form id', $formData.id);
-							console.log('team id', teamSettingsStore.updateTeamSettingId);
-
 							teamMembersStore.currentMemberTeamId = teamSettingsStore.updateTeamSettingId ?? '';
-							console.log('team members store', teamMembersStore.currentMemberTeamId);
 							dialogStore.showTeamMembersCreate = true;
 						}}
 					>
@@ -196,3 +202,4 @@
 </div>
 
 <PageTeamMembersCreateDialog />
+<PageTeamMembersDeleteDialog />
