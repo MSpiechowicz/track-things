@@ -16,14 +16,14 @@
 	import IconTrash from '$lib/components/svg/IconTrash.svelte';
 
 	function handleEdit(id: string, name: string) {
-		teamSettingsStore.updateTeamSettingId = id;
-		teamSettingsStore.updateTeamSettingName = name;
-		teamSettingsStore.updateView = true;
+		teamSettingsStore.currentTeamId = id;
+		teamSettingsStore.currentTeamName = name;
+		teamSettingsStore.showUpdateView = true;
 	}
 
 	function handleDelete(id: string, name: string) {
-		teamSettingsStore.deleteTeamSettingId = id;
-		teamSettingsStore.deleteTeamSettingName = name;
+		teamSettingsStore.currentTeamId = id;
+		teamSettingsStore.currentTeamName = name;
 		dialogStore.showTeamSettingsDelete = true;
 	}
 </script>

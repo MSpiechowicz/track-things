@@ -12,7 +12,7 @@
 	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
 	import { toast } from "svelte-sonner";
 
-  async function handleDelete(id: number | null) {
+  async function handleDelete(id: string | null) {
     if (!id) {
       toast.error("Error", {
         description: "We are unable to delete this team settings due to invalid ID."
@@ -26,8 +26,8 @@
 
     if (response.ok) {
       teamSettingsStore.data = teamSettingsStore.data.filter(entry => entry.id !== id);
-      teamSettingsStore.deleteTeamSettingId = null;
-      teamSettingsStore.deleteTeamSettingName = null;
+      teamSettingsStore.currentTeamId = null;
+      teamSettingsStore.currentTeamName = null;
       dialogStore.showTeamSettingsDelete = false;
 
       toast.success("Success", {
@@ -46,12 +46,12 @@
 		<DialogHeader>
 			<DialogTitle class="text-xl">Delete Team Settings</DialogTitle>
 			<DialogDescription class="text-base text-neutral-600">
-				Are you sure you want to delete team <span class="font-bold">{teamSettingsStore.deleteTeamSettingName}</span> settings?
+				Are you sure you want to delete team <span class="font-bold">{teamSettingsStore.currentTeamName}</span> settings?
 			</DialogDescription>
 		</DialogHeader>
 		<DialogFooter class="mt-4 flex flex-col gap-3 sm:flex-row sm:gap-2">
 			<Button variant="outline" onclick={() => (dialogStore.showTeamSettingsDelete = false)}>Cancel</Button>
-			<Button variant="destructive" onclick={() => handleDelete(teamSettingsStore.deleteTeamSettingId)}>Delete</Button>
+			<Button variant="destructive" onclick={() => handleDelete(teamSettingsStore.currentTeamId)}>Delete</Button>
 		</DialogFooter>
 	</DialogContent>
 </Dialog>

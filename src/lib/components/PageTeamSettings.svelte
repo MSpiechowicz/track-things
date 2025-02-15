@@ -38,7 +38,7 @@
 		</div>
 	{/if}
 	{#if timer.isFinished}
-		{#if teamSettingsStore.updateView}
+		{#if teamSettingsStore.showUpdateView}
 			<PageTeamSettingsUpdate />
 		{:else if teamSettings.length === 0}
 			<PageTeamSettingsCreate />

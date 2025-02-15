@@ -29,8 +29,8 @@
 
   const form = superForm(
 		{
-			id: teamSettingsStore.updateTeamSettingId ?? '',
-			name: teamSettingsStore.updateTeamSettingName ?? ''
+			id: teamSettingsStore.currentTeamId ?? '',
+			name: teamSettingsStore.currentTeamName ?? ''
 		},
 		{
 			validators: teamSettingsUpdateSchemaValidator,
@@ -57,7 +57,7 @@
 						});
 					}
 
-					teamSettingsStore.updateView = false;
+					teamSettingsStore.showUpdateView = false;
 
 					toast.success('Success', {
 						description: 'Your team has been updated successfully.'
@@ -77,7 +77,7 @@
 
 	async function getAllTeamMembers() {
 		const response = await fetch(
-			`/api/v1/team-members/get/all?teamId=${teamSettingsStore.updateTeamSettingId}`
+			`/api/v1/team-members/get/all?teamId=${teamSettingsStore.currentTeamId}`
 		);
 		const result = await response.json();
 
@@ -87,8 +87,8 @@
 	$effect(() => {
 		getAllTeamMembers();
 
-		$formData.name = teamSettingsStore.updateTeamSettingName ?? '';
-		$formData.id = teamSettingsStore.updateTeamSettingId ?? '';
+		$formData.name = teamSettingsStore.currentTeamName ?? '';
+		$formData.id = teamSettingsStore.currentTeamId ?? '';
 	});
 </script>
 
@@ -101,7 +101,7 @@
 		id="update-team-form"
 		data-sveltekit-reload
 	>
-		<input type="hidden" name="id" value={teamSettingsStore.updateTeamSettingId ?? ''} />
+		<input type="hidden" name="id" value={teamSettingsStore.currentTeamId ?? ''} />
 		<FormField {form} name="name" let:errors>
 			<FormControl let:attrs>
 				<FormLabel class="text-md !text-white">Team Name</FormLabel>
@@ -153,7 +153,7 @@
 										teamMembersStore.currentMemberId = member.id;
 										teamMembersStore.currentMemberName = member.name;
 										teamMembersStore.currentMemberEmail = member.email;
-										teamMembersStore.currentMemberTeamId = teamSettingsStore.updateTeamSettingId;
+										teamMembersStore.currentMemberTeamId = teamSettingsStore.currentTeamId;
 										dialogStore.showTeamMembersDelete = true;
 									}}
 								>
@@ -171,7 +171,7 @@
 						variant="link"
 						class="p-0 text-white"
 						onclick={() => {
-							teamMembersStore.currentMemberTeamId = teamSettingsStore.updateTeamSettingId ?? '';
+							teamMembersStore.currentMemberTeamId = teamSettingsStore.currentTeamId ?? '';
 							dialogStore.showTeamMembersCreate = true;
 						}}
 					>
@@ -186,7 +186,7 @@
 			<Button
 				variant="outline"
 				onclick={() => {
-					teamSettingsStore.updateView = false;
+					teamSettingsStore.showUpdateView = false;
 				}}
 				class="text-black"
 			>

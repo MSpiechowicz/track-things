@@ -28,7 +28,7 @@
 		const result = await response.json();
 
 		if (result.success) {
-			teamSettingsStore.members = teamSettingsStore.members.filter(
+			teamSettingsStore.currentTeamMembers = teamSettingsStore.currentTeamMembers.filter(
 				(entry) => entry.email !== email
 			);
 			teamMembersStore.data = teamMembersStore.data.filter((entry) => entry.email !== email);
@@ -64,7 +64,8 @@
 			>
 			<Button
 				variant="destructive"
-				onclick={() => handleDelete(teamMembersStore.currentMemberEmail, teamMembersStore.currentMemberTeamId)}
+				onclick={() =>
+					handleDelete(teamMembersStore.currentMemberEmail, teamMembersStore.currentMemberTeamId)}
 				>Delete</Button
 			>
 		</DialogFooter>
