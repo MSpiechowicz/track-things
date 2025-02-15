@@ -2,6 +2,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { FormControl, FormField, FormFieldErrors, FormLabel } from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
+	import { dashboardStore } from '$lib/stores/dashboardStore.svelte';
 	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
 	import { teamSettingsCreateSchemaValidator } from '$lib/validators/teamSettingsCreateSchemaValidator';
 	import { toast } from 'svelte-sonner';
@@ -23,6 +24,11 @@
 							members: []
 						});
 
+            if (teamSettingsStore.data?.length > 0) {
+              teamSettingsStore.showCreateView = false;
+              dashboardStore.isChildView = false;
+            }
+
 						toast.success('Success', {
 							description: 'Your team has been created successfully.'
 						});
@@ -38,6 +44,16 @@
 	);
 
 	const { form: formData, enhance } = form;
+
+  $effect(() => {
+    if (teamSettingsStore.data?.length > 0) {
+      dashboardStore.isChildView = true;
+      dashboardStore.goBack = () => {
+        teamSettingsStore.showCreateView = false;
+        dashboardStore.isChildView = false;
+      };
+    }
+  });
 </script>
 
 <div class="max-w-[80ch]">
@@ -48,7 +64,7 @@
 	<form
 		method="POST"
 		action="/api/v1/team-settings/create"
-		class="mt-6 space-y-8"
+		class="mt-4 space-y-8"
 		use:enhance
 		data-sveltekit-reload
 	>
@@ -61,7 +77,7 @@
 						? 'ring-red-500'
 						: 'ring-blue-600'} focus-visible:ring-offset-0 {errors.length > 0
 						? 'ring-2 ring-red-500'
-						: 'ring-2 ring-blue-600'}"
+						: 'ring-0 ring-blue-600'}"
 					placeholder="Enter team name"
 					autocomplete="off"
 					{...attrs}

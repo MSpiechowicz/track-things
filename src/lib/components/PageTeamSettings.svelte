@@ -61,7 +61,7 @@
 	{#if timer.isFinished}
 		{#if teamSettingsStore.showUpdateView}
 			<PageTeamSettingsUpdate />
-		{:else if teamSettings.length === 0}
+		{:else if teamSettings.length === 0 || teamSettingsStore.showCreateView}
 			<PageTeamSettingsCreate />
 		{:else}
 			<PageTeamSettingsList />

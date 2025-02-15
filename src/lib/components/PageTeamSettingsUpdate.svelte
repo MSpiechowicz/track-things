@@ -27,7 +27,7 @@
 
 	import PageTeamMembersCreateDialog from '$lib/components/PageTeamMembersCreateDialog.svelte';
 	import PageTeamMembersDeleteDialog from '$lib/components/PageTeamMembersDeleteDialog.svelte';
-	import IconUserPlus from '$lib/components/svg/IconUserPlus.svelte';
+	import IconPlus from '$lib/components/svg/IconPlus.svelte';
 
 	const form = superForm(
 		{
@@ -60,9 +60,6 @@
 							members: teamMembersStore.data
 						});
 					}
-					console.log(teamSettingsStore.data);
-
-					teamSettingsStore.showUpdateView = false;
 
 					toast.success('Success', {
 						description: 'Your team has been updated successfully.'
@@ -205,8 +202,8 @@
 						dialogStore.showTeamMembersCreateDialog = true;
 					}}
 				>
-					<IconUserPlus additionalClass="h-4 w-4" />
-					Add new member
+					<IconPlus additionalClass="!h-5 !w-5" />
+					Add Member
 				</Button>
 			</div>
 		{/if}

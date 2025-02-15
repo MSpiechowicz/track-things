@@ -13,6 +13,7 @@
 
 	import PageTeamSettingsDeleteDialog from '$lib/components/PageTeamSettingsDeleteDialog.svelte';
 	import IconPencil from '$lib/components/svg/IconPencil.svelte';
+	import IconPlus from '$lib/components/svg/IconPlus.svelte';
 	import IconTrash from '$lib/components/svg/IconTrash.svelte';
 
 	function handleEdit(id: string, name: string) {
@@ -29,6 +30,9 @@
 </script>
 
 <div class="py-6">
+	<p class="mb-4 text-sm text-neutral-400">
+		Here you can manage each of the team settings and its members.
+	</p>
 	<Table>
 		<TableHeader>
 			<TableRow>
@@ -66,6 +70,19 @@
 			{/each}
 		</TableBody>
 	</Table>
+
+  <div class="mt-4 flex items-center gap-4">
+    <Button
+      variant="default"
+      class="py-5 border-1"
+      onclick={() => {
+        teamSettingsStore.showCreateView = true;
+      }}
+    >
+      <IconPlus additionalClass="!h-5 !w-5" />
+      Add Team
+    </Button>
+  </div>
 </div>
 
 <PageTeamSettingsDeleteDialog />
