@@ -82,6 +82,7 @@
 		const result = await response.json();
 
 		teamMembersStore.data = result.data;
+    console.log('team members store', teamMembersStore.data);
 	}
 
 	$effect(() => {
@@ -165,7 +166,7 @@
 							console.log('form id', $formData.id);
 							console.log('team id', teamSettingsStore.updateTeamSettingId);
 
-							teamMembersStore.currentMemberTeamId = teamSettingsStore.updateTeamSettingId;
+							teamMembersStore.currentMemberTeamId = teamSettingsStore.updateTeamSettingId ?? '';
 							console.log('team members store', teamMembersStore.currentMemberTeamId);
 							dialogStore.showTeamMembersCreate = true;
 						}}

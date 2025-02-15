@@ -15,13 +15,13 @@
 	import IconPencil from '$lib/components/svg/IconPencil.svelte';
 	import IconTrash from '$lib/components/svg/IconTrash.svelte';
 
-	function handleEdit(id: number, name: string) {
+	function handleEdit(id: string, name: string) {
 		teamSettingsStore.updateTeamSettingId = id;
 		teamSettingsStore.updateTeamSettingName = name;
 		teamSettingsStore.updateView = true;
 	}
 
-	function handleDelete(id: number, name: string) {
+	function handleDelete(id: string, name: string) {
 		teamSettingsStore.deleteTeamSettingId = id;
 		teamSettingsStore.deleteTeamSettingName = name;
 		dialogStore.showTeamSettingsDelete = true;

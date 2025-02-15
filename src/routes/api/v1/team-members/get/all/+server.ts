@@ -17,7 +17,7 @@ export const GET = async ({ locals, request }) => {
 
 		if (membersError) throw membersError;
 
-		return new Response(JSON.stringify({ success: true, members: data }), { status: 200 });
+		return new Response(JSON.stringify({ success: true, data }), { status: 200 });
 	} catch (error) {
 		console.error('Get all team members error:', error);
 		return new Response(JSON.stringify({ error: 'Failed to get all team members' }), { status: 500 });
