@@ -27,6 +27,7 @@
 	import PageTeamMembersCreateDialog from '$lib/components/PageTeamMembersCreateDialog.svelte';
 	import PageTeamMembersDeleteDialog from '$lib/components/PageTeamMembersDeleteDialog.svelte';
 	import IconArrowBack from '$lib/components/svg/IconArrowBack.svelte';
+	import IconUserPlus from '$lib/components/svg/IconUserPlus.svelte';
 
 	const form = superForm(
 		{
@@ -110,7 +111,7 @@
 			<FormControl let:attrs>
 				<FormLabel class="text-md !text-white">Team Name</FormLabel>
 				<FormDescription class="mb-4 text-sm text-neutral-400">
-					This is your team's name that will be displayed to the public.
+					This is your team's name that will be displayed as a identifier for your entire team.
 				</FormDescription>
 				<div class="flex flex-row items-center gap-2">
 					<Input
@@ -133,7 +134,7 @@
 
 	<div class="mt-8">
 		<h3 class="text-md font-medium">Team Members</h3>
-		<p class="mb-4 text-sm text-neutral-400">Add or remove team members from your team.</p>
+		<p class="mb-4 text-sm text-neutral-400">You can manage your team members here.</p>
 		<Table>
 			<TableHeader>
 				<TableRow>
@@ -187,6 +188,21 @@
 				</Button>
 				to add a new member.
 			</p>
+		{/if}
+		{#if teamMembersStore.data && teamMembersStore.data.length > 0}
+			<div class="mt-4 flex items-center gap-4">
+				<Button
+					variant="default"
+					class="py-5 border-1"
+					onclick={() => {
+						teamMembersStore.currentMemberTeamId = teamSettingsStore.currentTeamId ?? '';
+						dialogStore.showTeamMembersCreateDialog = true;
+					}}
+				>
+					<IconUserPlus additionalClass="h-4 w-4" />
+					Add new member
+				</Button>
+			</div>
 		{/if}
 	</div>
 
