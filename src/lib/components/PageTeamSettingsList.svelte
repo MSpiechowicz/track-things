@@ -38,14 +38,14 @@
 </script>
 
 <div class="py-6">
-	<p class="mb-4 text-sm text-neutral-400">
+	<p class="mb-2 text-sm text-neutral-400">
 		Here you can manage each of the team settings and its members.
 	</p>
-	<div class="mb-4 flex items-center gap-2">
+	<div class="mb-4 flex max-w-sm items-center gap-2">
 		<Input
 			placeholder="Search"
 			oninput={(e) => teamSettingsStore.filterData((e.target as HTMLInputElement)?.value)}
-			class="text-black"
+			class="text-black focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-0"
 		/>
 	</div>
 	<Table data-sveltekit-reload>
