@@ -11,11 +11,10 @@
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
 
+	import PageSortableHeader from '$lib/components/PageSortableHeader.svelte';
 	import PageTeamSettingsDeleteDialog from '$lib/components/PageTeamSettingsDeleteDialog.svelte';
 	import IconPencil from '$lib/components/svg/IconPencil.svelte';
 	import IconPlus from '$lib/components/svg/IconPlus.svelte';
-	import IconSortAscending from '$lib/components/svg/IconSortAscending.svelte';
-	import IconSortDescending from '$lib/components/svg/IconSortDescending.svelte';
 	import IconTrash from '$lib/components/svg/IconTrash.svelte';
 
 	function handleEdit(id: string, name: string) {
@@ -29,14 +28,6 @@
 		teamSettingsStore.currentTeamName = name;
 		dialogStore.showTeamSettingsDeleteDialog = true;
 	}
-
-	function handleSort(field: 'name' | 'members' | 'createdAt') {
-		teamSettingsStore.sortData(field);
-	}
-
-  function getSortStatus(): 'asc' | 'desc' {
-    return teamSettingsStore.currentSort.direction;
-  }
 </script>
 
 <div class="py-6">
@@ -48,55 +39,13 @@
 			<TableRow class="hover:bg-transparent">
 				<TableHead class="w-[100px] cursor-default">ID</TableHead>
 				<TableHead class="cursor-default">
-					<div class="flex items-center gap-2">
-						Name
-						<Button
-							variant="link"
-							size="icon"
-							class="w-fit [&>svg]:stroke-neutral-400 cursor-pointer"
-							onclick={() => handleSort('name')}
-						>
-            {#if getSortStatus() === 'asc'}
-              <IconSortAscending />
-            {:else}
-              <IconSortDescending />
-            {/if}
-						</Button>
-					</div>
+					<PageSortableHeader label="Name" field="name" store={teamSettingsStore} />
 				</TableHead>
 				<TableHead class="cursor-default">
-					<div class="flex items-center gap-2">
-						Members
-						<Button
-							variant="link"
-							size="icon"
-							class="w-fit [&>svg]:stroke-neutral-400 cursor-pointer"
-							onclick={() => handleSort('members')}
-						>
-              {#if getSortStatus() === 'asc'}
-                <IconSortAscending />
-              {:else}
-                <IconSortDescending />
-              {/if}
-						</Button>
-					</div>
+					<PageSortableHeader label="Members" field="members" store={teamSettingsStore} />
 				</TableHead>
 				<TableHead class="cursor-default">
-					<div class="flex items-center gap-2">
-						Date Created
-						<Button
-							variant="link"
-							size="icon"
-							class="w-fit [&>svg]:stroke-neutral-400 cursor-pointer"
-							onclick={() => handleSort('createdAt')}
-						>
-              {#if getSortStatus() === 'asc'}
-                <IconSortAscending />
-              {:else}
-                <IconSortDescending />
-              {/if}
-						</Button>
-					</div>
+					<PageSortableHeader label="Date Created" field="createdAt" store={teamSettingsStore} />
 				</TableHead>
 				<TableHead class="w-[100px] cursor-default">Actions</TableHead>
 			</TableRow>
