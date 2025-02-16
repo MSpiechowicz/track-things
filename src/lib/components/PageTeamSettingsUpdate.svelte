@@ -177,22 +177,13 @@
 			</TableBody>
 		</Table>
 		{#if !teamMembersStore.data || teamMembersStore.data.length === 0}
-			<p class="mt-4 text-center text-sm text-neutral-400">
-				No team members are currently assigned to your team. Click
-				<Button
-					variant="link"
-					class="p-0 text-white"
-					onclick={() => {
-						teamMembersStore.currentMemberTeamId = teamSettingsStore.currentTeamId ?? '';
-						dialogStore.showTeamMembersCreateDialog = true;
-					}}
-				>
-					here
-				</Button>
-				to add a new member.
-			</p>
+			<div class="flex w-full items-center justify-center h-[68.5px]">
+				<p class="text-sm text-neutral-400">
+					There are currently no team members assigned to your team.
+				</p>
+			</div>
 		{/if}
-		{#if teamMembersStore.data && teamMembersStore.data.length > 0}
+
 			<div class="mt-4 flex items-center gap-4">
 				<Button
 					variant="default"
@@ -206,7 +197,7 @@
 					Add Member
 				</Button>
 			</div>
-		{/if}
+
 	</div>
 </div>
 
