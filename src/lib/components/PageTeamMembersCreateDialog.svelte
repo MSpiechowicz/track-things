@@ -33,9 +33,9 @@
 		{
 			validators: teamMembersCreateSchemaValidator,
 			onResult: async (event) => {
-				const eventType = event.result.type as 'success' | 'failure';
+				const eventType = event.result?.type as 'success' | 'failure';
 				// @ts-expect-error - This is a valid type
-				const eventData = event.result.data;
+				const eventData = event.result?.data;
 
 				if (eventType === 'success') {
 					// Check if member already exists
