@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { Button } from '$lib/components/ui/button';
+
 	import IconSortAscending from '$lib/components/svg/IconSortAscending.svelte';
 	import IconSortDescending from '$lib/components/svg/IconSortDescending.svelte';
 
