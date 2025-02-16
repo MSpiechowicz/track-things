@@ -54,9 +54,24 @@
 		<TableHeader>
 			<TableRow class="hover:bg-transparent">
 				<TableHead class="w-[100px] cursor-default">ID</TableHead>
-				<PageTableSortableHeader label="Name" field="name" store={teamSettingsStore} />
-				<PageTableSortableHeader label="Members" field="members" store={teamSettingsStore} />
-				<PageTableSortableHeader label="Date Created" field="createdAt" store={teamSettingsStore} />
+				<PageTableSortableHeader
+					label="Name"
+					field="name"
+					store={teamSettingsStore}
+					additionalClass="w-50"
+				/>
+				<PageTableSortableHeader
+					label="Members"
+					field="members"
+					store={teamSettingsStore}
+					additionalClass="w-[fit-content]"
+				/>
+				<PageTableSortableHeader
+					label="Date Created"
+					field="createdAt"
+					store={teamSettingsStore}
+					additionalClass="w-[fit-content]"
+				/>
 				<TableHead class="w-[100px] cursor-default">Actions</TableHead>
 			</TableRow>
 		</TableHeader>

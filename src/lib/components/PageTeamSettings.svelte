@@ -6,7 +6,8 @@
 	import DashboardContainer from './PageDashboardContainer.svelte';
 	import PageProgressBar from './PageProgressBar.svelte';
 	import PageTeamSettingsCreate from './PageTeamSettingsCreate.svelte';
-	import PageTeamSettingsList from './PageTeamSettingsList.svelte';
+	import PageTeamSettingsMemberList from './PageTeamSettingsMemberList.svelte';
+	import PageTeamSettingsOwnerList from './PageTeamSettingsOwnerList.svelte';
 	import PageTeamSettingsUpdate from './PageTeamSettingsUpdate.svelte';
 
 	async function loadTeamSettings() {
@@ -64,7 +65,8 @@
 		{:else if teamSettings.length === 0 || teamSettingsStore.showCreateView}
 			<PageTeamSettingsCreate />
 		{:else}
-			<PageTeamSettingsList />
+			<PageTeamSettingsOwnerList />
+			<PageTeamSettingsMemberList />
 		{/if}
 	{/if}
 </DashboardContainer>
