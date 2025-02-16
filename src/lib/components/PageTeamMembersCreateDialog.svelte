@@ -18,6 +18,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamMembersStore } from '$lib/stores/teamMembersStore.svelte';
+	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
 	import { teamMembersCreateSchemaValidator } from '$lib/validators/teamMembersCreateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
@@ -26,39 +27,71 @@
 
 	const form = superForm(
 		{
-			email: teamMembersStore.currentMemberEmail ?? '',
-      teamId: teamMembersStore.currentMemberTeamId ?? ''
+			email: '',
+			teamId: teamMembersStore.currentMemberTeamId ?? ''
 		},
 		{
 			validators: teamMembersCreateSchemaValidator,
 			onResult: async (event) => {
-				const eventType = event.result.type;
+				const eventType = event.result.type as 'success' | 'failure';
 
 				if (eventType === 'success') {
-          // @ts-expect-error - data is present
-          const existingMember = teamMembersStore.data?.filter(member => member.email === event.result.data?.email);
+					// Check if member already exists
+					const existingMember = teamMembersStore.data.find(
+						member => member.email === event.result.data?.email
+					);
 
-          if (!existingMember || existingMember?.length === 0) {
-            teamMembersStore.data = [];
-            teamMembersStore.data.push({
-              id: event.result.data?.id,
-              name: event.result.data?.name,
-              email: event.result.data?.email,
-              created_at: event.result.data?.created_at,
-              permissions: event.result.data?.permissions
-            });
-          }
+					if (!existingMember) {
+						// Update teamMembersStore
+						teamMembersStore.data.push({
+							id: event.result.data?.id,
+							email: event.result.data?.email,
+							name: event.result.data?.name,
+							permissions: event.result.data?.permissions,
+							created_at: event.result.data?.created_at
+						});
 
-          dialogStore.showTeamMembersCreateDialog = false;
+						// Update currentTeamMembers
+						teamSettingsStore.currentTeamMembers.push({
+							id: event.result.data?.id,
+							email: event.result.data?.email,
+							name: event.result.data?.name,
+							permissions: event.result.data?.permissions,
+							created_at: event.result.data?.created_at
+						});
 
-					toast.success('Success', {
-						description: 'Your team has been updated successfully.'
-					});
+						// Update the members array in the main data array
+						teamSettingsStore.data = teamSettingsStore.data.map((team) => {
+							if (team.id === teamMembersStore.currentMemberTeamId) {
+								return {
+									...team,
+									members: [
+										...team.members,
+										{
+											id: event.result.data?.id,
+											email: event.result.data?.email,
+											name: event.result.data?.name,
+											permissions: event.result.data?.permissions,
+											created_at: event.result.data?.created_at
+										}
+									]
+								};
+							}
+							return team;
+						});
+
+						dialogStore.showTeamMembersCreateDialog = false;
+						form.reset();
+
+						toast.success('Success', {
+							description: 'Your team member has been added successfully.'
+						});
+					}
 				}
 
 				if (eventType === 'failure') {
 					toast.error('Error', {
-						description: 'We were unable to update your team. Please try again.'
+						description: 'We were unable to add your team member. Please try again.'
 					});
 				}
 			}
