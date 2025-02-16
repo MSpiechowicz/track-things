@@ -94,3 +94,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+p {
+  @apply max-w-[80ch];
+}

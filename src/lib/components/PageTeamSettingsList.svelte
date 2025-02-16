@@ -12,7 +12,7 @@
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
 
-	import PageSortableHeader from '$lib/components/PageSortableHeader.svelte';
+	import PageTableSortableHeader from '$lib/components/PageTableSortableHeader.svelte';
 	import PageTeamSettingsDeleteDialog from '$lib/components/PageTeamSettingsDeleteDialog.svelte';
 	import IconPencil from '$lib/components/svg/IconPencil.svelte';
 	import IconPlus from '$lib/components/svg/IconPlus.svelte';
@@ -38,9 +38,10 @@
 </script>
 
 <div class="py-6">
-	<h3 class="mb-0 text-md text-white">Owner</h3>
-	<p class="mb-4 text-sm text-neutral-400 max-w-[80ch]">
-		Here you can find a list of all the teams you have created. As an owner, you can manage each of the individual team settings and its corresponding members.
+	<h3 class="text-md mb-0 text-white">Owner</h3>
+	<p class="mb-4 text-sm text-neutral-400">
+		Here you can find a list of all the teams you have created. As an owner, you can manage each of
+		the individual team settings and its corresponding members.
 	</p>
 	<div class="mb-4 flex max-w-sm items-center gap-2">
 		<Input
@@ -53,15 +54,9 @@
 		<TableHeader>
 			<TableRow class="hover:bg-transparent">
 				<TableHead class="w-[100px] cursor-default">ID</TableHead>
-				<TableHead class="cursor-default">
-					<PageSortableHeader label="Name" field="name" store={teamSettingsStore} />
-				</TableHead>
-				<TableHead class="cursor-default">
-					<PageSortableHeader label="Members" field="members" store={teamSettingsStore} />
-				</TableHead>
-				<TableHead class="cursor-default">
-					<PageSortableHeader label="Date Created" field="createdAt" store={teamSettingsStore} />
-				</TableHead>
+				<PageTableSortableHeader label="Name" field="name" store={teamSettingsStore} />
+				<PageTableSortableHeader label="Members" field="members" store={teamSettingsStore} />
+				<PageTableSortableHeader label="Date Created" field="createdAt" store={teamSettingsStore} />
 				<TableHead class="w-[100px] cursor-default">Actions</TableHead>
 			</TableRow>
 		</TableHeader>

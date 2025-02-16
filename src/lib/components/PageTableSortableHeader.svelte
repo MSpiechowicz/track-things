@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
+	import { TableHead } from '$lib/components/ui/table';
 	import type { TableSortableDataType } from '$lib/types/tableSortableDataType';
 
 	import IconSortAscending from '$lib/components/svg/IconSortAscending.svelte';
@@ -12,9 +13,10 @@
 	}>();
 </script>
 
-<div class="flex items-center gap-2">
-	{label}
-	<Button
+<TableHead class="cursor-default">
+	<div class="flex items-center gap-2">
+		{label}
+		<Button
 		variant="link"
 		size="icon"
 		class="w-fit cursor-pointer [&>svg]:stroke-neutral-400"
@@ -26,4 +28,5 @@
 			<IconSortDescending />
 		{/if}
 	</Button>
-</div>
+	</div>
+</TableHead>
