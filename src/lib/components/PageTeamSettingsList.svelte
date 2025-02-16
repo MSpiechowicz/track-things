@@ -34,14 +34,8 @@
 		teamSettingsStore.sortData(field);
 	}
 
-  function getSortStatus(field: 'name' | 'members' | 'createdAt'): 'asc' | 'desc' {
-    const sortItem = teamSettingsStore.currentSort.find(item => item.field === field);
-
-    if (sortItem) {
-      return sortItem.direction;
-    }
-
-    return 'asc';
+  function getSortStatus(): 'asc' | 'desc' {
+    return teamSettingsStore.currentSort.direction;
   }
 </script>
 
@@ -62,7 +56,7 @@
 							class="w-fit [&>svg]:stroke-neutral-400 cursor-pointer"
 							onclick={() => handleSort('name')}
 						>
-            {#if getSortStatus('name') === 'asc'}
+            {#if getSortStatus() === 'asc'}
               <IconSortAscending />
             {:else}
               <IconSortDescending />
@@ -79,7 +73,7 @@
 							class="w-fit [&>svg]:stroke-neutral-400 cursor-pointer"
 							onclick={() => handleSort('members')}
 						>
-              {#if getSortStatus('members') === 'asc'}
+              {#if getSortStatus() === 'asc'}
                 <IconSortAscending />
               {:else}
                 <IconSortDescending />
@@ -96,7 +90,7 @@
 							class="w-fit [&>svg]:stroke-neutral-400 cursor-pointer"
 							onclick={() => handleSort('createdAt')}
 						>
-              {#if getSortStatus('createdAt') === 'asc'}
+              {#if getSortStatus() === 'asc'}
                 <IconSortAscending />
               {:else}
                 <IconSortDescending />

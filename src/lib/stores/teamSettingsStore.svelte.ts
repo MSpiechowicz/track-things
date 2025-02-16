@@ -5,7 +5,7 @@ type SortField = 'name' | 'members' | 'createdAt';
 type SortDirection = 'asc' | 'desc';
 
 type SortItem = {
-	field: SortField;
+	fields: SortField[];
 	direction: SortDirection;
 };
 
@@ -16,29 +16,16 @@ export const teamSettingsStore = $state({
 	currentTeamMembers: [] as TeamMemberType[],
 	currentTeamId: null as string | null,
 	currentTeamName: null as string | null,
-	currentSort: [{
-    field: 'name',
-    direction: 'asc'
-  }, {
-    field: 'members',
-    direction: 'asc'
-  }, {
-    field: 'createdAt',
-    direction: 'asc'
-  }] as SortItem[],
+	currentSort: {
+		fields: ['name', 'members', 'createdAt'] as SortField[],
+		direction: 'asc' as SortDirection
+	} as SortItem,
 	sortData: (field: SortField) => {
-		const itemIndex = teamSettingsStore.currentSort.findIndex((item) => item.field === field);
-
-
-    console.log(' old team field sort', teamSettingsStore.currentSort[itemIndex]);
-
-		teamSettingsStore.currentSort[itemIndex].direction =
-			teamSettingsStore.currentSort[itemIndex].direction === 'asc' ? 'desc' : 'asc';
-
-
+		teamSettingsStore.currentSort.direction =
+			teamSettingsStore.currentSort.direction === 'asc' ? 'desc' : 'asc';
 
 		teamSettingsStore.data = [...teamSettingsStore.data].sort((a, b) => {
-			const modifier = teamSettingsStore.currentSort[itemIndex].direction === 'asc' ? 1 : -1;
+			const modifier = teamSettingsStore.currentSort.direction === 'asc' ? 1 : -1;
 
 			switch (field) {
 				case 'name':
@@ -51,7 +38,5 @@ export const teamSettingsStore = $state({
 					return 0;
 			}
 		});
-
-    console.log(' new team field sort', teamSettingsStore.currentSort[itemIndex]);
 	}
 });
