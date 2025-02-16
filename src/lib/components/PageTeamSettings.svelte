@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { DASHBOARD_VIEWS } from '$lib/constants';
-	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
+	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
 	import { timer } from '$lib/utils/progressTimer.svelte';
 
 	import DashboardContainer from './PageDashboardContainer.svelte';
@@ -20,9 +20,9 @@
 		try {
 			const resultTeamSettings = await responseTeamSettings.json();
 
-			teamSettingsStore.data = resultTeamSettings.data;
+			teamSettingsOwnerStore.data = resultTeamSettings.data;
 
-			for (const teamSetting of teamSettingsStore.data) {
+			for (const teamSetting of teamSettingsOwnerStore.data) {
 				const responseTeamMembers = await fetch(
 					`/api/v1/team-members/get/all?teamId=${teamSetting.id}`
 				);
@@ -42,7 +42,7 @@
 		}
 	}
 
-	let teamSettings = $derived(teamSettingsStore.data);
+	let teamSettings = $derived(teamSettingsOwnerStore.data);
 
 	$effect.pre(() => {
 		loadTeamSettings();
@@ -60,9 +60,9 @@
 		</div>
 	{/if}
 	{#if timer.isFinished}
-		{#if teamSettingsStore.showUpdateView}
+		{#if teamSettingsOwnerStore.showUpdateView}
 			<PageTeamSettingsUpdate />
-		{:else if teamSettings.length === 0 || teamSettingsStore.showCreateView}
+		{:else if teamSettings.length === 0 || teamSettingsOwnerStore.showCreateView}
 			<PageTeamSettingsCreate />
 		{:else}
 			<PageTeamSettingsOwnerList />

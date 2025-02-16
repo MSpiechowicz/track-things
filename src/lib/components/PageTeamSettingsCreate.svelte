@@ -3,7 +3,7 @@
 	import { FormControl, FormField, FormFieldErrors, FormLabel } from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import { dashboardStore } from '$lib/stores/dashboardStore.svelte';
-	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
+	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
 	import { teamSettingsCreateSchemaValidator } from '$lib/validators/teamSettingsCreateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
@@ -17,15 +17,15 @@
 			onResult: async (event) => {
 				switch (event.result.type) {
 					case 'success':
-						teamSettingsStore.data.push({
+						teamSettingsOwnerStore.data.push({
 							id: event.result.data?.id,
 							name: event.result.data?.name,
 							updated_at: event.result.data?.updated_at,
 							members: []
 						});
 
-            if (teamSettingsStore.data?.length > 0) {
-              teamSettingsStore.showCreateView = false;
+            if (teamSettingsOwnerStore.data?.length > 0) {
+              teamSettingsOwnerStore.showCreateView = false;
               dashboardStore.isChildView = false;
             }
 
@@ -46,10 +46,10 @@
 	const { form: formData, enhance } = form;
 
   $effect(() => {
-    if (teamSettingsStore.data?.length > 0) {
+    if (teamSettingsOwnerStore.data?.length > 0) {
       dashboardStore.isChildView = true;
       dashboardStore.goBack = () => {
-        teamSettingsStore.showCreateView = false;
+        teamSettingsOwnerStore.showCreateView = false;
         dashboardStore.isChildView = false;
       };
     }

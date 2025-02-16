@@ -12,12 +12,12 @@
 		TableHeader,
 		TableRow
 	} from '$lib/components/ui/table';
-	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
+	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
 
 	const data = $derived(
-		teamSettingsStore.dataFiltered && teamSettingsStore.dataFiltered.length > 0
-			? teamSettingsStore.dataFiltered
-			: teamSettingsStore.data
+		teamSettingsOwnerStore.dataFiltered && teamSettingsOwnerStore.dataFiltered.length > 0
+			? teamSettingsOwnerStore.dataFiltered
+			: teamSettingsOwnerStore.data
 	);
 </script>
 
@@ -29,7 +29,7 @@
 	<div class="mb-4 flex max-w-sm items-center gap-2">
 		<Input
 			placeholder="Search"
-			oninput={(e) => teamSettingsStore.filterData((e.target as HTMLInputElement)?.value)}
+			oninput={(e) => teamSettingsOwnerStore.filterData((e.target as HTMLInputElement)?.value)}
 			class="text-black"
 		/>
 	</div>
@@ -40,13 +40,13 @@
 				<PageTableSortableHeader
 					label="Name"
 					field="name"
-					store={teamSettingsStore}
+					store={teamSettingsOwnerStore}
 					additionalClass="w-50"
 				/>
 				<PageTableSortableHeader
 					label="Joined at"
 					field="createdAt"
-					store={teamSettingsStore}
+					store={teamSettingsOwnerStore}
 					additionalClass="w-[fit-content]"
 				/>
 				<TableHead class="w-[100px] cursor-default">Actions</TableHead>

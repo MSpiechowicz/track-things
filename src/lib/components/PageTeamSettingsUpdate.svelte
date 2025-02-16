@@ -20,7 +20,7 @@
 	import { dashboardStore } from '$lib/stores/dashboardStore.svelte';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamMembersStore } from '$lib/stores/teamMembersStore.svelte';
-	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
+	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
 	import { teamSettingsUpdateSchemaValidator } from '$lib/validators/teamSettingsUpdateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
@@ -31,8 +31,8 @@
 
 	const form = superForm(
 		{
-			id: teamSettingsStore.currentTeamId ?? '',
-			name: teamSettingsStore.currentTeamName ?? ''
+			id: teamSettingsOwnerStore.currentTeamId ?? '',
+			name: teamSettingsOwnerStore.currentTeamName ?? ''
 		},
 		{
 			validators: teamSettingsUpdateSchemaValidator,
@@ -40,26 +40,36 @@
 				const eventType = event.result.type;
 
 				if (eventType === 'success') {
-					const existingIndex = teamSettingsStore.data.findIndex(
+					const existingIndex = teamSettingsOwnerStore.data.findIndex(
 						// @ts-expect-error - data is present
 						(item) => item.id === event.result.data?.id
 					);
 
 					if (existingIndex !== -1) {
-						teamSettingsStore.data[existingIndex] = {
+						teamSettingsOwnerStore.data[existingIndex] = {
 							id: event.result.data?.id,
 							name: event.result.data?.name,
 							updated_at: event.result.data?.updated_at,
 							members: teamMembersStore.data
 						};
 					} else {
-						teamSettingsStore.data.push({
+						teamSettingsOwnerStore.data.push({
 							id: event.result.data?.id,
 							name: event.result.data?.name,
 							updated_at: event.result.data?.updated_at,
 							members: teamMembersStore.data
 						});
 					}
+
+          // Update the current team name
+					teamSettingsOwnerStore.currentTeamName = event.result.data?.name;
+
+          // Reset the form
+					form.reset({
+						id: event.result.data?.id ?? '',
+            // @ts-expect-error - This is a valid type
+						name: event.result.data?.name ?? ''
+					});
 
 					toast.success('Success', {
 						description: 'Your team has been updated successfully.'
@@ -79,7 +89,7 @@
 
 	async function getAllTeamMembers() {
 		const response = await fetch(
-			`/api/v1/team-members/get/all?teamId=${teamSettingsStore.currentTeamId}`
+			`/api/v1/team-members/get/all?teamId=${teamSettingsOwnerStore.currentTeamId}`
 		);
 		const result = await response.json();
 
@@ -91,12 +101,12 @@
 
 		dashboardStore.isChildView = true;
 		dashboardStore.goBack = () => {
-			teamSettingsStore.showUpdateView = false;
+			teamSettingsOwnerStore.showUpdateView = false;
 			dashboardStore.isChildView = false;
 		};
 
-		$formData.name = teamSettingsStore.currentTeamName ?? '';
-		$formData.id = teamSettingsStore.currentTeamId ?? '';
+		$formData.name = teamSettingsOwnerStore.currentTeamName ?? '';
+		$formData.id = teamSettingsOwnerStore.currentTeamId ?? '';
 	});
 </script>
 
@@ -109,7 +119,7 @@
 		id="update-team-form"
 		data-sveltekit-reload
 	>
-		<input type="hidden" name="id" value={teamSettingsStore.currentTeamId ?? ''} />
+		<input type="hidden" name="id" value={teamSettingsOwnerStore.currentTeamId ?? ''} />
 		<FormField {form} name="name" let:errors>
 			<FormControl let:attrs>
 				<FormLabel class="text-md !text-white">Team Name</FormLabel>
@@ -165,7 +175,7 @@
 									teamMembersStore.currentMemberId = member.id;
 									teamMembersStore.currentMemberName = member.name;
 									teamMembersStore.currentMemberEmail = member.email;
-									teamMembersStore.currentMemberTeamId = teamSettingsStore.currentTeamId;
+									teamMembersStore.currentMemberTeamId = teamSettingsOwnerStore.currentTeamId;
 									dialogStore.showTeamMembersDeleteDialog = true;
 								}}
 							>
@@ -177,27 +187,26 @@
 			</TableBody>
 		</Table>
 		{#if !teamMembersStore.data || teamMembersStore.data.length === 0}
-			<div class="flex w-full items-center justify-center h-[68.5px]">
+			<div class="flex h-[68.5px] w-full items-center justify-center">
 				<p class="text-sm text-neutral-400">
 					There are currently no team members assigned to your team.
 				</p>
 			</div>
 		{/if}
 
-			<div class="mt-4 flex items-center gap-4">
-				<Button
-					variant="default"
-					class="py-5 border-1"
-					onclick={() => {
-						teamMembersStore.currentMemberTeamId = teamSettingsStore.currentTeamId ?? '';
-						dialogStore.showTeamMembersCreateDialog = true;
-					}}
-				>
-					<IconPlus additionalClass="!h-5 !w-5" />
-					Add Member
-				</Button>
-			</div>
-
+		<div class="mt-4 flex items-center gap-4">
+			<Button
+				variant="default"
+				class="border-1 py-5"
+				onclick={() => {
+					teamMembersStore.currentMemberTeamId = teamSettingsOwnerStore.currentTeamId ?? '';
+					dialogStore.showTeamMembersCreateDialog = true;
+				}}
+			>
+				<IconPlus additionalClass="!h-5 !w-5" />
+				Add Member
+			</Button>
+		</div>
 	</div>
 </div>
 

@@ -1,6 +1,6 @@
+import type { SortableDirectionType } from '$lib/types/sortableDirectionType';
 import type { TeamMemberType } from '$lib/types/teamMemberType';
 import type { TeamSettingType } from '$lib/types/teamSettingsType';
-import type { SortableDirectionType } from '$lib/types/sortableDirectionType';
 
 type SortField = 'name' | 'members' | 'createdAt';
 
@@ -9,7 +9,7 @@ type SortItem = {
 	direction: SortableDirectionType;
 };
 
-export const teamSettingsStore = $state({
+export const teamSettingsOwnerStore = $state({
 	data: [] as TeamSettingType[],
 	dataFiltered: [] as TeamSettingType[],
   dataSorted: {
@@ -22,11 +22,11 @@ export const teamSettingsStore = $state({
 	currentTeamId: null as string | null,
 	currentTeamName: null as string | null,
 	sortData: (field: string) => {
-		teamSettingsStore.dataSorted.direction =
-			teamSettingsStore.dataSorted.direction === 'asc' ? 'desc' : 'asc';
+		teamSettingsOwnerStore.dataSorted.direction =
+			teamSettingsOwnerStore.dataSorted.direction === 'asc' ? 'desc' : 'asc';
 
-		teamSettingsStore.data = [...teamSettingsStore.data].sort((a, b) => {
-			const modifier = teamSettingsStore.dataSorted.direction === 'asc' ? 1 : -1;
+		teamSettingsOwnerStore.data = [...teamSettingsOwnerStore.data].sort((a, b) => {
+			const modifier = teamSettingsOwnerStore.dataSorted.direction === 'asc' ? 1 : -1;
 
 			switch (field) {
 				case 'name':
@@ -41,7 +41,7 @@ export const teamSettingsStore = $state({
 		});
 	},
   filterData: (search: string) => {
-		teamSettingsStore.dataFiltered = teamSettingsStore.data.filter((item) => {
+		teamSettingsOwnerStore.dataFiltered = teamSettingsOwnerStore.data.filter((item) => {
 			return (
 				item.id.toLowerCase().includes(search.toLowerCase()) ||
 				item.name.toLowerCase().includes(search.toLowerCase()) ||

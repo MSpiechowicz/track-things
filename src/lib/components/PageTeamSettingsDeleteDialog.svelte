@@ -9,7 +9,7 @@
 		DialogTitle
 	} from '$lib/components/ui/dialog';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
-	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
+	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
 	import { toast } from "svelte-sonner";
 
   async function handleDelete(id: string | null) {
@@ -25,9 +25,9 @@
     });
 
     if (response.ok) {
-      teamSettingsStore.data = teamSettingsStore.data.filter(entry => entry.id !== id);
-      teamSettingsStore.currentTeamId = null;
-      teamSettingsStore.currentTeamName = null;
+      teamSettingsOwnerStore.data = teamSettingsOwnerStore.data.filter(entry => entry.id !== id);
+      teamSettingsOwnerStore.currentTeamId = null;
+      teamSettingsOwnerStore.currentTeamName = null;
       dialogStore.showTeamSettingsDeleteDialog = false;
 
       toast.success("Success", {
@@ -46,12 +46,12 @@
 		<DialogHeader>
 			<DialogTitle class="text-xl">Delete Team Settings</DialogTitle>
 			<DialogDescription class="text-base text-neutral-600">
-				Are you sure you want to delete team <span class="font-bold">{teamSettingsStore.currentTeamName}</span> settings?
+				Are you sure you want to delete team <span class="font-bold">{teamSettingsOwnerStore.currentTeamName}</span> settings?
 			</DialogDescription>
 		</DialogHeader>
 		<DialogFooter class="mt-4 flex flex-col gap-3 sm:flex-row sm:gap-2">
 			<Button variant="outline" onclick={() => (dialogStore.showTeamSettingsDeleteDialog = false)}>Cancel</Button>
-			<Button variant="destructive" onclick={() => handleDelete(teamSettingsStore.currentTeamId)}>Delete</Button>
+			<Button variant="destructive" onclick={() => handleDelete(teamSettingsOwnerStore.currentTeamId)}>Delete</Button>
 		</DialogFooter>
 	</DialogContent>
 </Dialog>

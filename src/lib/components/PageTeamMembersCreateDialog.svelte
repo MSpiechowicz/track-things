@@ -18,7 +18,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamMembersStore } from '$lib/stores/teamMembersStore.svelte';
-	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
+	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
 	import { teamMembersCreateSchemaValidator } from '$lib/validators/teamMembersCreateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
@@ -54,7 +54,7 @@
 						});
 
 						// Update currentTeamMembers
-						teamSettingsStore.currentTeamMembers.push({
+						teamSettingsOwnerStore.currentTeamMembers.push({
 							id: eventData?.id,
 							email: eventData?.email,
 							name: eventData?.name,
@@ -63,7 +63,7 @@
 						});
 
 						// Update the members array in the main data array
-						teamSettingsStore.data = teamSettingsStore.data.map((team) => {
+						teamSettingsOwnerStore.data = teamSettingsOwnerStore.data.map((team) => {
 							if (team.id === teamMembersStore.currentMemberTeamId) {
 								return {
 									...team,

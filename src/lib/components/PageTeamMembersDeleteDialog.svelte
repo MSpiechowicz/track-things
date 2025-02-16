@@ -10,7 +10,7 @@
 	} from '$lib/components/ui/dialog';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamMembersStore } from '$lib/stores/teamMembersStore.svelte';
-	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
+	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
 	import { toast } from 'svelte-sonner';
 
 	async function handleDelete(email: string | null, teamId: string | null) {
@@ -28,11 +28,11 @@
 		const result = await response.json();
 
 		if (result.success) {
-			teamSettingsStore.currentTeamMembers = teamSettingsStore.currentTeamMembers.filter(
+			teamSettingsOwnerStore.currentTeamMembers = teamSettingsOwnerStore.currentTeamMembers.filter(
 				(entry) => entry.email !== email
 			);
 
-			teamSettingsStore.data = teamSettingsStore.data.map((team) => {
+			teamSettingsOwnerStore.data = teamSettingsOwnerStore.data.map((team) => {
 				if (team.id === teamId) {
 					return {
 						...team,
