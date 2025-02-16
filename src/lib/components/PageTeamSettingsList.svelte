@@ -38,14 +38,15 @@
 </script>
 
 <div class="py-6">
-	<p class="mb-2 text-sm text-neutral-400">
-		Here you can manage each of the team settings and its members.
+	<h3 class="mb-0 text-md text-white">Owner</h3>
+	<p class="mb-4 text-sm text-neutral-400 max-w-[80ch]">
+		Here you can find a list of all the teams you have created. As an owner, you can manage each of the individual team settings and its corresponding members.
 	</p>
 	<div class="mb-4 flex max-w-sm items-center gap-2">
 		<Input
 			placeholder="Search"
 			oninput={(e) => teamSettingsStore.filterData((e.target as HTMLInputElement)?.value)}
-			class="text-black focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-0"
+			class="text-black"
 		/>
 	</div>
 	<Table data-sveltekit-reload>
