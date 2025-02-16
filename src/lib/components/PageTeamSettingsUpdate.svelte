@@ -142,10 +142,10 @@
 			<TableHeader>
 				<TableRow>
 					<TableHead class="w-16">ID</TableHead>
-					<TableHead>Name</TableHead>
-					<TableHead>Email</TableHead>
-					<TableHead>Joined Date</TableHead>
-					<TableHead>Permissions</TableHead>
+					<TableHead class="w-50">Name</TableHead>
+					<TableHead class="w-64">Email</TableHead>
+					<TableHead class="w-40">Joined Date</TableHead>
+					<TableHead class="w-40">Permissions</TableHead>
 					<TableHead class="w-16">Actions</TableHead>
 				</TableRow>
 			</TableHeader>
