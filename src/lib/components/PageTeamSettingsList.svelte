@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
+	import { Input } from '$lib/components/ui/input';
 	import {
 		Table,
 		TableBody,
@@ -28,12 +29,25 @@
 		teamSettingsStore.currentTeamName = name;
 		dialogStore.showTeamSettingsDeleteDialog = true;
 	}
+
+	const data = $derived(
+		teamSettingsStore.dataFiltered && teamSettingsStore.dataFiltered.length > 0
+			? teamSettingsStore.dataFiltered
+			: teamSettingsStore.data
+	);
 </script>
 
 <div class="py-6">
 	<p class="mb-4 text-sm text-neutral-400">
 		Here you can manage each of the team settings and its members.
 	</p>
+	<div class="mb-4 flex items-center gap-2">
+		<Input
+			placeholder="Search"
+			oninput={(e) => teamSettingsStore.filterData((e.target as HTMLInputElement)?.value)}
+			class="text-black"
+		/>
+	</div>
 	<Table data-sveltekit-reload>
 		<TableHeader>
 			<TableRow class="hover:bg-transparent">
@@ -51,7 +65,7 @@
 			</TableRow>
 		</TableHeader>
 		<TableBody>
-			{#each teamSettingsStore.data as entry, index}
+			{#each data as entry, index}
 				<TableRow>
 					<TableCell>{index + 1}</TableCell>
 					<TableCell>{entry.name}</TableCell>
