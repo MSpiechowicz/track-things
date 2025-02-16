@@ -14,6 +14,8 @@
 	import PageTeamSettingsDeleteDialog from '$lib/components/PageTeamSettingsDeleteDialog.svelte';
 	import IconPencil from '$lib/components/svg/IconPencil.svelte';
 	import IconPlus from '$lib/components/svg/IconPlus.svelte';
+	import IconSortAscending from '$lib/components/svg/IconSortAscending.svelte';
+	import IconSortDescending from '$lib/components/svg/IconSortDescending.svelte';
 	import IconTrash from '$lib/components/svg/IconTrash.svelte';
 
 	function handleEdit(id: string, name: string) {
@@ -27,20 +29,82 @@
 		teamSettingsStore.currentTeamName = name;
 		dialogStore.showTeamSettingsDeleteDialog = true;
 	}
+
+	function handleSort(field: 'name' | 'members' | 'createdAt') {
+		teamSettingsStore.sortData(field);
+	}
+
+  function getSortStatus(field: 'name' | 'members' | 'createdAt'): 'asc' | 'desc' {
+    const sortItem = teamSettingsStore.currentSort.find(item => item.field === field);
+
+    if (sortItem) {
+      return sortItem.direction;
+    }
+
+    return 'asc';
+  }
 </script>
 
 <div class="py-6">
 	<p class="mb-4 text-sm text-neutral-400">
 		Here you can manage each of the team settings and its members.
 	</p>
-	<Table>
+	<Table data-sveltekit-reload>
 		<TableHeader>
-			<TableRow>
-				<TableHead class="w-[100px]">ID</TableHead>
-				<TableHead>Name</TableHead>
-				<TableHead>Members</TableHead>
-				<TableHead>Last Updated</TableHead>
-				<TableHead class="w-[100px]">Actions</TableHead>
+			<TableRow class="hover:bg-transparent">
+				<TableHead class="w-[100px] cursor-default">ID</TableHead>
+				<TableHead class="cursor-default">
+					<div class="flex items-center gap-2">
+						Name
+						<Button
+							variant="link"
+							size="icon"
+							class="w-fit [&>svg]:stroke-neutral-400 cursor-pointer"
+							onclick={() => handleSort('name')}
+						>
+            {#if getSortStatus('name') === 'asc'}
+              <IconSortAscending />
+            {:else}
+              <IconSortDescending />
+            {/if}
+						</Button>
+					</div>
+				</TableHead>
+				<TableHead class="cursor-default">
+					<div class="flex items-center gap-2">
+						Members
+						<Button
+							variant="link"
+							size="icon"
+							class="w-fit [&>svg]:stroke-neutral-400 cursor-pointer"
+							onclick={() => handleSort('members')}
+						>
+              {#if getSortStatus('members') === 'asc'}
+                <IconSortAscending />
+              {:else}
+                <IconSortDescending />
+              {/if}
+						</Button>
+					</div>
+				</TableHead>
+				<TableHead class="cursor-default">
+					<div class="flex items-center gap-2">
+						Date Created
+						<Button
+							variant="link"
+							size="icon"
+							class="w-fit [&>svg]:stroke-neutral-400 cursor-pointer"
+							onclick={() => handleSort('createdAt')}
+						>
+              {#if getSortStatus('createdAt') === 'asc'}
+                <IconSortAscending />
+              {:else}
+                <IconSortDescending />
+              {/if}
+						</Button>
+					</div>
+				</TableHead>
+				<TableHead class="w-[100px] cursor-default">Actions</TableHead>
 			</TableRow>
 		</TableHeader>
 		<TableBody>
@@ -71,18 +135,18 @@
 		</TableBody>
 	</Table>
 
-  <div class="mt-4 flex items-center gap-4">
-    <Button
-      variant="default"
-      class="py-5 border-1"
-      onclick={() => {
-        teamSettingsStore.showCreateView = true;
-      }}
-    >
-      <IconPlus additionalClass="!h-5 !w-5" />
-      Add Team
-    </Button>
-  </div>
+	<div class="mt-4 flex items-center gap-4">
+		<Button
+			variant="default"
+			class="border-1 py-5"
+			onclick={() => {
+				teamSettingsStore.showCreateView = true;
+			}}
+		>
+			<IconPlus additionalClass="!h-5 !w-5" />
+			Add Team
+		</Button>
+	</div>
 </div>
 
 <PageTeamSettingsDeleteDialog />
