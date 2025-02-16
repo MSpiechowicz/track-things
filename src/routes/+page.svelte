@@ -21,6 +21,7 @@
       <Button
         onclick={async () => userProfile ? goto('/dashboard') : goto('/auth/login')}
         variant="default"
+        aria-label={userProfile ? "Go to dashboard" : "Login to start tracking"}
       >
         Start Tracking Now
       </Button>

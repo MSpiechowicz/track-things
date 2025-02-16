@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-  import { userStore } from '$lib/stores/userStore.svelte';
+	import { userStore } from '$lib/stores/userStore.svelte';
 	import {
 		DropdownMenu,
 		DropdownMenuContent,
@@ -14,12 +14,12 @@
 	import IconMenu from '$lib/components/svg/IconMenu.svelte';
 	import IconSettings from '$lib/components/svg/IconSettings.svelte';
 
-  const { isMobile = false } = $props();
+	const { isMobile = false } = $props();
 </script>
 
 <DropdownMenu>
 	<DropdownMenuTrigger asChild let:builder>
-		<Button size="icon" builders={[builder]}>
+		<Button size="icon" builders={[builder]} aria-label="Open user menu">
 			{#if isMobile}
 				<IconMenu additionalClass="h-5 w-5" />
 			{:else}
@@ -33,7 +33,7 @@
 </DropdownMenu>
 
 {#if userStore.id}
-  <PageAccountSettings />
+	<PageAccountSettings />
 {/if}
 
 <PageUserMenuDialog />

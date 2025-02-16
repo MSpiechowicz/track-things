@@ -3,13 +3,13 @@
 	import { userStore } from '$lib/stores/userStore.svelte';
 	import { timer } from '$lib/utils/countdownTimer.svelte';
 
-  import PageSpinner from '$lib/components/PageSpinner.svelte';
-  import PageUserMenu from '$lib/components/PageUserMenu.svelte';
-  import IconFoots from './svg/IconFoots.svelte';
+	import PageSpinner from '$lib/components/PageSpinner.svelte';
+	import PageUserMenu from '$lib/components/PageUserMenu.svelte';
+	import IconFoots from './svg/IconFoots.svelte';
 
-  $effect(() => {
-    timer.start();
-  });
+	$effect(() => {
+		timer.start();
+	});
 </script>
 
 <nav class="flex h-[96px] items-center justify-between border-b border-white/15 md:px-8">
@@ -34,23 +34,29 @@
 		</div>
 		<span class="ml-2 rounded-full bg-gray-200 px-2 py-1 text-xs text-gray-700">ALPHA</span>
 	</a>
-  {#if timer.isRunning}
-    <PageSpinner />
-  {/if}
+	{#if timer.isRunning}
+		<PageSpinner />
+	{/if}
 	{#if timer.isFinished && userStore.id}
 		<div class="flex items-center gap-2 text-white">
-			<Button variant="link" href="/dashboard" data-sveltekit-reload class="text-white"
-				>Dashboard</Button
+			<Button
+				variant="link"
+				href="/dashboard"
+				data-sveltekit-reload
+				class="text-white"
+				aria-label="Go to dashboard">Dashboard</Button
 			>
 			<div class="hidden sm:block">
-        <PageUserMenu />
+				<PageUserMenu />
 			</div>
 			<div class="sm:hidden">
-        <PageUserMenu isMobile={true} />
+				<PageUserMenu isMobile={true} />
 			</div>
 		</div>
 	{/if}
-  {#if timer.isFinished && !userStore.id}
-		<Button variant="default" href="/auth/login">Sign In</Button>
+	{#if timer.isFinished && !userStore.id}
+		<Button variant="default" href="/auth/login" aria-label="Sign in to your account"
+			>Sign In</Button
+		>
 	{/if}
 </nav>

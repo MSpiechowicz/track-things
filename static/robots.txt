@@ -1,0 +1,38 @@
+# Default rules for all robots
+User-agent: *
+
+# Allow all robots to access everything by default
+Allow: /
+
+# Prevent access to admin/internal routes
+Disallow: /admin/
+Disallow: /internal/
+Disallow: /api/
+Disallow: /dashboard/
+
+# Prevent access to authentication pages
+Disallow: /login
+Disallow: /signup
+Disallow: /reset-password
+Disallow: /forgot-password
+
+# Prevent indexing of search results, if any
+Disallow: /search
+
+# Prevent access to temporary or development routes
+Disallow: /dev/
+Disallow: /test/
+Disallow: /staging/
+
+# Add sitemap location (if you have one)
+Sitemap: https://track-things.com/sitemap.xml
+
+# Specific rules for certain bots (optional)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
