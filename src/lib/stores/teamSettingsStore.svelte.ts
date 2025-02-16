@@ -18,7 +18,7 @@ export const teamSettingsStore = $state({
 	currentTeamName: null as string | null,
 	currentSort: {
 		fields: ['name', 'members', 'createdAt'] as SortField[],
-		direction: 'asc' as SortDirection
+		direction: 'desc' as SortDirection
 	} as SortItem,
 	sortData: (field: SortField) => {
 		teamSettingsStore.currentSort.direction =
