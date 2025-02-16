@@ -34,30 +34,32 @@
 			validators: teamMembersCreateSchemaValidator,
 			onResult: async (event) => {
 				const eventType = event.result.type as 'success' | 'failure';
+				// @ts-expect-error - This is a valid type
+				const eventData = event.result.data;
 
 				if (eventType === 'success') {
 					// Check if member already exists
 					const existingMember = teamMembersStore.data.find(
-						member => member.email === event.result.data?.email
+						(member) => member.email === eventData?.email
 					);
 
 					if (!existingMember) {
 						// Update teamMembersStore
 						teamMembersStore.data.push({
-							id: event.result.data?.id,
-							email: event.result.data?.email,
-							name: event.result.data?.name,
-							permissions: event.result.data?.permissions,
-							created_at: event.result.data?.created_at
+							id: eventData?.id,
+							email: eventData?.email,
+							name: eventData?.name,
+							permissions: eventData?.permissions,
+							created_at: eventData?.created_at
 						});
 
 						// Update currentTeamMembers
 						teamSettingsStore.currentTeamMembers.push({
-							id: event.result.data?.id,
-							email: event.result.data?.email,
-							name: event.result.data?.name,
-							permissions: event.result.data?.permissions,
-							created_at: event.result.data?.created_at
+							id: eventData?.id,
+							email: eventData?.email,
+							name: eventData?.name,
+							permissions: eventData?.permissions,
+							created_at: eventData?.created_at
 						});
 
 						// Update the members array in the main data array
@@ -68,11 +70,11 @@
 									members: [
 										...team.members,
 										{
-											id: event.result.data?.id,
-											email: event.result.data?.email,
-											name: event.result.data?.name,
-											permissions: event.result.data?.permissions,
-											created_at: event.result.data?.created_at
+											id: eventData?.id,
+											email: eventData?.email,
+											name: eventData?.name,
+											permissions: eventData?.permissions,
+											created_at: eventData?.created_at
 										}
 									]
 								};
@@ -100,9 +102,9 @@
 
 	const { form: formData, enhance } = form;
 
-  $effect(() => {
-    $formData.teamId = teamMembersStore.currentMemberTeamId ?? '';
-  });
+	$effect(() => {
+		$formData.teamId = teamMembersStore.currentMemberTeamId ?? '';
+	});
 </script>
 
 <Dialog
