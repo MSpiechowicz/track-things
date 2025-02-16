@@ -9,8 +9,8 @@
 		DialogTitle
 	} from '$lib/components/ui/dialog';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
-	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
 	import { teamMembersStore } from '$lib/stores/teamMembersStore.svelte';
+	import { teamSettingsStore } from '$lib/stores/teamSettingsStore.svelte';
 	import { toast } from 'svelte-sonner';
 
 	async function handleDelete(email: string | null, teamId: string | null) {
@@ -31,7 +31,19 @@
 			teamSettingsStore.currentTeamMembers = teamSettingsStore.currentTeamMembers.filter(
 				(entry) => entry.email !== email
 			);
+
+			teamSettingsStore.data = teamSettingsStore.data.map((team) => {
+				if (team.id === teamId) {
+					return {
+						...team,
+						members: team.members.filter((member) => member.email !== email)
+					};
+				}
+				return team;
+			});
+
 			teamMembersStore.data = teamMembersStore.data.filter((entry) => entry.email !== email);
+
 			dialogStore.showTeamMembersDeleteDialog = false;
 
 			toast.success('Success', {
@@ -53,7 +65,7 @@
 		<DialogHeader>
 			<DialogTitle class="text-xl">Delete Team Member</DialogTitle>
 			<DialogDescription class="text-base text-neutral-600">
-				Are you sure you want to delete member <span class="font-bold"
+				Are you sure that you want to delete member <span class="font-bold"
 					>{teamMembersStore.currentMemberName}</span
 				> from your team?
 			</DialogDescription>

@@ -34,8 +34,6 @@
 			onResult: async (event) => {
 				const eventType = event.result.type;
 
-        console.log(event.result);
-
 				if (eventType === 'success') {
           // @ts-expect-error - data is present
           const existingMember = teamMembersStore.data?.filter(member => member.email === event.result.data?.email);
@@ -77,11 +75,10 @@
 <Dialog
 	open={dialogStore.showTeamMembersCreateDialog}
 	onOpenChange={() => {
-    console.log('onOpenChange');
 		dialogStore.showTeamMembersCreateDialog = false;
 		form.reset();
 		teamMembersStore.currentMemberEmail = null;
-		//teamMembersStore.currentMemberTeamId = null;
+		teamMembersStore.currentMemberTeamId = null;
 	}}
 >
 	<DialogContent class="w-[325px] rounded-xl border sm:w-full">
