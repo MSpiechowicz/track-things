@@ -10,22 +10,12 @@ serve(async (req: Request) => {
 		return new Response('ok', { headers: corsHeaders });
 	}
 
-  //const {user} = await req.json();
-
 	try {
 		const { email } = await req.json();
 
 		if (!email) {
 			throw new Error('User email is required');
 		}
-
-		//const {
-		//	data: { user }
-		//} = await supabaseClient.auth.getUser();
-
-		//if (!user) {
-		//	throw new Error('User not found');
-		//}
 
 		const supabaseAdmin = createClient(
 			Deno.env.get('SUPABASE_URL') ?? '',

@@ -35,7 +35,7 @@ serve(async (req: Request) => {
 			throw new Error('User is not a member of any team');
 		}
 
-		// Get the team settings for a selected member
+		// Create the team data based on the provided member data and the team name.
 		const teamsData = await Promise.all(
 			teamMembersData.map(
 				async (member: {

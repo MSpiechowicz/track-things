@@ -11,7 +11,6 @@ serve(async (req: Request) => {
 	}
 
 	try {
-		// Parse the email from the request body
 		const { email } = await req.json();
 
 		if (!email) {
@@ -23,7 +22,6 @@ serve(async (req: Request) => {
 			Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 		);
 
-		// Query the profiles and profile_settings tables to get the user's name
 		const { data: profiles, error: profileError } = await supabaseAdmin
 			.from('profiles')
 			.select('name')
