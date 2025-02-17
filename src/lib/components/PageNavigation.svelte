@@ -15,7 +15,6 @@
 <nav class="flex h-[96px] items-center justify-between border-b border-white/15 md:px-8">
 	<a
 		href={userStore.id ? '/dashboard' : '/'}
-		data-sveltekit-reload
 		class="flex flex-shrink-0 cursor-pointer items-center hover:no-underline"
 	>
 		<div class="flex text-3xl font-bold sm:hidden">
@@ -42,7 +41,6 @@
 			<Button
 				variant="link"
 				href="/dashboard"
-				data-sveltekit-reload
 				class="text-white"
 				aria-label="Go to dashboard">Dashboard</Button
 			>
