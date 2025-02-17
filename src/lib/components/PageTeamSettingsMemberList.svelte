@@ -12,13 +12,29 @@
 		TableHeader,
 		TableRow
 	} from '$lib/components/ui/table';
-	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
+	import { teamSettingsMemberStore } from '$lib/stores/teamSettingsMemberStore.svelte';
 
 	const data = $derived(
-		teamSettingsOwnerStore.dataFiltered && teamSettingsOwnerStore.dataFiltered.length > 0
-			? teamSettingsOwnerStore.dataFiltered
-			: teamSettingsOwnerStore.data
+		teamSettingsMemberStore.dataFiltered && teamSettingsMemberStore.dataFiltered.length > 0
+			? teamSettingsMemberStore.dataFiltered
+			: teamSettingsMemberStore.data
 	);
+
+	async function fetchData() {
+		const response = await fetch(`/api/v1/team-settings/member/get/all`);
+
+		if (!response.ok) {
+			throw new Error('Unable to fetch the user member team settings');
+		}
+
+		const result = await response.json();
+
+		teamSettingsMemberStore.data = result.data;
+	}
+
+	$effect(() => {
+		fetchData();
+	});
 </script>
 
 <div class="py-6">
@@ -29,7 +45,7 @@
 	<div class="mb-4 flex max-w-sm items-center gap-2">
 		<Input
 			placeholder="Search"
-			oninput={(e) => teamSettingsOwnerStore.filterData((e.target as HTMLInputElement)?.value)}
+			oninput={(e) => teamSettingsMemberStore.filterData((e.target as HTMLInputElement)?.value)}
 			class="text-black"
 		/>
 	</div>
@@ -40,13 +56,14 @@
 				<PageTableSortableHeader
 					label="Name"
 					field="name"
-					store={teamSettingsOwnerStore}
+					store={teamSettingsMemberStore}
 					additionalClass="w-50"
 				/>
+        <TableHead>Permissions</TableHead>
 				<PageTableSortableHeader
 					label="Joined at"
 					field="createdAt"
-					store={teamSettingsOwnerStore}
+					store={teamSettingsMemberStore}
 					additionalClass="w-[fit-content]"
 				/>
 				<TableHead class="w-[100px] cursor-default">Actions</TableHead>
@@ -57,13 +74,10 @@
 				<TableRow>
 					<TableCell>{index + 1}</TableCell>
 					<TableCell>{entry.name}</TableCell>
-					<TableCell>{new Date(entry.updated_at).toLocaleDateString()}</TableCell>
-          <TableCell class="flex gap-2">
-						<Button
-							variant="destructive"
-							size="icon"
-							onclick={() => console.log('delete')}
-						>
+					<TableCell>{entry.permissions}</TableCell>
+          <TableCell>{new Date(entry.created_at).toLocaleDateString()}</TableCell>
+					<TableCell class="flex gap-2">
+						<Button variant="destructive" size="icon" onclick={() => console.log('delete')}>
 							<IconTrash additionalClass="h-4 w-4 text-white" />
 						</Button>
 					</TableCell>
@@ -71,6 +85,13 @@
 			{/each}
 		</TableBody>
 	</Table>
+	{#if !data || data.length === 0}
+		<div class="flex h-[68.5px] w-full items-center justify-center">
+			<p class="text-sm text-neutral-400">
+				There are currently no teams where you are an active member.
+			</p>
+		</div>
+	{/if}
 </div>
 
 <PageTeamSettingsDeleteDialog />

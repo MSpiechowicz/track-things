@@ -67,7 +67,7 @@
 					additionalClass="w-[fit-content]"
 				/>
 				<PageTableSortableHeader
-					label="Date Created"
+					label="Created at"
 					field="createdAt"
 					store={teamSettingsOwnerStore}
 					additionalClass="w-[fit-content]"

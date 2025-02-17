@@ -1,6 +1,6 @@
 import type { SortableDirectionType } from '$lib/types/sortableDirectionType';
 import type { TeamMemberType } from '$lib/types/teamMemberType';
-import type { TeamSettingType } from '$lib/types/teamSettingsType';
+import type { TeamSettingOwnerType } from '$lib/types/teamSettingsOwnerType';
 
 type SortField = 'name' | 'members' | 'createdAt';
 
@@ -10,8 +10,8 @@ type SortItem = {
 };
 
 export const teamSettingsOwnerStore = $state({
-	data: [] as TeamSettingType[],
-	dataFiltered: [] as TeamSettingType[],
+	data: [] as TeamSettingOwnerType[],
+	dataFiltered: [] as TeamSettingOwnerType[],
   dataSorted: {
 		fields: ['name', 'members', 'createdAt'] as SortField[],
 		direction: 'desc' as SortableDirectionType

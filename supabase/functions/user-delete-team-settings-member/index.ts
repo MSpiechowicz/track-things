@@ -2,7 +2,7 @@ import { serve } from 'https://deno.land/std@0.182.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.14.0';
 import { corsHeaders } from '../_shared/cors.ts';
 
-console.log(`Function "user-get-name" up and running!`);
+console.log(`Function "user-delete-team-settings-member" up and running!`);
 
 serve(async (req: Request) => {
 	// This is needed if you're planning to invoke your function from a browser.
@@ -11,7 +11,6 @@ serve(async (req: Request) => {
 	}
 
 	try {
-		// Parse the email from the request body
 		const { email } = await req.json();
 
 		if (!email) {
@@ -23,25 +22,22 @@ serve(async (req: Request) => {
 			Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 		);
 
-		// Query the profiles and profile_settings tables to get the user's name
-		const { data: profiles, error: profileError } = await supabaseAdmin
-			.from('profiles')
-			.select('name')
-			.eq('email', email)
-			.single();
+		const { data, error } = await supabaseAdmin
+			.from('team_members')
+			.delete()
+			.eq('email', email);
 
-		if (profileError) {
-			throw profileError;
+		if (error) {
+			throw error;
 		}
 
-		if (!profiles) {
-			throw new Error('User does not exist');
+		if (!data) {
+			throw new Error('User is not a member of any team');
 		}
 
 		return new Response(
 			JSON.stringify({
-				name: profiles.name,
-				profile_id: profiles.id
+				message: 'User was deleted from team'
 			}),
 			{
 				headers: { ...corsHeaders, 'Content-Type': 'application/json' },

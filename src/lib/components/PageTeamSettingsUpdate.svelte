@@ -154,8 +154,8 @@
 					<TableHead class="w-16">ID</TableHead>
 					<TableHead class="w-50">Name</TableHead>
 					<TableHead class="w-64">Email</TableHead>
-					<TableHead class="w-40">Joined Date</TableHead>
 					<TableHead class="w-40">Permissions</TableHead>
+					<TableHead class="w-40">Joined at</TableHead>
 					<TableHead class="w-16">Actions</TableHead>
 				</TableRow>
 			</TableHeader>
@@ -165,8 +165,8 @@
 						<TableCell>{index + 1}</TableCell>
 						<TableCell>{member.name}</TableCell>
 						<TableCell>{member.email}</TableCell>
-						<TableCell>{new Date(member.created_at).toLocaleDateString()}</TableCell>
 						<TableCell>{member.permissions}</TableCell>
+            <TableCell>{new Date(member.created_at).toLocaleDateString()}</TableCell>
 						<TableCell>
 							<Button
 								variant="destructive"

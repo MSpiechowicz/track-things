@@ -1,6 +1,6 @@
 import type { TeamMemberType } from '$lib/types/teamMemberType';
 
-export type TeamSettingType = {
+export type TeamSettingOwnerType = {
   id: string;
   name: string;
   members: TeamMemberType[];
