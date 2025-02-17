@@ -44,13 +44,9 @@
 
 	let teamSettings = $derived(teamSettingsOwnerStore.data);
 
-	$effect.pre(() => {
-		loadTeamSettings();
-	});
+  loadTeamSettings();
 
-	$effect(() => {
-		timer.reset();
-	});
+  timer.reset();
 </script>
 
 <DashboardContainer title={DASHBOARD_VIEWS.TEAM_SETTINGS}>
