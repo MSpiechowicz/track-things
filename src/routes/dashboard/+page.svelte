@@ -4,11 +4,10 @@
 	import { DASHBOARD_VIEWS } from '$lib/constants';
 	import { dashboardStore } from '$lib/stores/dashboardStore.svelte';
 
-	import PageDashboardProjects from '$lib/components/PageDashboardProjects.svelte';
+	import PageDashboardTrackings from '$lib/components/PageDashboardTrackings.svelte';
 	import PageTeamSettings from '$lib/components/PageTeamSettings.svelte';
 	import PageTeamSettingsCreate from '$lib/components/PageTeamSettingsCreate.svelte';
-
-	import IconDataBricks from '$lib/components/svg/IconDataBricks.svelte';
+	import IconEye from '$lib/components/svg/IconEye.svelte';
 	import IconUserGroup from '$lib/components/svg/IconUserGroup.svelte';
 
 	const { data } = $props();
@@ -24,7 +23,7 @@
 <div class="flex flex-1 gap-8">
 	<div class="w-[20%] min-w-[250px]">
 		<div class="flex flex-col items-start gap-1">
-			{#each [{ view: DASHBOARD_VIEWS.PROJECTS, icon: IconDataBricks }, { view: DASHBOARD_VIEWS.TEAM_SETTINGS, icon: IconUserGroup }] as { view, icon: Icon }}
+			{#each [{ view: DASHBOARD_VIEWS.TRACKINGS, icon: IconEye }, { view: DASHBOARD_VIEWS.TEAM_SETTINGS, icon: IconUserGroup }] as { view, icon: Icon }}
 				<Button
 					variant="ghost"
 					class={`flex w-[200px] justify-start text-white hover:text-black [&_svg]:stroke-white hover:[&_svg]:stroke-black
@@ -37,8 +36,8 @@
 			{/each}
 		</div>
 	</div>
-	{#if dashboardStore.currentView === DASHBOARD_VIEWS.PROJECTS}
-		<PageDashboardProjects />
+	{#if dashboardStore.currentView === DASHBOARD_VIEWS.TRACKINGS}
+		<PageDashboardTrackings />
 	{/if}
 	{#if dashboardStore.currentView === DASHBOARD_VIEWS.TEAM_SETTINGS}
 		<PageTeamSettings />
