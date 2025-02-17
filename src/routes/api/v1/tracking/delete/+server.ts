@@ -7,23 +7,23 @@ export const POST = async ({ request, locals }) => {
 
 	try {
 		const url = new URL(request.url);
-		const projectId = url.searchParams.get('projectId');
+		const trackingId = url.searchParams.get('trackingId');
 
-		if (!projectId) {
+		if (!trackingId) {
 			return new Response(JSON.stringify({ error: 'Missing required fields' }), { status: 400 });
 		}
 
-		const { error: projectError } = await locals.supabase
-			.from('projects')
+		const { error: trackingError } = await locals.supabase
+			.from('tracking')
 			.delete()
-			.eq('id', projectId)
+			.eq('id', trackingId)
 			.eq('profileId', user.id);
 
-		if (projectError) throw projectError;
+		if (trackingError) throw trackingError;
 
 		return new Response(JSON.stringify({ success: true }), { status: 200 });
 	} catch (error) {
-		console.error('Delete project error:', error);
-		return new Response(JSON.stringify({ error: 'Failed to delete project' }), { status: 500 });
+		console.error('Delete tracking error:', error);
+		return new Response(JSON.stringify({ error: 'Failed to delete tracking' }), { status: 500 });
 	}
 };

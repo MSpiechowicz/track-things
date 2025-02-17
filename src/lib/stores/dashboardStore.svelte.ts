@@ -7,7 +7,7 @@ interface DashboardStore {
 }
 
 export const dashboardStore = $state<DashboardStore>({
-  currentView: DASHBOARD_VIEWS.TRACKINGS,
+  currentView: DASHBOARD_VIEWS.TRACKING,
   isChildView: false,
   goBack: () => {},
 });

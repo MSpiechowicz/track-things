@@ -7,16 +7,18 @@ export const POST = async ({ request, locals }) => {
 
 	try {
 		const url = new URL(request.url);
-		const projectId = url.searchParams.get('projectId');
+		const trackingId = url.searchParams.get('trackingId');
 		const email = url.searchParams.get('email');
 
-		if (!projectId || !email) {
+		if (!trackingId || !email) {
 			return new Response(JSON.stringify({ error: 'Missing required fields' }), { status: 400 });
 		}
 
-		const { error: projectError } = await locals.supabase
-			.from('project_collaborators')
-			.update({
+		const { error: trackingError } = await locals.supabase
+			.from('tracking_collaborators')
+			.insert({
+				tracking_id: trackingId,
+				profile_id: user.id,
 				emails: {
 					set: (existing: string[]) => {
 						if (existing?.includes(email)) {
@@ -25,16 +27,15 @@ export const POST = async ({ request, locals }) => {
 						return [...(existing || []), email];
 					}
 				},
+				created_at: new Date(),
 				updated_at: new Date()
-			})
-			.eq('project_id', projectId)
-			.eq('profile_id', user.id);
+			});
 
-		if (projectError) throw projectError;
+		if (trackingError) throw trackingError;
 
 		return new Response(JSON.stringify({ success: true }), { status: 200 });
 	} catch (error) {
-		console.error('Update project collaborator error:', error);
-		return new Response(JSON.stringify({ error: 'Failed to update project collaborator' }), { status: 500 });
+		console.error('Create tracking collaborator error:', error);
+		return new Response(JSON.stringify({ error: 'Failed to create tracking collaborator' }), { status: 500 });
 	}
 };

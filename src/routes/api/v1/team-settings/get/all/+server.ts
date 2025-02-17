@@ -18,7 +18,7 @@ export const GET = async ({ locals }) => {
 
 		return new Response(JSON.stringify({ data }), { status: 200 });
 	} catch (error) {
-		console.error('Get all projects error:', error);
-		return new Response(JSON.stringify({ error: 'Failed to get all projects' }), { status: 500 });
+		console.error('Get all team settings error:', error);
+		return new Response(JSON.stringify({ error: 'Failed to get all team settings' }), { status: 500 });
 	}
 };

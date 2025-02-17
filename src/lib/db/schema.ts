@@ -20,7 +20,7 @@ export const profileSettingsTable = pgTable('profile_settings', {
 	updatedAt: timestamp('updated_at').notNull().defaultNow()
 }).enableRLS();
 
-export const projectsTable = pgTable('projects', {
+export const trackingTable = pgTable('tracking', {
 	id: uuid('id').primaryKey().defaultRandom(),
 	profileId: uuid('profile_id')
 		.references(() => profilesTable.id, { onDelete: 'cascade' })
@@ -31,22 +31,22 @@ export const projectsTable = pgTable('projects', {
 	updatedAt: timestamp('updated_at').notNull().defaultNow()
 }).enableRLS();
 
-export const projectsRecentTable = pgTable('projects_recent', {
+export const trackingRecentTable = pgTable('tracking_recent', {
 	id: uuid('id').primaryKey().defaultRandom(),
 	profileId: uuid('profile_id')
 		.references(() => profilesTable.id, { onDelete: 'cascade' })
 		.notNull(),
-	projectId: uuid('project_id')
-		.references(() => projectsTable.id, { onDelete: 'cascade' })
+	trackingId: uuid('tracking_id')
+		.references(() => trackingTable.id, { onDelete: 'cascade' })
 		.notNull(),
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	updatedAt: timestamp('updated_at').notNull().defaultNow()
 }).enableRLS();
 
-export const projectCollaboratorsTable = pgTable('project_collaborators', {
+export const trackingCollaboratorsTable = pgTable('tracking_collaborators', {
 	id: uuid('id').primaryKey().defaultRandom(),
-	projectId: uuid('project_id')
-		.references(() => projectsTable.id, { onDelete: 'cascade' })
+	trackingId: uuid('tracking_id')
+		.references(() => trackingTable.id, { onDelete: 'cascade' })
 		.notNull(),
 	profileId: uuid('profile_id')
 		.references(() => profilesTable.id, { onDelete: 'cascade' })
@@ -56,10 +56,10 @@ export const projectCollaboratorsTable = pgTable('project_collaborators', {
 	updatedAt: timestamp('updated_at').notNull().defaultNow()
 }).enableRLS();
 
-export const projectCalendarEventsTable = pgTable('project_calendar_events', {
+export const trackingCalendarEventsTable = pgTable('tracking_calendar_events', {
 	id: uuid('id').primaryKey().defaultRandom(),
-	projectId: uuid('project_id')
-		.references(() => projectsTable.id, { onDelete: 'cascade' })
+	trackingId: uuid('tracking_id')
+		.references(() => trackingTable.id, { onDelete: 'cascade' })
 		.notNull(),
 	eventName: text('event_name').notNull(),
 	eventType: text('event_type').notNull(),
@@ -77,7 +77,7 @@ export const teamSettingsTable = pgTable('team_settings', {
 		.references(() => profilesTable.id, { onDelete: 'cascade' })
 		.notNull(),
 	name: text('name').notNull(),
-  projectIds: uuid('project_ids').array(),
+  trackingIds: uuid('tracking_ids').array(),
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	updatedAt: timestamp('updated_at').notNull().defaultNow()
 }).enableRLS();

@@ -7,22 +7,22 @@ export const GET = async ({ request, locals }) => {
 
 	try {
 		const url = new URL(request.url);
-		const projectId = url.searchParams.get('projectId');
+		const trackingId = url.searchParams.get('trackingId');
 
-		if (!projectId) {
+		if (!trackingId) {
 			return new Response(JSON.stringify({ error: 'Missing required fields' }), { status: 400 });
 		}
 
-		const { data, error: projectError } = await locals.supabase
-			.from('project_collaborators')
+		const { data, error: trackingError } = await locals.supabase
+			.from('tracking_collaborators')
 			.select('emails')
-			.eq('project_id', projectId);
+			.eq('tracking_id', trackingId);
 
-		if (projectError) throw projectError;
+		if (trackingError) throw trackingError;
 
 		return new Response(JSON.stringify({ collaborators: data }), { status: 200 });
 	} catch (error) {
-		console.error('Get project collaborators error:', error);
-		return new Response(JSON.stringify({ error: 'Failed to get project collaborators' }), { status: 500 });
+		console.error('Get tracking collaborators error:', error);
+		return new Response(JSON.stringify({ error: 'Failed to get tracking collaborators' }), { status: 500 });
 	}
 };
