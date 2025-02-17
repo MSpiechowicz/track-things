@@ -41,6 +41,11 @@ export const teamSettingsOwnerStore = $state({
 		});
 	},
   filterData: (search: string) => {
+    if (search.length === 0) {
+      teamSettingsOwnerStore.dataFiltered = [];
+      return;
+    }
+
 		teamSettingsOwnerStore.dataFiltered = teamSettingsOwnerStore.data.filter((item) => {
 			return (
 				item.id.toLowerCase().includes(search.toLowerCase()) ||

@@ -35,6 +35,11 @@ export const teamSettingsMemberStore = $state({
 		});
 	},
   filterData: (search: string) => {
+    if (search.length === 0) {
+      teamSettingsMemberStore.dataFiltered = [];
+      return;
+    }
+
 		teamSettingsMemberStore.dataFiltered = teamSettingsMemberStore.data.filter((item) => {
 			return (
 				item.id.toLowerCase().includes(search.toLowerCase()) ||

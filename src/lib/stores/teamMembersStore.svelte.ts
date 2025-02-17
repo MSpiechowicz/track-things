@@ -44,6 +44,11 @@ export const teamMembersStore = $state({
 		teamMembersStore.dataFiltered = [...teamMembersStore.data];
 	},
 	filterData: (search: string) => {
+		if (search.length === 0) {
+			teamMembersStore.dataFiltered = [];
+			return;
+		}
+
 		teamMembersStore.dataFiltered = teamMembersStore.data.filter((member) => {
 			return (
 				member.name.toLowerCase().includes(search.toLowerCase()) ||
