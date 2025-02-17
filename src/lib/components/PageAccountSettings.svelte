@@ -61,7 +61,7 @@
 				Below you can adjust your personal account information.
 			</DialogDescription>
 		</DialogHeader>
-		<div class="grid gap-4 py-4">
+		<div class="grid gap-4 py-2">
 			<div class="grid gap-2">
 				<Label for={uniqueId} class="text-base">Display Name</Label>
 				<Input

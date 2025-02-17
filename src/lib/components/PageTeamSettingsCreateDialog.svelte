@@ -120,7 +120,7 @@
 		<form
 			method="POST"
 			action="/api/v1/team-settings/create"
-			class="mt-6 space-y-8"
+			class="mt-2 space-y-8"
 			use:enhance
 			id="create-team-member-form"
 			data-sveltekit-reload
