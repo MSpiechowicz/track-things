@@ -10,6 +10,8 @@ serve(async (req: Request) => {
 		return new Response('ok', { headers: corsHeaders });
 	}
 
+  //const {user} = await req.json();
+
 	try {
 		const { email } = await req.json();
 
@@ -17,22 +19,26 @@ serve(async (req: Request) => {
 			throw new Error('User email is required');
 		}
 
+		//const {
+		//	data: { user }
+		//} = await supabaseClient.auth.getUser();
+
+		//if (!user) {
+		//	throw new Error('User not found');
+		//}
+
 		const supabaseAdmin = createClient(
 			Deno.env.get('SUPABASE_URL') ?? '',
 			Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 		);
 
-		const { data, error } = await supabaseAdmin
+		const { error } = await supabaseAdmin
 			.from('team_members')
 			.delete()
 			.eq('email', email);
 
 		if (error) {
 			throw error;
-		}
-
-		if (!data) {
-			throw new Error('User is not a member of any team');
 		}
 
 		return new Response(

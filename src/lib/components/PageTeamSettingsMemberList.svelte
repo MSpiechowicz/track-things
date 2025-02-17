@@ -1,6 +1,6 @@
 <script lang="ts">
 	import PageTableSortableHeader from '$lib/components/PageTableSortableHeader.svelte';
-	import PageTeamSettingsDeleteDialog from '$lib/components/PageTeamSettingsDeleteDialog.svelte';
+	import PageTeamSettingsMemberDeleteDialog from '$lib/components/PageTeamSettingsMemberDeleteDialog.svelte';
 	import IconTrash from '$lib/components/svg/IconTrash.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
@@ -12,6 +12,7 @@
 		TableHeader,
 		TableRow
 	} from '$lib/components/ui/table';
+	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamSettingsMemberStore } from '$lib/stores/teamSettingsMemberStore.svelte';
 
 	const data = $derived(
@@ -59,7 +60,7 @@
 					store={teamSettingsMemberStore}
 					additionalClass="w-50"
 				/>
-        <TableHead>Permissions</TableHead>
+				<TableHead>Permissions</TableHead>
 				<PageTableSortableHeader
 					label="Joined at"
 					field="createdAt"
@@ -75,9 +76,17 @@
 					<TableCell>{index + 1}</TableCell>
 					<TableCell>{entry.name}</TableCell>
 					<TableCell>{entry.permissions}</TableCell>
-          <TableCell>{new Date(entry.created_at).toLocaleDateString()}</TableCell>
+					<TableCell>{new Date(entry.created_at).toLocaleDateString()}</TableCell>
 					<TableCell class="flex gap-2">
-						<Button variant="destructive" size="icon" onclick={() => console.log('delete')}>
+						<Button
+							variant="destructive"
+							size="icon"
+							onclick={() => {
+								teamSettingsMemberStore.currentTeamId = entry.id;
+								teamSettingsMemberStore.currentTeamName = entry.name;
+								dialogStore.showTeamSettingsMemberDeleteDialog = true;
+							}}
+						>
 							<IconTrash additionalClass="h-4 w-4 text-white" />
 						</Button>
 					</TableCell>
@@ -94,4 +103,4 @@
 	{/if}
 </div>
 
-<PageTeamSettingsDeleteDialog />
+<PageTeamSettingsMemberDeleteDialog />

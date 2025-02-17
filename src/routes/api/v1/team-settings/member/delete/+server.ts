@@ -1,4 +1,4 @@
-export const DELETE = async ({ locals, request }) => {
+export const DELETE = async ({ locals }) => {
 	const { user } = await locals.safeGetUser();
 
 	if (!user) {
@@ -6,16 +6,9 @@ export const DELETE = async ({ locals, request }) => {
 	}
 
 	try {
-		const url = new URL(request.url);
-		const email = url.searchParams.get('email');
-
-		if (!email) {
-			return new Response(JSON.stringify({ error: 'Missing required fields' }), { status: 400 });
-		}
-
 		const response = await locals.supabase.functions.invoke('user-delete-team-settings-member', {
 			method: 'POST',
-			body: JSON.stringify({ email })
+			body: JSON.stringify({ email: user.email })
 		});
 
 		if (response.error) {
