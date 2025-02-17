@@ -6,16 +6,16 @@ export const GET = async ({ locals }) => {
 	}
 
 	try {
-		const response = await locals.supabase.functions.invoke('user-get-team-settings-member', {
+		const { data: response, error } = await locals.supabase.functions.invoke('user-get-team-settings-member', {
 			method: 'POST',
 			body: JSON.stringify({ email: user.email })
 		});
 
-		if (response.error) {
-			throw response.error;
+		if (error) {
+			throw error;
 		}
 
-		const data = response.data?.length > 0 ? [...response.data] : [];
+		const data = response.data?.length > 0 ? response.data : [];
 
 		return new Response(JSON.stringify({ data: data }), { status: 200 });
 	} catch (error) {

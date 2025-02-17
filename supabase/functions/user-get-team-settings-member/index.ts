@@ -22,22 +22,51 @@ serve(async (req: Request) => {
 			Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 		);
 
-		const { data, error } = await supabaseAdmin
+		const { data: teamMembersData, error: teamMembersError } = await supabaseAdmin
 			.from('team_members')
-			.select('id, name, created_at, permissions')
+			.select('id, team_id, created_at, permissions')
 			.eq('email', email);
 
-		if (error) {
-			throw error;
+		if (teamMembersError) {
+			throw teamMembersError;
 		}
 
-		if (!data) {
+		if (!teamMembersData) {
 			throw new Error('User is not a member of any team');
 		}
 
+		// Get the team settings for a selected member
+		const teamsData = await Promise.all(
+			teamMembersData.map(
+				async (member: {
+					id: string;
+					team_id: string;
+					created_at: string;
+					permissions: string;
+				}) => {
+					const { data: teamData, error: teamError } = await supabaseAdmin
+						.from('team_settings')
+						.select('id, name')
+						.eq('id', member.team_id)
+						.single();
+
+					if (teamError) {
+						throw teamError;
+					}
+
+					return {
+						id: member.id,
+						name: teamData.name,
+						created_at: member.created_at,
+						permissions: member.permissions
+					};
+				}
+			)
+		);
+
 		return new Response(
 			JSON.stringify({
-				data
+				data: teamsData
 			}),
 			{
 				headers: { ...corsHeaders, 'Content-Type': 'application/json' },

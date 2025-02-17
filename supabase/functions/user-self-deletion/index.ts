@@ -11,31 +11,27 @@ serve(async (req: Request) => {
 	}
 
 	try {
-		// Create a Supabase client with the Auth context of the logged in user.
 		const supabaseClient = createClient(
-			// Supabase API URL - env var exported by default.
 			Deno.env.get('SUPABASE_URL') ?? '',
-			// Supabase API ANON KEY - env var exported by default.
 			Deno.env.get('SUPABASE_ANON_KEY') ?? '',
 			// Create client with Auth context of the user that called the function.
 			// This way your row-level-security (RLS) policies are applied.
 			{ global: { headers: { Authorization: req.headers.get('Authorization')! } } }
 		);
 
-		// Now we can get the session or user object
 		const {
 			data: { user }
 		} = await supabaseClient.auth.getUser();
 
-		// And we can run queries in the context of our authenticated user
-		const { data: profiles, error: userError } = await supabaseClient
+		const { data, error } = await supabaseClient
 			.from('profiles')
 			.select('id')
-			.eq('id', user.id);
+			.eq('id', user.id)
+      .single();
 
-		if (userError) throw userError;
-
-		const user_id = profiles[0].id;
+		if (error) {
+			throw error;
+		}
 
 		const supabaseAdmin = createClient(
 			Deno.env.get('SUPABASE_URL') ?? '',
@@ -43,11 +39,11 @@ serve(async (req: Request) => {
 		);
 
 		const { data: deletion_data, error: deletion_error } =
-			await supabaseAdmin.auth.admin.deleteUser(user_id);
+			await supabaseAdmin.auth.admin.deleteUser(data.id);
 
-		if (deletion_error) throw deletion_error;
-
-		console.log('User & files deleted user_id: ' + user_id);
+		if (deletion_error) {
+			throw deletion_error;
+		}
 
 		return new Response('User deleted: ' + JSON.stringify(deletion_data, null, 2), {
 			headers: { ...corsHeaders, 'Content-Type': 'application/json' },
