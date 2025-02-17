@@ -13,6 +13,7 @@
 	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
 
 	import PageTableSortableHeader from '$lib/components/PageTableSortableHeader.svelte';
+	import PageTeamSettingsCreateDialog from '$lib/components/PageTeamSettingsCreateDialog.svelte';
 	import PageTeamSettingsDeleteDialog from '$lib/components/PageTeamSettingsDeleteDialog.svelte';
 	import IconPencil from '$lib/components/svg/IconPencil.svelte';
 	import IconPlus from '$lib/components/svg/IconPlus.svelte';
@@ -102,13 +103,19 @@
 			{/each}
 		</TableBody>
 	</Table>
-
+	{#if !data || data.length === 0}
+		<div class="flex h-[68.5px] w-full items-center justify-center">
+			<p class="text-sm text-neutral-400">
+				There are currently no teams where you are an active owner.
+			</p>
+		</div>
+	{/if}
 	<div class="mt-4 flex items-center gap-4">
 		<Button
 			variant="default"
 			class="border-1 py-5"
 			onclick={() => {
-				teamSettingsOwnerStore.showCreateView = true;
+				dialogStore.showTeamSettingsCreateDialog = true;
 			}}
 		>
 			<IconPlus additionalClass="!h-5 !w-5" />
@@ -117,4 +124,5 @@
 	</div>
 </div>
 
+<PageTeamSettingsCreateDialog />
 <PageTeamSettingsDeleteDialog />

@@ -1,8 +1,10 @@
-import type { TeamMemberType } from '$lib/types/teamMemberType';
+import type { TeamMemberType } from "./teamMemberType";
 
 export type TeamSettingOwnerType = {
   id: string;
   name: string;
-  members: TeamMemberType[];
+  created_at: string;
   updated_at: string;
+  tracking_ids: string[];
+  members: TeamMemberType[];
 };

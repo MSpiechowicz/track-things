@@ -5,7 +5,6 @@
 
 	import DashboardContainer from './PageDashboardContainer.svelte';
 	import PageProgressBar from './PageProgressBar.svelte';
-	import PageTeamSettingsCreate from './PageTeamSettingsCreate.svelte';
 	import PageTeamSettingsMemberList from './PageTeamSettingsMemberList.svelte';
 	import PageTeamSettingsOwnerList from './PageTeamSettingsOwnerList.svelte';
 	import PageTeamSettingsUpdate from './PageTeamSettingsUpdate.svelte';
@@ -42,10 +41,7 @@
 		}
 	}
 
-	let teamSettings = $derived(teamSettingsOwnerStore.data);
-
   loadTeamSettings();
-
   timer.reset();
 </script>
 
@@ -58,8 +54,6 @@
 	{#if timer.isFinished}
 		{#if teamSettingsOwnerStore.showUpdateView}
 			<PageTeamSettingsUpdate />
-		{:else if teamSettings.length === 0 || teamSettingsOwnerStore.showCreateView}
-			<PageTeamSettingsCreate />
 		{:else}
 			<PageTeamSettingsOwnerList />
 			<PageTeamSettingsMemberList />

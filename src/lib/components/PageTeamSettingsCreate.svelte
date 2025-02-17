@@ -20,8 +20,10 @@
 						teamSettingsOwnerStore.data.push({
 							id: event.result.data?.id,
 							name: event.result.data?.name,
+							created_at: event.result.data?.created_at,
 							updated_at: event.result.data?.updated_at,
-							members: []
+							members: [],
+							tracking_ids: []
 						});
 
             if (teamSettingsOwnerStore.data?.length > 0) {
@@ -64,7 +66,7 @@
 	<form
 		method="POST"
 		action="/api/v1/team-settings/create"
-		class="mt-4 space-y-8"
+		class="mt-4 space-y-4"
 		use:enhance
 		data-sveltekit-reload
 	>

@@ -50,15 +50,19 @@
 						teamSettingsOwnerStore.data[existingIndex] = {
 							id: event.result.data?.id,
 							name: event.result.data?.name,
+							created_at: event.result.data?.created_at,
 							updated_at: event.result.data?.updated_at,
-							members: teamMembersStore.data
+							members: teamMembersStore.data,
+							tracking_ids: event.result.data?.tracking_ids
 						};
 					} else {
 						teamSettingsOwnerStore.data.push({
 							id: event.result.data?.id,
 							name: event.result.data?.name,
+							created_at: event.result.data?.created_at,
 							updated_at: event.result.data?.updated_at,
-							members: teamMembersStore.data
+							members: teamMembersStore.data,
+							tracking_ids: event.result.data?.tracking_ids
 						});
 					}
 

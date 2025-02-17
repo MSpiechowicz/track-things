@@ -52,9 +52,10 @@ export const actions: Actions = {
 					name: name,
 					profile_id: user.id,
 					created_at: new Date(),
-					updated_at: new Date()
+					updated_at: new Date(),
+					tracking_ids: []
 				})
-				.select('id, name, updated_at')
+				.select('id, name, created_at, updated_at, tracking_ids')
 				.single();
 
 			if (teamError) throw teamError;
@@ -63,7 +64,10 @@ export const actions: Actions = {
 				success: true,
 				id: data.id,
 				name: data.name,
+				created_at: data.created_at,
 				updated_at: data.updated_at,
+				members: [],
+				tracking_ids: data.tracking_ids,
 				form
 			};
 		} catch (error) {
