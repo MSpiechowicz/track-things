@@ -168,7 +168,7 @@
     </div>
 		<Table>
 			<TableHeader>
-				<TableRow>
+				<TableRow class="hover:bg-transparent">
 					<TableHead class="w-16">ID</TableHead>
           <PageTableSortableHeader
             field="name"
