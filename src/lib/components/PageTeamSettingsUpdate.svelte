@@ -25,6 +25,7 @@
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
 
+	import PageTableSortableHeader from '$lib/components/PageTableSortableHeader.svelte';
 	import PageTeamMembersCreateDialog from '$lib/components/PageTeamMembersCreateDialog.svelte';
 	import PageTeamMembersDeleteDialog from '$lib/components/PageTeamMembersDeleteDialog.svelte';
 	import IconPlus from '$lib/components/svg/IconPlus.svelte';
@@ -108,6 +109,12 @@
 		$formData.name = teamSettingsOwnerStore.currentTeamName ?? '';
 		$formData.id = teamSettingsOwnerStore.currentTeamId ?? '';
 	});
+
+  const data = $derived(
+		teamMembersStore.dataFiltered && teamMembersStore.dataFiltered.length > 0
+			? teamMembersStore.dataFiltered
+			: teamMembersStore.data
+	);
 </script>
 
 <div class="flex flex-1 flex-col">
@@ -148,19 +155,46 @@
 	<div class="mt-8">
 		<h3 class="text-md font-medium">Team Members</h3>
 		<p class="mb-4 text-sm text-neutral-400">You can manage your team members here.</p>
+    <div class="mb-4 flex max-w-sm items-center gap-2">
+      <Input
+        placeholder="Search"
+        oninput={(e) => teamMembersStore.filterData((e.target as HTMLInputElement)?.value)}
+        class="text-black"
+      />
+    </div>
 		<Table>
 			<TableHeader>
 				<TableRow>
 					<TableHead class="w-16">ID</TableHead>
-					<TableHead class="w-50">Name</TableHead>
-					<TableHead class="w-64">Email</TableHead>
-					<TableHead class="w-40">Permissions</TableHead>
-					<TableHead class="w-40">Joined at</TableHead>
+          <PageTableSortableHeader
+            field="name"
+            label="Name"
+            store={teamMembersStore}
+            additionalClass="w-50"
+          />
+					<PageTableSortableHeader
+            field="email"
+            label="Email"
+            store={teamMembersStore}
+            additionalClass="w-64"
+          />
+					<PageTableSortableHeader
+            field="permissions"
+            label="Permissions"
+            store={teamMembersStore}
+            additionalClass="w-40"
+          />
+					<PageTableSortableHeader
+            field="created_at"
+            label="Joined at"
+            store={teamMembersStore}
+            additionalClass="w-40"
+          />
 					<TableHead class="w-16">Actions</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{#each teamMembersStore.data as member, index}
+				{#each data as member, index}
 					<TableRow>
 						<TableCell>{index + 1}</TableCell>
 						<TableCell>{member.name}</TableCell>
