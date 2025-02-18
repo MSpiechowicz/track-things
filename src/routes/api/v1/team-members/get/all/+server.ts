@@ -11,7 +11,7 @@ export const GET = async ({ locals, request }) => {
 
 		const { data, error: membersError } = await locals.supabase
 			.from('team_members')
-			.select('id, name, email, created_at, permissions')
+			.select('id, name, team_id, email, created_at, permissions')
 			.eq('team_id', teamId)
 			.order('created_at', { ascending: false });
 

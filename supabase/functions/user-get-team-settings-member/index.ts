@@ -57,6 +57,7 @@ serve(async (req: Request) => {
 					return {
 						id: member.id,
 						name: teamData.name,
+						team_id: member.team_id,
 						created_at: member.created_at,
 						permissions: member.permissions
 					};

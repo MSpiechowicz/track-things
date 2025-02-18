@@ -11,6 +11,7 @@
 	} from '$lib/components/ui/dialog';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamSettingsMemberStore } from '$lib/stores/teamSettingsMemberStore.svelte';
+	import { teamSettingsTimer } from '$lib/utils/timers/defaults';
 	import { toast } from 'svelte-sonner';
 
 	async function handleDelete(id: string | null) {
@@ -21,9 +22,12 @@
 			return;
 		}
 
-		const response = await fetch('/api/v1/team-settings/member/delete', {
-			method: 'DELETE'
-		});
+		const response = await fetch(
+			`/api/v1/team-settings/member/delete?teamId=${teamSettingsMemberStore.currentMemberTeamId}`,
+			{
+				method: 'DELETE'
+			}
+		);
 
 		if (response.ok) {
 			teamSettingsMemberStore.data = teamSettingsMemberStore.data.filter(
@@ -33,7 +37,9 @@
 
 			dialogStore.showTeamSettingsMemberDeleteDialog = false;
 
-      invalidate('app:dashboard');
+			teamSettingsTimer.reset();
+
+			invalidate('app:dashboard');
 
 			toast.success('Success', {
 				description: 'You have been removed from the selected team successfully.'
@@ -68,8 +74,7 @@
 				onclick={() => {
 					dialogStore.showTeamSettingsMemberDeleteDialog = false;
 					teamSettingsMemberStore.resetCurrentMember();
-				}}
-				>Cancel</Button
+				}}>Cancel</Button
 			>
 			<Button
 				variant="destructive"

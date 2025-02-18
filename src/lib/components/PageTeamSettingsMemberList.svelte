@@ -66,7 +66,7 @@
 							variant="destructive"
 							size="icon"
 							onclick={() => {
-								teamSettingsMemberStore.currentMemberTeamId = entry.id;
+								teamSettingsMemberStore.currentMemberTeamId = entry.team_id;
 								teamSettingsMemberStore.currentMemberTeamName = entry.name;
 								dialogStore.showTeamSettingsMemberDeleteDialog = true;
 							}}

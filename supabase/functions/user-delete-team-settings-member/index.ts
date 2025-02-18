@@ -11,10 +11,10 @@ serve(async (req: Request) => {
 	}
 
 	try {
-		const { email } = await req.json();
+		const { email, teamId } = await req.json();
 
-		if (!email) {
-			throw new Error('User email is required');
+		if (!email || !teamId) {
+			throw new Error('Missing required parameters!');
 		}
 
 		const supabaseAdmin = createClient(
@@ -25,7 +25,8 @@ serve(async (req: Request) => {
 		const { error } = await supabaseAdmin
 			.from('team_members')
 			.delete()
-			.eq('email', email);
+			.eq('email', email)
+			.eq('team_id', teamId);
 
 		if (error) {
 			throw error;
