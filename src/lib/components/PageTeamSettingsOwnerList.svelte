@@ -11,7 +11,6 @@
 	} from '$lib/components/ui/table';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
-
 	import PageTableSortableHeader from '$lib/components/PageTableSortableHeader.svelte';
 	import PageTeamSettingsCreateDialog from '$lib/components/PageTeamSettingsCreateDialog.svelte';
 	import PageTeamSettingsDeleteDialog from '$lib/components/PageTeamSettingsDeleteDialog.svelte';

@@ -24,7 +24,6 @@
 	import { teamSettingsUpdateSchemaValidator } from '$lib/validators/teamSettingsUpdateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
-
 	import PageTableSortableHeader from '$lib/components/PageTableSortableHeader.svelte';
 	import PageTeamMembersCreateDialog from '$lib/components/PageTeamMembersCreateDialog.svelte';
 	import PageTeamMembersDeleteDialog from '$lib/components/PageTeamMembersDeleteDialog.svelte';
@@ -41,49 +40,37 @@
 				const eventType = event.result.type;
 
 				if (eventType === 'success') {
-					const existingIndex = teamSettingsOwnerStore.data.findIndex(
+					const index = teamSettingsOwnerStore.data.findIndex(
 						// @ts-expect-error - data is present
 						(item) => item.id === event.result.data?.id
 					);
 
-					if (existingIndex !== -1) {
-						teamSettingsOwnerStore.data[existingIndex] = {
-							id: event.result.data?.id,
-							name: event.result.data?.name,
-							created_at: event.result.data?.created_at,
-							updated_at: event.result.data?.updated_at,
-							members: event.result.data?.members,
-							tracking_ids: event.result.data?.tracking_ids
-						};
-					} else {
-						teamSettingsOwnerStore.data.push({
-							id: event.result.data?.id,
-							name: event.result.data?.name,
-							created_at: event.result.data?.created_at,
-							updated_at: event.result.data?.updated_at,
-							members: event.result.data?.members,
-							tracking_ids: event.result.data?.tracking_ids
-						});
-					}
+					teamSettingsOwnerStore.data[index] = {
+						id: event.result.data?.id,
+						name: event.result.data?.name,
+						created_at: event.result.data?.created_at,
+						updated_at: event.result.data?.updated_at,
+						members: event.result.data?.members,
+						tracking_ids: event.result.data?.tracking_ids
+					};
 
-          // Update the current team name
+					// Update the current team name
 					teamSettingsOwnerStore.currentTeamName = event.result.data?.name;
 
-          // Reset the form
+					// Reset the form
 					form.reset({
 						id: event.result.data?.id ?? '',
-            // @ts-expect-error - This is a valid type
+						// @ts-expect-error - This is a valid type
 						name: event.result.data?.name ?? ''
 					});
 
 					toast.success('Success', {
 						description: 'Your team has been updated successfully.'
 					});
-				}
-
-				if (eventType === 'failure') {
+				} else {
 					toast.error('Error', {
-						description: 'We were unable to update your team. Please try again.'
+						description:
+							'We were unable to update your team. Please try again later or check if team with this name already exists.'
 					});
 				}
 			}
@@ -114,7 +101,7 @@
 		$formData.id = teamSettingsOwnerStore.currentTeamId ?? '';
 	});
 
-  const data = $derived(
+	const data = $derived(
 		teamMembersStore.dataFiltered && teamMembersStore.dataFiltered.length > 0
 			? teamMembersStore.dataFiltered
 			: teamMembersStore.data
@@ -155,45 +142,44 @@
 			<FormFieldErrors class="text-red-500" />
 		</FormField>
 	</form>
-
 	<div class="mt-8">
 		<h3 class="text-md font-medium">Team Members</h3>
 		<p class="mb-4 text-sm text-neutral-400">You can manage your team members here.</p>
-    <div class="mb-4 flex max-w-sm items-center gap-2">
-      <Input
-        placeholder="Search"
-        oninput={(e) => teamMembersStore.filterData((e.target as HTMLInputElement)?.value)}
-        class="text-black"
-      />
-    </div>
+		<div class="mb-4 flex max-w-sm items-center gap-2">
+			<Input
+				placeholder="Search"
+				oninput={(e) => teamMembersStore.filterData((e.target as HTMLInputElement)?.value)}
+				class="text-black"
+			/>
+		</div>
 		<Table>
 			<TableHeader>
 				<TableRow class="hover:bg-transparent">
 					<TableHead class="w-16">ID</TableHead>
-          <PageTableSortableHeader
-            field="name"
-            label="Name"
-            store={teamMembersStore}
-            additionalClass="w-50"
-          />
 					<PageTableSortableHeader
-            field="email"
-            label="Email"
-            store={teamMembersStore}
-            additionalClass="w-64"
-          />
+						field="name"
+						label="Name"
+						store={teamMembersStore}
+						additionalClass="w-50"
+					/>
 					<PageTableSortableHeader
-            field="permissions"
-            label="Permissions"
-            store={teamMembersStore}
-            additionalClass="w-40"
-          />
+						field="email"
+						label="Email"
+						store={teamMembersStore}
+						additionalClass="w-64"
+					/>
 					<PageTableSortableHeader
-            field="created_at"
-            label="Joined at"
-            store={teamMembersStore}
-            additionalClass="w-40"
-          />
+						field="permissions"
+						label="Permissions"
+						store={teamMembersStore}
+						additionalClass="w-40"
+					/>
+					<PageTableSortableHeader
+						field="created_at"
+						label="Joined at"
+						store={teamMembersStore}
+						additionalClass="w-40"
+					/>
 					<TableHead class="w-16">Actions</TableHead>
 				</TableRow>
 			</TableHeader>
@@ -204,7 +190,7 @@
 						<TableCell>{member.name}</TableCell>
 						<TableCell>{member.email}</TableCell>
 						<TableCell>{member.permissions}</TableCell>
-            <TableCell>{new Date(member.created_at).toLocaleDateString()}</TableCell>
+						<TableCell>{new Date(member.created_at).toLocaleDateString()}</TableCell>
 						<TableCell>
 							<Button
 								variant="destructive"
@@ -231,7 +217,6 @@
 				</p>
 			</div>
 		{/if}
-
 		<div class="mt-4 flex items-center gap-4">
 			<Button
 				variant="default"

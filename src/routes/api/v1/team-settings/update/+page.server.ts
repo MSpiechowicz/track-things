@@ -24,12 +24,26 @@ export const actions: Actions = {
 
 		try {
 			const name = form.data.name;
-      const id = form.data.id;
+			const id = form.data.id;
 
 			if (!name || !id) {
 				return fail(400, {
 					form,
 					message: 'Missing required fields'
+				});
+			}
+
+			const { data: existingTeam } = await locals.supabase
+				.from('team_settings')
+				.select('id')
+				.eq('profile_id', user.id)
+				.eq('name', name)
+				.single();
+
+			if (existingTeam) {
+				return fail(400, {
+					form,
+					message: 'A team with this name already exists'
 				});
 			}
 
@@ -40,16 +54,21 @@ export const actions: Actions = {
 					updated_at: new Date()
 				})
 				.eq('id', id)
-				.select('id, name, updated_at')
+				.select('id, name, updated_at, created_at, members, tracking_ids')
 				.single();
 
-			if (teamError) throw teamError;
+			if (teamError) {
+				throw teamError;
+			}
 
 			return {
 				success: true,
 				id: data.id,
 				name: data.name,
+				created_at: data.created_at,
 				updated_at: data.updated_at,
+				members: data.members,
+				tracking_ids: data.tracking_ids,
 				form
 			};
 		} catch (error) {
