@@ -1,4 +1,4 @@
-import { boolean, date, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
+import { boolean, date, pgTable, text, timestamp, uuid, integer } from 'drizzle-orm/pg-core';
 
 export const profilesTable = pgTable('profiles', {
 	id: uuid('id').primaryKey(),
@@ -77,7 +77,8 @@ export const teamSettingsTable = pgTable('team_settings', {
 		.references(() => profilesTable.id, { onDelete: 'cascade' })
 		.notNull(),
 	name: text('name').notNull(),
-  trackingIds: uuid('tracking_ids').array(),
+	trackingIds: uuid('tracking_ids').array(),
+	members: integer('members').notNull().default(0),
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	updatedAt: timestamp('updated_at').notNull().defaultNow()
 }).enableRLS();
@@ -90,9 +91,9 @@ export const teamMembersTable = pgTable('team_members', {
 	profileId: uuid('profile_id')
 		.references(() => profilesTable.id, { onDelete: 'cascade' })
 		.notNull(),
-  name: text('name'),
+	name: text('name'),
 	email: text('email').notNull(),
-  permissions: text('permissions').notNull().default('edit'),
+	permissions: text('permissions').notNull().default('edit'),
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	updatedAt: timestamp('updated_at').notNull().defaultNow()
 }).enableRLS();
