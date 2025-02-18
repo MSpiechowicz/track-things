@@ -29,6 +29,7 @@
 			teamSettingsMemberStore.data = teamSettingsMemberStore.data.filter(
 				(entry) => entry.id !== id
 			);
+			teamSettingsMemberStore.resetCurrentMember();
 
 			dialogStore.showTeamSettingsMemberDeleteDialog = false;
 
@@ -47,25 +48,32 @@
 
 <Dialog
 	open={dialogStore.showTeamSettingsMemberDeleteDialog}
-	onOpenChange={() => (dialogStore.showTeamSettingsMemberDeleteDialog = false)}
+	onOpenChange={() => {
+		dialogStore.showTeamSettingsMemberDeleteDialog = false;
+		teamSettingsMemberStore.resetCurrentMember();
+	}}
 >
 	<DialogContent class="w-[325px] rounded-xl border sm:w-full">
 		<DialogHeader>
-			<DialogTitle class="text-xl">Delete Team Member</DialogTitle>
+			<DialogTitle class="text-xl">Delete Membership</DialogTitle>
 			<DialogDescription class="text-base text-neutral-600">
-				Are you sure you want to remove yourself from the team: <span class="font-bold"
-					>{teamSettingsMemberStore.currentTeamName}</span
+				Are you sure you want to remove yourself from the team <span class="font-bold"
+					>{teamSettingsMemberStore.currentMemberTeamName}</span
 				>?
 			</DialogDescription>
 		</DialogHeader>
 		<DialogFooter class="mt-4 flex flex-col gap-3 sm:flex-row sm:gap-2">
 			<Button
 				variant="outline"
-				onclick={() => (dialogStore.showTeamSettingsMemberDeleteDialog = false)}>Cancel</Button
+				onclick={() => {
+					dialogStore.showTeamSettingsMemberDeleteDialog = false;
+					teamSettingsMemberStore.resetCurrentMember();
+				}}
+				>Cancel</Button
 			>
 			<Button
 				variant="destructive"
-				onclick={() => handleDelete(teamSettingsMemberStore.currentTeamId)}>Delete</Button
+				onclick={() => handleDelete(teamSettingsMemberStore.currentMemberTeamId)}>Delete</Button
 			>
 		</DialogFooter>
 	</DialogContent>

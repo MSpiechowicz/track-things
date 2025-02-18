@@ -15,8 +15,12 @@ export const teamSettingsMemberStore = $state({
 		fields: ['name', 'createdAt'] as SortField[],
 		direction: 'desc' as SortableDirectionType
 	} as SortItem,
-	currentTeamId: null as string | null,
-	currentTeamName: null as string | null,
+	currentMemberTeamId: null as string | null,
+	currentMemberTeamName: null as string | null,
+	resetCurrentMember: () => {
+		teamSettingsMemberStore.currentMemberTeamId = null;
+		teamSettingsMemberStore.currentMemberTeamName = null;
+	},
 	sortData: (field: string) => {
 		teamSettingsMemberStore.dataSorted.direction =
 			teamSettingsMemberStore.dataSorted.direction === 'asc' ? 'desc' : 'asc';
