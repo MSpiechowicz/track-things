@@ -81,7 +81,7 @@
 				<TableRow>
 					<TableCell>{index + 1}</TableCell>
 					<TableCell>{entry.name}</TableCell>
-					<TableCell>{entry.members?.length ?? 0}</TableCell>
+					<TableCell>{entry.members}</TableCell>
 					<TableCell>{new Date(entry.updated_at).toLocaleDateString()}</TableCell>
 					<TableCell class="flex gap-2">
 						<Button

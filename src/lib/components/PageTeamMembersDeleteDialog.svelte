@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { invalidate } from '$app/navigation';
 	import { Button } from '$lib/components/ui/button';
 	import {
 		Dialog,
@@ -11,6 +12,7 @@
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamMembersStore } from '$lib/stores/teamMembersStore.svelte';
 	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
+	import { timer } from '$lib/utils/progressTimer.svelte';
 	import { toast } from 'svelte-sonner';
 
 	async function handleDelete(email: string | null, teamId: string | null) {
@@ -32,17 +34,21 @@
 				(entry) => entry.email !== email
 			);
 
-			teamSettingsOwnerStore.data = teamSettingsOwnerStore.data.map((team) => {
-				if (team.id === teamId) {
-					return {
-						...team,
-						members: team.members.filter((member) => member.email !== email)
-					};
-				}
-				return team;
-			});
+			//teamSettingsOwnerStore.data = teamSettingsOwnerStore.data.map((team) => {
+			//	if (team.id === teamId) {
+			//		return {
+			//			...team,
+			//			members: team.members.filter((member) => member.email !== email)
+			//		};
+			//	}
+			//	return team;
+			//});
 
 			teamMembersStore.data = teamMembersStore.data.filter((entry) => entry.email !== email);
+
+      timer.reset();
+
+      invalidate('app:dashboard');
 
 			dialogStore.showTeamMembersDeleteDialog = false;
 

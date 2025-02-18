@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { invalidate } from '$app/navigation';
 	import { Button } from '$lib/components/ui/button';
 	import {
 		Dialog,
@@ -10,6 +11,7 @@
 	} from '$lib/components/ui/dialog';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
+	import { timer } from '$lib/utils/progressTimer.svelte';
 	import { toast } from "svelte-sonner";
 
   async function handleDelete(id: string | null) {
@@ -29,6 +31,12 @@
       teamSettingsOwnerStore.currentTeamId = null;
       teamSettingsOwnerStore.currentTeamName = null;
       dialogStore.showTeamSettingsDeleteDialog = false;
+
+      timer.reset();
+
+      invalidate('app:dashboard');
+
+      //goto('/dashboard', { invalidateAll: true });
 
       toast.success("Success", {
         description: "Your team settings has been deleted successfully."

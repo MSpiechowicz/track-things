@@ -8,7 +8,7 @@ export const GET = async ({ locals }) => {
 	try {
 		const { data, error: teamSettingsError } = await locals.supabase
 			.from('team_settings')
-			.select('id, name, updated_at')
+			.select('id, name, created_at, updated_at, tracking_ids, members')
 			.eq('profile_id', user.id)
 			.order('updated_at', { ascending: false });
 
@@ -19,6 +19,8 @@ export const GET = async ({ locals }) => {
 		return new Response(JSON.stringify({ data }), { status: 200 });
 	} catch (error) {
 		console.error('Get all team settings error:', error);
-		return new Response(JSON.stringify({ error: 'Failed to get all team settings' }), { status: 500 });
+		return new Response(JSON.stringify({ error: 'Failed to get all team settings' }), {
+			status: 500
+		});
 	}
 };

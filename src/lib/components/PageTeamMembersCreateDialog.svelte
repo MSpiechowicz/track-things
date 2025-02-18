@@ -23,7 +23,9 @@
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
 
+	import { invalidate } from '$app/navigation';
 	import PageDeleteAccount from '$lib/components/PageDeleteAccount.svelte';
+	import { teamSettingsMemberStore } from '$lib/stores/teamSettingsMemberStore.svelte';
 
 	const form = superForm(
 		{
@@ -63,24 +65,31 @@
 						});
 
 						// Update the members array in the main data array
-						teamSettingsOwnerStore.data = teamSettingsOwnerStore.data.map((team) => {
-							if (team.id === teamMembersStore.currentMemberTeamId) {
-								return {
-									...team,
-									members: [
-										...team.members,
-										{
-											id: eventData?.id,
-											email: eventData?.email,
-											name: eventData?.name,
-											permissions: eventData?.permissions,
-											created_at: eventData?.created_at
-										}
-									]
-								};
-							}
-							return team;
-						});
+						//teamSettingsOwnerStore.data. = teamSettingsOwnerStore.data.map((team) => {
+						//	if (team.id === teamMembersStore.currentMemberTeamId) {
+						//		return {
+						//			...team,
+						//			members: [
+						//				...team.members,
+						//				{
+						//					id: eventData?.id,
+						//					email: eventData?.email,
+						//					name: eventData?.name,
+						//					permissions: eventData?.permissions,
+						//					created_at: eventData?.created_at
+						//				}
+						//			]
+						//		};
+						//	}
+						//	return team;
+						//});
+
+            teamSettingsMemberStore.data.push({
+              id: eventData?.id,
+              name: eventData?.name,
+              permissions: eventData?.permissions,
+              created_at: eventData?.created_at
+            });
 
 						dialogStore.showTeamMembersCreateDialog = false;
 						form.reset();

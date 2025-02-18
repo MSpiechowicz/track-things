@@ -20,22 +20,6 @@
 			? teamSettingsMemberStore.dataFiltered
 			: teamSettingsMemberStore.data
 	);
-
-	async function fetchData() {
-		const response = await fetch(`/api/v1/team-settings/member/get/all`);
-
-		if (!response.ok) {
-			throw new Error('Unable to fetch the user member team settings');
-		}
-
-		const result = await response.json();
-
-		teamSettingsMemberStore.data = result.data;
-	}
-
-	$effect(() => {
-		fetchData();
-	});
 </script>
 
 <div class="py-6">

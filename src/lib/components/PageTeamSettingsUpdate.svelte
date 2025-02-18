@@ -52,7 +52,7 @@
 							name: event.result.data?.name,
 							created_at: event.result.data?.created_at,
 							updated_at: event.result.data?.updated_at,
-							members: teamMembersStore.data,
+							members: event.result.data?.members,
 							tracking_ids: event.result.data?.tracking_ids
 						};
 					} else {
@@ -61,7 +61,7 @@
 							name: event.result.data?.name,
 							created_at: event.result.data?.created_at,
 							updated_at: event.result.data?.updated_at,
-							members: teamMembersStore.data,
+							members: event.result.data?.members,
 							tracking_ids: event.result.data?.tracking_ids
 						});
 					}

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { invalidate } from '$app/navigation';
 	import { Button } from '$lib/components/ui/button';
 	import {
 		Dialog,
@@ -28,8 +29,10 @@
 			teamSettingsMemberStore.data = teamSettingsMemberStore.data.filter(
 				(entry) => entry.id !== id
 			);
-      
+
 			dialogStore.showTeamSettingsMemberDeleteDialog = false;
+
+      invalidate('app:dashboard');
 
 			toast.success('Success', {
 				description: 'You have been removed from the selected team successfully.'
