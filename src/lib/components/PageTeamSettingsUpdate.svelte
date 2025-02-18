@@ -83,6 +83,7 @@
 		const response = await fetch(
 			`/api/v1/team-members/get/all?teamId=${teamSettingsOwnerStore.currentTeamId}`
 		);
+
 		const result = await response.json();
 
 		teamMembersStore.data = result.data;

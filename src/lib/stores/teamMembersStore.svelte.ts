@@ -20,6 +20,13 @@ export const teamMembersStore = $state({
 	currentMemberEmail: null as string | null,
 	currentMemberTeamId: null as string | null,
 	currentMemberPermissions: null as string | null,
+	resetCurrentMember: () => {
+		teamMembersStore.currentMemberId = null;
+		teamMembersStore.currentMemberName = null;
+		teamMembersStore.currentMemberEmail = null;
+		teamMembersStore.currentMemberTeamId = null;
+		teamMembersStore.currentMemberPermissions = null;
+	},
 	sortData: (field: string) => {
 		teamMembersStore.dataSorted.direction =
 			teamMembersStore.dataSorted.direction === 'asc' ? 'desc' : 'asc';

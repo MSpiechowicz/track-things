@@ -11,8 +11,6 @@
 	} from '$lib/components/ui/dialog';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamMembersStore } from '$lib/stores/teamMembersStore.svelte';
-	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
-	import { timer } from '$lib/utils/progressTimer.svelte';
 	import { toast } from 'svelte-sonner';
 
 	async function handleDelete(email: string | null, teamId: string | null) {
@@ -30,27 +28,12 @@
 		const result = await response.json();
 
 		if (result.success) {
-			//teamSettingsOwnerStore.currentTeamMembers = teamSettingsOwnerStore.currentTeamMembers.filter(
-			//	(entry) => entry.email !== email
-			//);
-
-			//teamSettingsOwnerStore.data = teamSettingsOwnerStore.data.map((team) => {
-			//	if (team.id === teamId) {
-			//		return {
-			//			...team,
-			//			members: team.members.filter((member) => member.email !== email)
-			//		};
-			//	}
-			//	return team;
-			//});
-
 			teamMembersStore.data = teamMembersStore.data.filter((entry) => entry.email !== email);
-
-      timer.reset();
-
-      invalidate('app:dashboard');
+			teamMembersStore.resetCurrentMember();
 
 			dialogStore.showTeamMembersDeleteDialog = false;
+
+      invalidate('app:dashboard');
 
 			toast.success('Success', {
 				description: 'Your team member has been deleted successfully.'
@@ -65,7 +48,10 @@
 
 <Dialog
 	open={dialogStore.showTeamMembersDeleteDialog}
-	onOpenChange={() => (dialogStore.showTeamMembersDeleteDialog = false)}
+	onOpenChange={() => {
+		dialogStore.showTeamMembersDeleteDialog = false;
+		teamMembersStore.resetCurrentMember();
+	}}
 >
 	<DialogContent class="w-[325px] rounded-xl border sm:w-full">
 		<DialogHeader>
@@ -77,7 +63,12 @@
 			</DialogDescription>
 		</DialogHeader>
 		<DialogFooter class="mt-4 flex flex-col gap-3 sm:flex-row sm:gap-2">
-			<Button variant="outline" onclick={() => (dialogStore.showTeamMembersDeleteDialog = false)}
+			<Button
+				variant="outline"
+				onclick={() => {
+					dialogStore.showTeamMembersDeleteDialog = false;
+					teamMembersStore.resetCurrentMember();
+				}}
 				>Cancel</Button
 			>
 			<Button

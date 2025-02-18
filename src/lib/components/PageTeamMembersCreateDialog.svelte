@@ -18,14 +18,11 @@
 	import { Input } from '$lib/components/ui/input';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamMembersStore } from '$lib/stores/teamMembersStore.svelte';
-	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
 	import { teamMembersCreateSchemaValidator } from '$lib/validators/teamMembersCreateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
-
 	import { invalidate } from '$app/navigation';
 	import PageDeleteAccount from '$lib/components/PageDeleteAccount.svelte';
-	import { teamSettingsMemberStore } from '$lib/stores/teamSettingsMemberStore.svelte';
 
 	const form = superForm(
 		{
@@ -35,74 +32,32 @@
 		{
 			validators: teamMembersCreateSchemaValidator,
 			onResult: async (event) => {
-				const eventType = event.result?.type as 'success' | 'failure';
+				const eventType = event.result?.type;
 				// @ts-expect-error - This is a valid type
 				const eventData = event.result?.data;
 
 				if (eventType === 'success') {
-					// Check if member already exists
-					const existingMember = teamMembersStore.data.find(
-						(member) => member.email === eventData?.email
-					);
+					teamMembersStore.data.push({
+						id: eventData?.id,
+						email: eventData?.email,
+						name: eventData?.name,
+						permissions: eventData?.permissions,
+						created_at: eventData?.created_at
+					});
+					teamMembersStore.resetCurrentMember();
 
-					if (!existingMember) {
-						// Update teamMembersStore
-						teamMembersStore.data.push({
-							id: eventData?.id,
-							email: eventData?.email,
-							name: eventData?.name,
-							permissions: eventData?.permissions,
-							created_at: eventData?.created_at
-						});
+					dialogStore.showTeamMembersCreateDialog = false;
+					form.reset();
 
-						// Update currentTeamMembers
-						//teamSettingsOwnerStore.currentTeamMembers.push({
-						//	id: eventData?.id,
-						//	email: eventData?.email,
-						//	name: eventData?.name,
-						//	permissions: eventData?.permissions,
-						//	created_at: eventData?.created_at
-						//});
+					invalidate('app:dashboard');
 
-						// Update the members array in the main data array
-						//teamSettingsOwnerStore.data. = teamSettingsOwnerStore.data.map((team) => {
-						//	if (team.id === teamMembersStore.currentMemberTeamId) {
-						//		return {
-						//			...team,
-						//			members: [
-						//				...team.members,
-						//				{
-						//					id: eventData?.id,
-						//					email: eventData?.email,
-						//					name: eventData?.name,
-						//					permissions: eventData?.permissions,
-						//					created_at: eventData?.created_at
-						//				}
-						//			]
-						//		};
-						//	}
-						//	return team;
-						//});
-
-            teamSettingsMemberStore.data.push({
-              id: eventData?.id,
-              name: eventData?.name,
-              permissions: eventData?.permissions,
-              created_at: eventData?.created_at
-            });
-
-						dialogStore.showTeamMembersCreateDialog = false;
-						form.reset();
-
-						toast.success('Success', {
-							description: 'Your team member has been added successfully.'
-						});
-					}
-				}
-
-				if (eventType === 'failure') {
+					toast.success('Success', {
+						description: 'Your team member has been added successfully.'
+					});
+				} else {
 					toast.error('Error', {
-						description: 'We were unable to add your team member. Please try again.'
+						description:
+							'We were unable to add your team member. Please try again or check if member with this email already exists.'
 					});
 				}
 			}
@@ -120,9 +75,8 @@
 	open={dialogStore.showTeamMembersCreateDialog}
 	onOpenChange={() => {
 		dialogStore.showTeamMembersCreateDialog = false;
-		form.reset();
-		teamMembersStore.currentMemberEmail = null;
-		teamMembersStore.currentMemberTeamId = null;
+		teamMembersStore.resetCurrentMember();
+    form.reset();
 	}}
 >
 	<DialogContent class="w-[325px] rounded-xl border sm:w-full">
@@ -166,9 +120,8 @@
 					variant="outline"
 					onclick={() => {
 						dialogStore.showTeamMembersCreateDialog = false;
-						form.reset();
-						teamMembersStore.currentMemberEmail = null;
-						teamMembersStore.currentMemberTeamId = null;
+						teamMembersStore.resetCurrentMember();
+            form.reset();
 					}}>Cancel</Button
 				>
 				<Button type="submit" disabled={!$formData.email}>Save changes</Button>
