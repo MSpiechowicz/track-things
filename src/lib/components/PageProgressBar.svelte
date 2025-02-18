@@ -1,8 +1,7 @@
 <script lang="ts">
   import { Progress } from "$lib/components/ui/progress";
-  import { timer } from "$lib/utils/progressTimer.svelte";
 
-  const { duration = 1500 } = $props();
+  const { duration = 1500, timer } = $props();
 
   $effect(() => {
     const startTime = performance.now();

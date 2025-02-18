@@ -1,7 +1,7 @@
-class Timer {
+export class Timer {
   progress = $state(0);
   isFinished = $state(false);
-  isNotFinished = $state(true);
+  isRunning = $state(true);
 
   setProgress(value: number) {
     this.progress = value;
@@ -9,7 +9,7 @@ class Timer {
     if (this.progress >= 100) {
       setTimeout(() => {
         this.isFinished = true;
-        this.isNotFinished = false;
+        this.isRunning = false;
       }, 100);
     }
   }
@@ -17,8 +17,6 @@ class Timer {
   reset() {
     this.progress = 0;
     this.isFinished = false;
-    this.isNotFinished = true;
+    this.isRunning = true;
   }
 }
-
-export const timer = new Timer();

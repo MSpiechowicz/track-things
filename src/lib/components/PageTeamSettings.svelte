@@ -1,21 +1,25 @@
 <script lang="ts">
 	import { DASHBOARD_VIEWS } from '$lib/constants';
 	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
-	import { timer } from '$lib/utils/progressTimer.svelte';
+	import { teamSettingsTimer } from '$lib/utils/timers/defaults';
 	import DashboardContainer from './PageDashboardContainer.svelte';
-	import PageProgressBar from './PageProgressBar.svelte';
+	import PageSpinner from './PageSpinner.svelte';
 	import PageTeamSettingsMemberList from './PageTeamSettingsMemberList.svelte';
 	import PageTeamSettingsOwnerList from './PageTeamSettingsOwnerList.svelte';
 	import PageTeamSettingsUpdate from './PageTeamSettingsUpdate.svelte';
+
+  $effect(() => {
+    teamSettingsTimer.start();
+  });
 </script>
 
 <DashboardContainer title={DASHBOARD_VIEWS.TEAM_SETTINGS}>
-	{#if timer.isNotFinished}
-		<div class="mt-24">
-			<PageProgressBar />
+	{#if teamSettingsTimer.isRunning}
+		<div class="mt-8">
+			<PageSpinner additionalClass="w-10 h-10" />
 		</div>
 	{/if}
-	{#if timer.isFinished}
+	{#if teamSettingsTimer.isFinished}
 		{#if teamSettingsOwnerStore.showUpdateView}
 			<PageTeamSettingsUpdate />
 		{:else}

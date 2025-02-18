@@ -11,7 +11,7 @@
 	} from '$lib/components/ui/dialog';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
-	import { timer } from '$lib/utils/progressTimer.svelte';
+	import { teamSettingsTimer } from '$lib/utils/timers/defaults';
 	import { toast } from "svelte-sonner";
 
   async function handleDelete(id: string | null) {
@@ -32,7 +32,7 @@
 
       dialogStore.showTeamSettingsDeleteDialog = false;
 
-      timer.reset();
+      teamSettingsTimer.reset();
 
       invalidate('app:dashboard');
 

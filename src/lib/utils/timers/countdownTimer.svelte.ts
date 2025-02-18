@@ -1,4 +1,4 @@
-class Timer {
+export class Timer {
 	private startTime = $state<number | null>(null);
 	private duration = $state(1500);
 	private elapsed = $state(0);
@@ -38,6 +38,7 @@ class Timer {
 		this.stop();
 		this.startTime = null;
 		this.elapsed = 0;
+    this.start();
 	}
 
 	get progress() {
@@ -52,5 +53,3 @@ class Timer {
 		return !this.isFinished;
 	}
 }
-
-export const timer = new Timer(1000);

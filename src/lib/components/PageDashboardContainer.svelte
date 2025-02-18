@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { dashboardStore } from '$lib/stores/dashboardStore.svelte';
-
 	import IconArrowBack from '$lib/components/svg/IconArrowBack.svelte';
 
 	const { title, children } = $props();

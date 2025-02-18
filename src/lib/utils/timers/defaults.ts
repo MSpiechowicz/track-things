@@ -1,0 +1,5 @@
+import { Timer as CountdownTimer } from './countdownTimer.svelte';
+
+export const navigationTimer = new CountdownTimer(500);
+export const teamSettingsTimer = new CountdownTimer(1000);
+export const teamMembersTimer = new CountdownTimer();

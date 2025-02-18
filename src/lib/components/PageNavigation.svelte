@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { userStore } from '$lib/stores/userStore.svelte';
-	import { timer } from '$lib/utils/countdownTimer.svelte';
+	import { navigationTimer } from '$lib/utils/timers/defaults';
 
 	import PageSpinner from '$lib/components/PageSpinner.svelte';
 	import PageUserMenu from '$lib/components/PageUserMenu.svelte';
 	import IconFoots from './svg/IconFoots.svelte';
 
 	$effect(() => {
-		timer.start();
+		navigationTimer.start();
 	});
 </script>
 
@@ -33,10 +33,10 @@
 		</div>
 		<span class="ml-2 rounded-full bg-gray-200 px-2 py-1 text-xs text-gray-700">ALPHA</span>
 	</a>
-	{#if timer.isRunning}
+	{#if navigationTimer.isRunning}
 		<PageSpinner />
 	{/if}
-	{#if timer.isFinished && userStore.id}
+	{#if navigationTimer.isFinished && userStore.id}
 		<div class="flex items-center gap-2 text-white">
 			<Button
 				variant="link"
@@ -52,7 +52,7 @@
 			</div>
 		</div>
 	{/if}
-	{#if timer.isFinished && !userStore.id}
+	{#if navigationTimer.isFinished && !userStore.id}
 		<Button variant="default" href="/auth/login" aria-label="Sign in to your account"
 			>Sign In</Button
 		>
