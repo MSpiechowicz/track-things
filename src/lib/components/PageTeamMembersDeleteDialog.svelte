@@ -30,9 +30,9 @@
 		const result = await response.json();
 
 		if (result.success) {
-			teamSettingsOwnerStore.currentTeamMembers = teamSettingsOwnerStore.currentTeamMembers.filter(
-				(entry) => entry.email !== email
-			);
+			//teamSettingsOwnerStore.currentTeamMembers = teamSettingsOwnerStore.currentTeamMembers.filter(
+			//	(entry) => entry.email !== email
+			//);
 
 			//teamSettingsOwnerStore.data = teamSettingsOwnerStore.data.map((team) => {
 			//	if (team.id === teamId) {

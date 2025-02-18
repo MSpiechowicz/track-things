@@ -56,13 +56,13 @@
 						});
 
 						// Update currentTeamMembers
-						teamSettingsOwnerStore.currentTeamMembers.push({
-							id: eventData?.id,
-							email: eventData?.email,
-							name: eventData?.name,
-							permissions: eventData?.permissions,
-							created_at: eventData?.created_at
-						});
+						//teamSettingsOwnerStore.currentTeamMembers.push({
+						//	id: eventData?.id,
+						//	email: eventData?.email,
+						//	name: eventData?.name,
+						//	permissions: eventData?.permissions,
+						//	created_at: eventData?.created_at
+						//});
 
 						// Update the members array in the main data array
 						//teamSettingsOwnerStore.data. = teamSettingsOwnerStore.data.map((team) => {

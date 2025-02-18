@@ -17,7 +17,6 @@
 	} from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
-	import { teamMembersStore } from '$lib/stores/teamMembersStore.svelte';
 	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
 	import { teamSettingsCreateSchemaValidator } from '$lib/validators/teamSettingsCreateSchemaValidator';
 	import { toast } from 'svelte-sonner';
@@ -32,70 +31,32 @@
 		{
 			validators: teamSettingsCreateSchemaValidator,
 			onResult: async (event) => {
-				const eventType = event.result?.type as 'success' | 'failure';
+				const eventType = event.result?.type;
 				// @ts-expect-error - This is a valid type
 				const eventData = event.result?.data;
 
 				if (eventType === 'success') {
-					// Check if team already exists
-					const existingTeam = teamSettingsOwnerStore.data.find(
-						(team) => team.name === eventData?.name
-					);
-
-					if (!existingTeam) {
-						// Update teamSettingsOwnerStore
-						teamSettingsOwnerStore.data.push({
-							id: eventData?.id,
-							name: eventData?.name,
-							created_at: eventData?.created_at,
-							updated_at: eventData?.updated_at,
-							tracking_ids: [],
-							members: []
-						});
-
-						// Update currentTeamMembers
-						teamSettingsOwnerStore.currentTeamMembers.push({
-							id: eventData?.id,
-							email: eventData?.email,
-							name: eventData?.name,
-							permissions: eventData?.permissions,
-							created_at: eventData?.created_at
-						});
-
-						// Update the members array in the main data array
-						teamSettingsOwnerStore.data = teamSettingsOwnerStore.data.map((team) => {
-							if (team.id === teamMembersStore.currentMemberTeamId) {
-								return {
-									...team,
-									members: [
-										...team.members,
-										{
-											id: eventData?.id,
-											email: eventData?.email,
-											name: eventData?.name,
-											permissions: eventData?.permissions,
-											created_at: eventData?.created_at
-										}
-									]
-								};
-							}
-							return team;
-						});
-
-						dialogStore.showTeamSettingsCreateDialog = false;
-						form.reset();
-
-						toast.success('Success', {
-							description: 'Your team member has been added successfully.'
-						});
-					}
-				}
-
-				if (eventType === 'failure') {
-					toast.error('Error', {
-						description: 'We were unable to add your team member. Please try again.'
+					teamSettingsOwnerStore.data.push({
+						id: eventData?.id,
+						name: eventData?.name,
+						created_at: eventData?.created_at,
+						updated_at: eventData?.updated_at,
+						tracking_ids: [],
+						members: 0
 					});
-				}
+
+					dialogStore.showTeamSettingsCreateDialog = false;
+					form.reset();
+
+					toast.success('Success', {
+						description: 'Your team has been created successfully.'
+					});
+				} else {
+          toast.error('Error', {
+						description:
+							'We were unable to add your team. Please try again or check if this team already exists.'
+					});
+        }
 			}
 		}
 	);

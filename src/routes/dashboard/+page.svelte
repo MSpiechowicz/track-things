@@ -1,14 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import PageDashboardTracking from '$lib/components/PageDashboardTracking.svelte';
+	import PageTeamSettings from '$lib/components/PageTeamSettings.svelte';
+	import IconEye from '$lib/components/svg/IconEye.svelte';
+	import IconUserGroup from '$lib/components/svg/IconUserGroup.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { DASHBOARD_VIEWS } from '$lib/constants';
 	import { dashboardStore } from '$lib/stores/dashboardStore.svelte';
-
-	import PageDashboardTracking from '$lib/components/PageDashboardTracking.svelte';
-	import PageTeamSettings from '$lib/components/PageTeamSettings.svelte';
-	import PageTeamSettingsCreate from '$lib/components/PageTeamSettingsCreate.svelte';
-	import IconEye from '$lib/components/svg/IconEye.svelte';
-	import IconUserGroup from '$lib/components/svg/IconUserGroup.svelte';
 
 	const { data } = $props();
 	const { userProfile } = $derived(data);
@@ -41,8 +39,5 @@
 	{/if}
 	{#if dashboardStore.currentView === DASHBOARD_VIEWS.TEAM_SETTINGS}
 		<PageTeamSettings />
-	{/if}
-	{#if dashboardStore.currentView === DASHBOARD_VIEWS.TEAM_SETTINGS_CREATE}
-		<PageTeamSettingsCreate />
 	{/if}
 </div>

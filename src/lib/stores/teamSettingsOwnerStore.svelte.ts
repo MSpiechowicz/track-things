@@ -1,5 +1,4 @@
 import type { SortableDirectionType } from '$lib/types/sortableDirectionType';
-import type { TeamMemberType } from '$lib/types/teamMemberType';
 import type { TeamSettingOwnerType } from '$lib/types/teamSettingsOwnerType';
 
 type SortField = 'name' | 'members' | 'createdAt';
@@ -16,9 +15,7 @@ export const teamSettingsOwnerStore = $state({
 		fields: ['name', 'members', 'createdAt'] as SortField[],
 		direction: 'desc' as SortableDirectionType
 	} as SortItem,
-	showCreateView: false as boolean,
 	showUpdateView: false as boolean,
-	currentTeamMembers: [] as TeamMemberType[],
 	currentTeamId: null as string | null,
 	currentTeamName: null as string | null,
 	sortData: (field: string) => {
@@ -32,7 +29,7 @@ export const teamSettingsOwnerStore = $state({
 				case 'name':
 					return modifier * a.name.localeCompare(b.name);
 				case 'members':
-					return modifier * ((a.members?.length || 0) - (b.members?.length || 0));
+					return modifier * (a.members - b.members);
 				case 'createdAt':
 					return modifier * a.updated_at.localeCompare(b.updated_at);
 				default:
