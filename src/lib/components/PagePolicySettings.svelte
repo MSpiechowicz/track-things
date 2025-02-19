@@ -1,13 +1,7 @@
 <script lang="ts">
-	interface SubContent {
-		title: string;
-		content: string;
-	}
+  import type { PolicySubContentType } from "$lib/types/policySubContentType";
 
-	export let title: string;
-	export let content: string;
-	export let subcontent: SubContent[] = [];
-	export let sectionNumber: string;
+	const { title, content, subcontent = [] as PolicySubContentType[], sectionNumber } = $props();
 </script>
 
 <section class="mb-8 max-w-[80ch]">

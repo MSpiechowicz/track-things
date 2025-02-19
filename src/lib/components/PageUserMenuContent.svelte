@@ -1,4 +1,6 @@
 <script lang="ts">
+	import IconUserConfig from '$lib/components/svg/IconUserConfig.svelte';
+	import IconUserSignOut from '$lib/components/svg/IconUserSignOut.svelte';
 	import {
 		DropdownMenuItem,
 		DropdownMenuLabel,
@@ -6,9 +8,6 @@
 	} from '$lib/components/ui/dropdown-menu';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { userStore } from '$lib/stores/userStore.svelte';
-
-	import IconUserConfig from '$lib/components/svg/IconUserConfig.svelte';
-	import IconUserSignOut from '$lib/components/svg/IconUserSignOut.svelte';
 </script>
 
 <DropdownMenuLabel>

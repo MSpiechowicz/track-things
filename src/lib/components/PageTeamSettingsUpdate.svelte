@@ -1,4 +1,6 @@
 <script lang="ts">
+	import PageFormInput from '$lib/components/PageFormInput.svelte';
+	import PageFormLabel from '$lib/components/PageFormLabel.svelte';
 	import PageTableSortableHeader from '$lib/components/PageTableSortableHeader.svelte';
 	import PageTeamMembersCreateDialog from '$lib/components/PageTeamMembersCreateDialog.svelte';
 	import PageTeamMembersDeleteDialog from '$lib/components/PageTeamMembersDeleteDialog.svelte';
@@ -7,10 +9,8 @@
 	import { Button } from '$lib/components/ui/button';
 	import {
 		FormControl,
-		FormDescription,
 		FormField,
-		FormFieldErrors,
-		FormLabel
+		FormFieldErrors
 	} from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import {
@@ -130,21 +130,17 @@
 			<input type="hidden" name="id" value={teamSettingsOwnerStore.currentTeamId ?? ''} />
 			<FormField {form} name="name" let:errors>
 				<FormControl let:attrs>
-					<FormLabel class="text-md !text-white">Team Name</FormLabel>
-					<FormDescription class="mb-4 text-sm text-neutral-400">
-						This is your team's name that will be displayed as a identifier for your entire team.
-					</FormDescription>
+					<PageFormLabel
+						label="Team Name"
+						description="This is your team's name that will be displayed as a identifier for your entire team."
+						isTextWhite={true}
+					/>
 					<div class="flex flex-row items-center gap-2">
-						<Input
+						<PageFormInput
 							bind:value={$formData.name}
-							class="text-md max-w-sm text-black focus-visible:{errors.length > 0
-								? 'ring-red-500'
-								: 'ring-blue-600'} focus-visible:ring-offset-0 {errors.length > 0
-								? 'ring-2 ring-red-500'
-								: 'ring-0 ring-blue-600'}"
+							{errors}
+							{attrs}
 							placeholder="Enter team name"
-							autocomplete="off"
-							{...attrs}
 						/>
 						<Button type="submit" variant="default" class="border-1 py-5 text-white">Save</Button>
 					</div>

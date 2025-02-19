@@ -1,18 +1,16 @@
 <script lang="ts">
+	import PageAccountSettingsDialog from '$lib/components/PageAccountSettingsDialog.svelte';
+	import PageUserMenuContent from '$lib/components/PageUserMenuContent.svelte';
+	import PageUserMenuDialog from '$lib/components/PageUserMenuDialog.svelte';
+	import IconMenu from '$lib/components/svg/IconMenu.svelte';
+	import IconSettings from '$lib/components/svg/IconSettings.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import { userStore } from '$lib/stores/userStore.svelte';
 	import {
 		DropdownMenu,
 		DropdownMenuContent,
 		DropdownMenuTrigger
 	} from '$lib/components/ui/dropdown-menu';
-
-	import PageAccountSettingsDialog from '$lib/components/PageAccountSettingsDialog.svelte';
-	import PageUserMenuContent from '$lib/components/PageUserMenuContent.svelte';
-	import PageUserMenuDialog from '$lib/components/PageUserMenuDialog.svelte';
-
-	import IconMenu from '$lib/components/svg/IconMenu.svelte';
-	import IconSettings from '$lib/components/svg/IconSettings.svelte';
+	import { userStore } from '$lib/stores/userStore.svelte';
 
 	const { isMobile = false } = $props();
 </script>

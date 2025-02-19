@@ -2,15 +2,10 @@
 	import { invalidate } from '$app/navigation';
 	import PageDialog from '$lib/components/PageDialog.svelte';
 	import PageDialogFooter from '$lib/components/PageDialogFooter.svelte';
+	import PageFormInput from '$lib/components/PageFormInput.svelte';
+	import PageFormLabel from '$lib/components/PageFormLabel.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import {
-		FormControl,
-		FormDescription,
-		FormField,
-		FormFieldErrors,
-		FormLabel
-	} from '$lib/components/ui/form';
-	import { Input } from '$lib/components/ui/input';
+	import { FormControl, FormField, FormFieldErrors } from '$lib/components/ui/form';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamMembersStore } from '$lib/stores/teamMembersStore.svelte';
 	import { teamMembersCreateSchemaValidator } from '$lib/validators/teamMembersCreateSchemaValidator';
@@ -89,21 +84,11 @@
 		<input type="hidden" name="teamId" value={teamMembersStore.currentMemberTeamId ?? ''} />
 		<FormField {form} name="email" let:errors>
 			<FormControl let:attrs>
-				<FormLabel class="text-md !text-black">Email</FormLabel>
-				<FormDescription class="mb-4 text-sm text-neutral-400">
-					This is the email address of a new team member for your reference.
-				</FormDescription>
-				<Input
-					bind:value={$formData.email}
-					class="text-md mt-1 max-w-sm text-black focus-visible:{errors.length > 0
-						? 'ring-red-500'
-						: 'ring-blue-600'} focus-visible:ring-offset-0 {errors.length > 0
-						? 'ring-2 ring-red-500'
-						: 'ring-2 ring-blue-600'}"
-					placeholder="Enter the email"
-					autocomplete="off"
-					{...attrs}
+				<PageFormLabel
+					label="Email"
+					description="This is the email address of a new team member for your reference."
 				/>
+				<PageFormInput bind:value={$formData.email} {errors} {attrs} placeholder="Enter the email" />
 			</FormControl>
 			<FormFieldErrors class="text-red-500" />
 		</FormField>

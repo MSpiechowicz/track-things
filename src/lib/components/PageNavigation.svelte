@@ -1,10 +1,9 @@
 <script lang="ts">
+	import PageSpinner from '$lib/components/PageSpinner.svelte';
+	import PageUserMenu from '$lib/components/PageUserMenu.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { userStore } from '$lib/stores/userStore.svelte';
 	import { navigationTimer } from '$lib/utils/timers/defaults';
-
-	import PageSpinner from '$lib/components/PageSpinner.svelte';
-	import PageUserMenu from '$lib/components/PageUserMenu.svelte';
 	import IconFoots from './svg/IconFoots.svelte';
 
 	$effect(() => {

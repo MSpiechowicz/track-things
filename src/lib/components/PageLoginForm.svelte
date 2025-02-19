@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { Button } from '$lib/components/ui/button';
-
 	import IconGithubBrand from '$lib/components/svg/IconGithubBrand.svelte';
 	import IconMail from '$lib/components/svg/IconMail.svelte';
+	import { Button } from '$lib/components/ui/button';
 
 	const socialLogins = [
 		{
@@ -30,7 +29,6 @@
 			</Button>
 		{/each}
 	</div>
-
 	<div class="relative">
 		<div class="absolute inset-0 flex items-center">
 			<span class="w-full border-t"></span>
@@ -39,11 +37,9 @@
 			<span class="text-muted-foreground bg-white px-2">or</span>
 		</div>
 	</div>
-
 	<Button variant="outline" class="h-11 w-full font-normal" onclick={() => goto('/')}>
 		Return to Home Page
 	</Button>
-
 	<p class="text-muted-foreground text-center text-sm">
 		By signing in, you agree to our{' '}
 		<a href="/terms-of-service" class="hover:text-primary underline underline-offset-4">

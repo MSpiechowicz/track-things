@@ -1,10 +1,9 @@
 <script lang="ts">
+	import IconSortAscending from '$lib/components/svg/IconSortAscending.svelte';
+	import IconSortDescending from '$lib/components/svg/IconSortDescending.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { TableHead } from '$lib/components/ui/table';
 	import type { TableSortableDataType } from '$lib/types/tableSortableDataType';
-
-	import IconSortAscending from '$lib/components/svg/IconSortAscending.svelte';
-	import IconSortDescending from '$lib/components/svg/IconSortDescending.svelte';
 
 	const { label, field, store, additionalClass } = $props<{
 		label: string;
