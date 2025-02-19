@@ -29,7 +29,7 @@
 					form.reset();
 
 					toast.success('Settings updated', {
-						description: 'Your display name has been updated successfully.'
+						description: 'Your account settings have been updated successfully.'
 					});
 				} else {
 					toast.error('Error', {
