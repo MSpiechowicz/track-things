@@ -7,7 +7,7 @@
 		DropdownMenuTrigger
 	} from '$lib/components/ui/dropdown-menu';
 
-	import PageAccountSettings from '$lib/components/PageAccountSettings.svelte';
+	import PageAccountSettingsDialog from '$lib/components/PageAccountSettingsDialog.svelte';
 	import PageUserMenuContent from '$lib/components/PageUserMenuContent.svelte';
 	import PageUserMenuDialog from '$lib/components/PageUserMenuDialog.svelte';
 
@@ -33,7 +33,7 @@
 </DropdownMenu>
 
 {#if userStore.id}
-	<PageAccountSettings />
+	<PageAccountSettingsDialog />
 {/if}
 
 <PageUserMenuDialog />
