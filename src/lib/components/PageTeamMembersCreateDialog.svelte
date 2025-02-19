@@ -68,7 +68,10 @@
 	const { form: formData, enhance } = form;
 
 	$effect(() => {
-		$formData.teamId = teamMembersStore.currentMemberTeamId ?? '';
+    // We want to revalidate this effect when the dialog is open
+    if (dialogStore.showTeamMembersCreateDialog) {
+      $formData.teamId = teamMembersStore.currentMemberTeamId ?? '';
+    }
 	});
 </script>
 
