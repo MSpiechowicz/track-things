@@ -1,14 +1,8 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
+	import PageDialog from '$lib/components/PageDialog.svelte';
+	import PageDialogFooter from '$lib/components/PageDialogFooter.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import {
-		Dialog,
-		DialogContent,
-		DialogDescription,
-		DialogFooter,
-		DialogHeader,
-		DialogTitle
-	} from '$lib/components/ui/dialog';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamSettingsMemberStore } from '$lib/stores/teamSettingsMemberStore.svelte';
 	import { teamSettingsTimer } from '$lib/utils/timers/defaults';
@@ -52,34 +46,25 @@
 	}
 </script>
 
-<Dialog
+<PageDialog
 	open={dialogStore.showTeamSettingsMemberDeleteDialog}
 	onOpenChange={() => {
 		dialogStore.showTeamSettingsMemberDeleteDialog = false;
 		teamSettingsMemberStore.resetCurrentMember();
 	}}
+	dialogTitle="Delete Membership"
+	dialogDescription="Are you sure you want to remove yourself from the team <span class='font-bold'
+		>{teamSettingsMemberStore.currentMemberTeamName}</span>?"
 >
-	<DialogContent class="w-[325px] rounded-xl border sm:w-full">
-		<DialogHeader>
-			<DialogTitle class="text-xl">Delete Membership</DialogTitle>
-			<DialogDescription class="text-base text-neutral-600">
-				Are you sure you want to remove yourself from the team <span class="font-bold"
-					>{teamSettingsMemberStore.currentMemberTeamName}</span
-				>?
-			</DialogDescription>
-		</DialogHeader>
-		<DialogFooter class="mt-4 flex flex-col gap-3 sm:flex-row sm:gap-2">
-			<Button
-				variant="outline"
-				onclick={() => {
-					dialogStore.showTeamSettingsMemberDeleteDialog = false;
-					teamSettingsMemberStore.resetCurrentMember();
-				}}>Cancel</Button
-			>
-			<Button
-				variant="destructive"
-				onclick={() => handleDelete(teamSettingsMemberStore.currentMemberTeamId)}>Delete</Button
-			>
-		</DialogFooter>
-	</DialogContent>
-</Dialog>
+	<PageDialogFooter
+		onCancelClick={() => {
+			dialogStore.showTeamSettingsMemberDeleteDialog = false;
+			teamSettingsMemberStore.resetCurrentMember();
+		}}
+	>
+		<Button
+			variant="destructive"
+			onclick={() => handleDelete(teamSettingsMemberStore.currentMemberTeamId)}>Delete</Button
+		>
+	</PageDialogFooter>
+</PageDialog>

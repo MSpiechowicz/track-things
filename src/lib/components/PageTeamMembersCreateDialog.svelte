@@ -1,14 +1,8 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
+	import PageDialog from '$lib/components/PageDialog.svelte';
+	import PageDialogFooter from '$lib/components/PageDialogFooter.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import {
-		Dialog,
-		DialogContent,
-		DialogDescription,
-		DialogFooter,
-		DialogHeader,
-		DialogTitle
-	} from '$lib/components/ui/dialog';
 	import {
 		FormControl,
 		FormDescription,
@@ -67,68 +61,60 @@
 	const { form: formData, enhance } = form;
 
 	$effect(() => {
-    // We want to revalidate this effect when the dialog is open
-    if (dialogStore.showTeamMembersCreateDialog) {
-      $formData.teamId = teamMembersStore.currentMemberTeamId ?? '';
-    }
+		// We want to revalidate this effect when the dialog is open
+		if (dialogStore.showTeamMembersCreateDialog) {
+			$formData.teamId = teamMembersStore.currentMemberTeamId ?? '';
+		}
 	});
 </script>
 
-<Dialog
+<PageDialog
 	open={dialogStore.showTeamMembersCreateDialog}
 	onOpenChange={() => {
 		dialogStore.showTeamMembersCreateDialog = false;
 		teamMembersStore.resetCurrentMember();
-    form.reset();
+		form.reset();
 	}}
+	dialogTitle="Add Team Member"
+	dialogDescription="Below you can add a new team member to your team."
 >
-	<DialogContent class="w-[325px] rounded-xl border sm:w-full">
-		<DialogHeader>
-			<DialogTitle class="text-xl">Add Team Member</DialogTitle>
-			<DialogDescription class="text-base text-neutral-600">
-				Below you can add a new team member to your team.
-			</DialogDescription>
-		</DialogHeader>
-		<form
-			method="POST"
-			action="/api/v1/team-members/create"
-			class="mt-2 space-y-8"
-			use:enhance
-			id="create-team-member-form"
-			data-sveltekit-reload
+	<form
+		method="POST"
+		action="/api/v1/team-members/create"
+		class="mt-2 space-y-8"
+		use:enhance
+		id="create-team-member-form"
+		data-sveltekit-reload
+	>
+		<input type="hidden" name="teamId" value={teamMembersStore.currentMemberTeamId ?? ''} />
+		<FormField {form} name="email" let:errors>
+			<FormControl let:attrs>
+				<FormLabel class="text-md !text-black">Email</FormLabel>
+				<FormDescription class="mb-4 text-sm text-neutral-400">
+					This is the email address of a new team member for your reference.
+				</FormDescription>
+				<Input
+					bind:value={$formData.email}
+					class="text-md mt-1 max-w-sm text-black focus-visible:{errors.length > 0
+						? 'ring-red-500'
+						: 'ring-blue-600'} focus-visible:ring-offset-0 {errors.length > 0
+						? 'ring-2 ring-red-500'
+						: 'ring-2 ring-blue-600'}"
+					placeholder="Enter the email"
+					autocomplete="off"
+					{...attrs}
+				/>
+			</FormControl>
+			<FormFieldErrors class="text-red-500" />
+		</FormField>
+		<PageDialogFooter
+			onCancelClick={() => {
+				dialogStore.showTeamMembersCreateDialog = false;
+				teamMembersStore.resetCurrentMember();
+				form.reset();
+			}}
 		>
-			<input type="hidden" name="teamId" value={teamMembersStore.currentMemberTeamId ?? ''} />
-			<FormField {form} name="email" let:errors>
-				<FormControl let:attrs>
-					<FormLabel class="text-md !text-black">Email</FormLabel>
-					<FormDescription class="mb-4 text-sm text-neutral-400">
-						This is the email address of a new team member for your reference.
-					</FormDescription>
-					<Input
-						bind:value={$formData.email}
-						class="text-md mt-1 max-w-sm text-black focus-visible:{errors.length > 0
-							? 'ring-red-500'
-							: 'ring-blue-600'} focus-visible:ring-offset-0 {errors.length > 0
-							? 'ring-2 ring-red-500'
-							: 'ring-2 ring-blue-600'}"
-						placeholder="Enter the email"
-						autocomplete="off"
-						{...attrs}
-					/>
-				</FormControl>
-				<FormFieldErrors class="text-red-500" />
-			</FormField>
-			<DialogFooter class="mt-4 flex flex-col gap-3 sm:flex-row sm:gap-2">
-				<Button
-					variant="outline"
-					onclick={() => {
-						dialogStore.showTeamMembersCreateDialog = false;
-						teamMembersStore.resetCurrentMember();
-            form.reset();
-					}}>Cancel</Button
-				>
-				<Button type="submit" disabled={!$formData.email}>Save changes</Button>
-			</DialogFooter>
-		</form>
-	</DialogContent>
-</Dialog>
+			<Button type="submit" disabled={!$formData.email}>Save changes</Button>
+		</PageDialogFooter>
+	</form>
+</PageDialog>
