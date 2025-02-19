@@ -1,4 +1,8 @@
 <script lang="ts">
+	import PageTableSortableHeader from '$lib/components/PageTableSortableHeader.svelte';
+	import PageTeamMembersCreateDialog from '$lib/components/PageTeamMembersCreateDialog.svelte';
+	import PageTeamMembersDeleteDialog from '$lib/components/PageTeamMembersDeleteDialog.svelte';
+	import IconPlus from '$lib/components/svg/IconPlus.svelte';
 	import IconTrash from '$lib/components/svg/IconTrash.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import {
@@ -21,13 +25,11 @@
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamMembersStore } from '$lib/stores/teamMembersStore.svelte';
 	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
+	import { teamSettingsUpdateTimer } from '$lib/utils/timers/defaults';
 	import { teamSettingsUpdateSchemaValidator } from '$lib/validators/teamSettingsUpdateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
-	import PageTableSortableHeader from '$lib/components/PageTableSortableHeader.svelte';
-	import PageTeamMembersCreateDialog from '$lib/components/PageTeamMembersCreateDialog.svelte';
-	import PageTeamMembersDeleteDialog from '$lib/components/PageTeamMembersDeleteDialog.svelte';
-	import IconPlus from '$lib/components/svg/IconPlus.svelte';
+	import PageSpinner from './PageSpinner.svelte';
 
 	const form = superForm(
 		{
@@ -100,6 +102,8 @@
 
 		$formData.name = teamSettingsOwnerStore.currentTeamName ?? '';
 		$formData.id = teamSettingsOwnerStore.currentTeamId ?? '';
+
+		teamSettingsUpdateTimer.start();
 	});
 
 	const data = $derived(
@@ -109,130 +113,136 @@
 	);
 </script>
 
-<div class="flex flex-1 flex-col">
-	<form
-		method="POST"
-		action="/api/v1/team-settings/update"
-		class="mt-6 w-full space-y-8"
-		use:enhance
-		id="update-team-form"
-		data-sveltekit-reload
-	>
-		<input type="hidden" name="id" value={teamSettingsOwnerStore.currentTeamId ?? ''} />
-		<FormField {form} name="name" let:errors>
-			<FormControl let:attrs>
-				<FormLabel class="text-md !text-white">Team Name</FormLabel>
-				<FormDescription class="mb-4 text-sm text-neutral-400">
-					This is your team's name that will be displayed as a identifier for your entire team.
-				</FormDescription>
-				<div class="flex flex-row items-center gap-2">
-					<Input
-						bind:value={$formData.name}
-						class="text-md max-w-sm text-black focus-visible:{errors.length > 0
-							? 'ring-red-500'
-							: 'ring-blue-600'} focus-visible:ring-offset-0 {errors.length > 0
-							? 'ring-2 ring-red-500'
-							: 'ring-0 ring-blue-600'}"
-						placeholder="Enter team name"
-						autocomplete="off"
-						{...attrs}
-					/>
-					<Button type="submit" variant="default" class="border-1 py-5 text-white">Save</Button>
-				</div>
-			</FormControl>
-			<FormFieldErrors class="text-red-500" />
-		</FormField>
-	</form>
+{#if teamSettingsUpdateTimer.isRunning}
 	<div class="mt-8">
-		<h3 class="text-md font-medium">Team Members</h3>
-		<p class="mb-4 text-sm text-neutral-400">You can manage your team members here.</p>
-		<div class="mb-4 flex max-w-sm items-center gap-2">
-			<Input
-				placeholder="Search"
-				oninput={(e) => teamMembersStore.filterData((e.target as HTMLInputElement)?.value)}
-				class="text-black"
-			/>
-		</div>
-		<Table>
-			<TableHeader>
-				<TableRow class="hover:bg-transparent">
-					<TableHead class="w-16">ID</TableHead>
-					<PageTableSortableHeader
-						field="name"
-						label="Name"
-						store={teamMembersStore}
-						additionalClass="w-50"
-					/>
-					<PageTableSortableHeader
-						field="email"
-						label="Email"
-						store={teamMembersStore}
-						additionalClass="w-64"
-					/>
-					<PageTableSortableHeader
-						field="permissions"
-						label="Permissions"
-						store={teamMembersStore}
-						additionalClass="w-40"
-					/>
-					<PageTableSortableHeader
-						field="created_at"
-						label="Joined at"
-						store={teamMembersStore}
-						additionalClass="w-40"
-					/>
-					<TableHead class="w-16">Actions</TableHead>
-				</TableRow>
-			</TableHeader>
-			<TableBody>
-				{#each data as member, index}
-					<TableRow>
-						<TableCell>{index + 1}</TableCell>
-						<TableCell>{member.name}</TableCell>
-						<TableCell>{member.email}</TableCell>
-						<TableCell>{member.permissions}</TableCell>
-						<TableCell>{new Date(member.created_at).toLocaleDateString()}</TableCell>
-						<TableCell>
-							<Button
-								variant="destructive"
-								size="icon"
-								onclick={() => {
-									teamMembersStore.currentMemberId = member.id;
-									teamMembersStore.currentMemberName = member.name;
-									teamMembersStore.currentMemberEmail = member.email;
-									teamMembersStore.currentMemberTeamId = teamSettingsOwnerStore.currentTeamId;
-									dialogStore.showTeamMembersDeleteDialog = true;
-								}}
-							>
-								<IconTrash additionalClass="h-4 w-4" />
-							</Button>
-						</TableCell>
-					</TableRow>
-				{/each}
-			</TableBody>
-		</Table>
-		{#if !teamMembersStore.data || teamMembersStore.data.length === 0}
-			<div class="flex h-[68.5px] w-full items-center justify-center">
-				<p class="text-sm text-neutral-400">
-					There are currently no team members assigned to your team.
-				</p>
+		<PageSpinner additionalClass="w-10 h-10" />
+	</div>
+{:else}
+	<div class="flex flex-1 flex-col">
+		<form
+			method="POST"
+			action="/api/v1/team-settings/update"
+			class="mt-6 w-full space-y-8"
+			use:enhance
+			id="update-team-form"
+			data-sveltekit-reload
+		>
+			<input type="hidden" name="id" value={teamSettingsOwnerStore.currentTeamId ?? ''} />
+			<FormField {form} name="name" let:errors>
+				<FormControl let:attrs>
+					<FormLabel class="text-md !text-white">Team Name</FormLabel>
+					<FormDescription class="mb-4 text-sm text-neutral-400">
+						This is your team's name that will be displayed as a identifier for your entire team.
+					</FormDescription>
+					<div class="flex flex-row items-center gap-2">
+						<Input
+							bind:value={$formData.name}
+							class="text-md max-w-sm text-black focus-visible:{errors.length > 0
+								? 'ring-red-500'
+								: 'ring-blue-600'} focus-visible:ring-offset-0 {errors.length > 0
+								? 'ring-2 ring-red-500'
+								: 'ring-0 ring-blue-600'}"
+							placeholder="Enter team name"
+							autocomplete="off"
+							{...attrs}
+						/>
+						<Button type="submit" variant="default" class="border-1 py-5 text-white">Save</Button>
+					</div>
+				</FormControl>
+				<FormFieldErrors class="text-red-500" />
+			</FormField>
+		</form>
+		<div class="mt-8">
+			<h3 class="text-md font-medium">Team Members</h3>
+			<p class="mb-4 text-sm text-neutral-400">You can manage your team members here.</p>
+			<div class="mb-4 flex max-w-sm items-center gap-2">
+				<Input
+					placeholder="Search"
+					oninput={(e) => teamMembersStore.filterData((e.target as HTMLInputElement)?.value)}
+					class="text-black"
+				/>
 			</div>
-		{/if}
-		<div class="mt-4 flex items-center gap-4">
-			<Button
-				variant="default"
-				class="border-1 py-5"
-				onclick={() => {
-					teamMembersStore.currentMemberTeamId = teamSettingsOwnerStore.currentTeamId ?? '';
-					dialogStore.showTeamMembersCreateDialog = true;
-				}}
-			>
-				<IconPlus additionalClass="!h-5 !w-5" />
-				Add Member
-			</Button>
+			<Table>
+				<TableHeader>
+					<TableRow class="hover:bg-transparent">
+						<TableHead class="w-16">ID</TableHead>
+						<PageTableSortableHeader
+							field="name"
+							label="Name"
+							store={teamMembersStore}
+							additionalClass="w-50"
+						/>
+						<PageTableSortableHeader
+							field="email"
+							label="Email"
+							store={teamMembersStore}
+							additionalClass="w-64"
+						/>
+						<PageTableSortableHeader
+							field="permissions"
+							label="Permissions"
+							store={teamMembersStore}
+							additionalClass="w-40"
+						/>
+						<PageTableSortableHeader
+							field="created_at"
+							label="Joined at"
+							store={teamMembersStore}
+							additionalClass="w-40"
+						/>
+						<TableHead class="w-16">Actions</TableHead>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
+					{#each data as member, index}
+						<TableRow>
+							<TableCell>{index + 1}</TableCell>
+							<TableCell>{member.name}</TableCell>
+							<TableCell>{member.email}</TableCell>
+							<TableCell>{member.permissions}</TableCell>
+							<TableCell>{new Date(member.created_at).toLocaleDateString()}</TableCell>
+							<TableCell>
+								<Button
+									variant="destructive"
+									size="icon"
+									onclick={() => {
+										teamMembersStore.currentMemberId = member.id;
+										teamMembersStore.currentMemberName = member.name;
+										teamMembersStore.currentMemberEmail = member.email;
+										teamMembersStore.currentMemberTeamId = teamSettingsOwnerStore.currentTeamId;
+										dialogStore.showTeamMembersDeleteDialog = true;
+									}}
+								>
+									<IconTrash additionalClass="h-4 w-4" />
+								</Button>
+							</TableCell>
+						</TableRow>
+					{/each}
+				</TableBody>
+			</Table>
+			{#if !teamMembersStore.data || teamMembersStore.data.length === 0}
+				<div class="flex h-[68.5px] w-full items-center justify-center">
+					<p class="text-sm text-neutral-400">
+						There are currently no team members assigned to your team.
+					</p>
+				</div>
+			{/if}
+			<div class="mt-4 flex items-center gap-4">
+				<Button
+					variant="default"
+					class="border-1 py-5"
+					onclick={() => {
+						teamMembersStore.currentMemberTeamId = teamSettingsOwnerStore.currentTeamId ?? '';
+						dialogStore.showTeamMembersCreateDialog = true;
+					}}
+				>
+					<IconPlus additionalClass="!h-5 !w-5" />
+					Add Member
+				</Button>
+			</div>
 		</div>
 	</div>
-</div>
+{/if}
 
 <PageTeamMembersCreateDialog />
 <PageTeamMembersDeleteDialog />
