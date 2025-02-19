@@ -142,7 +142,7 @@
 							{attrs}
 							placeholder="Enter team name"
 						/>
-						<Button type="submit" variant="default" class="border-1 py-5 text-white">Save</Button>
+						<Button type="submit" variant="default" class="py-5 text-white">Save</Button>
 					</div>
 				</FormControl>
 				<FormFieldErrors class="text-red-500" />
@@ -226,7 +226,7 @@
 			<div class="mt-4 flex items-center gap-4">
 				<Button
 					variant="default"
-					class="border-1 py-5"
+					class="py-5"
 					onclick={() => {
 						teamMembersStore.currentMemberTeamId = teamSettingsOwnerStore.currentTeamId ?? '';
 						dialogStore.showTeamMembersCreateDialog = true;

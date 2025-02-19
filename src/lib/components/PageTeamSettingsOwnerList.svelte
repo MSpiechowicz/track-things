@@ -1,4 +1,10 @@
 <script lang="ts">
+	import PageTableSortableHeader from '$lib/components/PageTableSortableHeader.svelte';
+	import PageTeamSettingsCreateDialog from '$lib/components/PageTeamSettingsCreateDialog.svelte';
+	import PageTeamSettingsDeleteDialog from '$lib/components/PageTeamSettingsDeleteDialog.svelte';
+	import IconPencil from '$lib/components/svg/IconPencil.svelte';
+	import IconPlus from '$lib/components/svg/IconPlus.svelte';
+	import IconTrash from '$lib/components/svg/IconTrash.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import {
@@ -11,12 +17,6 @@
 	} from '$lib/components/ui/table';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
-	import PageTableSortableHeader from '$lib/components/PageTableSortableHeader.svelte';
-	import PageTeamSettingsCreateDialog from '$lib/components/PageTeamSettingsCreateDialog.svelte';
-	import PageTeamSettingsDeleteDialog from '$lib/components/PageTeamSettingsDeleteDialog.svelte';
-	import IconPencil from '$lib/components/svg/IconPencil.svelte';
-	import IconPlus from '$lib/components/svg/IconPlus.svelte';
-	import IconTrash from '$lib/components/svg/IconTrash.svelte';
 
 	function handleEdit(id: string, name: string) {
 		teamSettingsOwnerStore.currentTeamId = id;
@@ -112,7 +112,7 @@
 	<div class="mt-4 flex items-center gap-4">
 		<Button
 			variant="default"
-			class="border-1 py-5"
+			class="py-5"
 			onclick={() => {
 				dialogStore.showTeamSettingsCreateDialog = true;
 			}}
