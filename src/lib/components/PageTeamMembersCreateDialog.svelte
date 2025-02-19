@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { invalidate } from '$app/navigation';
+	import PageDeleteAccount from '$lib/components/PageDeleteAccount.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import {
 		Dialog,
@@ -21,8 +23,6 @@
 	import { teamMembersCreateSchemaValidator } from '$lib/validators/teamMembersCreateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
-	import { invalidate } from '$app/navigation';
-	import PageDeleteAccount from '$lib/components/PageDeleteAccount.svelte';
 
 	const form = superForm(
 		{
@@ -42,6 +42,7 @@
 						email: eventData?.email,
 						name: eventData?.name,
 						permissions: eventData?.permissions,
+						team_id: eventData?.team_id,
 						created_at: eventData?.created_at
 					});
 					teamMembersStore.resetCurrentMember();
@@ -89,7 +90,7 @@
 		<form
 			method="POST"
 			action="/api/v1/team-members/create"
-			class="mt-6 space-y-8"
+			class="mt-2 space-y-8"
 			use:enhance
 			id="create-team-member-form"
 			data-sveltekit-reload
