@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
-	import PageDeleteAccount from '$lib/components/PageDeleteAccount.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import {
 		Dialog,
@@ -133,5 +132,3 @@
 		</form>
 	</DialogContent>
 </Dialog>
-
-<PageDeleteAccount />
