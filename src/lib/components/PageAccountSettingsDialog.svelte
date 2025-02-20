@@ -83,19 +83,26 @@
 			</FormControl>
 			<FormFieldErrors class="text-red-500" />
 		</FormField>
-		<div class="mt-2 border-t pt-2">
+		<div class="mt-0">
+      <div class="relative mb-2">
+        <div class="absolute inset-0 flex items-center">
+          <span class="w-full border-t border-black"></span>
+        </div>
+        <div class="relative flex justify-center text-xs uppercase">
+          <span class="bg-background px-2 text-black font-semibold">Danger Zone</span>
+        </div>
+      </div>
 			<span>{t('accountSettings.dialog.deleteAccount.label_1')}</span>
-			<Button
-				variant="link"
+			<button
 				onclick={() => {
 					dialogStore.showDeleteAccountDialog = true;
 					dialogStore.showAccountSettingsDialog = false;
 				}}
-				class="cursor-pointer p-0 font-bold"
+				class="cursor-pointer p-0 font-bold text-base hover:underline underline-offset-2"
 			>
 				{t('accountSettings.dialog.deleteAccount.button.label')}
-			</Button>
-			<span>{t('accountSettings.dialog.deleteAccount.label_2')}</span>
+			</button>
+			<span >{t('accountSettings.dialog.deleteAccount.label_2')}</span>
 		</div>
 		<PageDialogFooter
 			onCancelClick={() => {

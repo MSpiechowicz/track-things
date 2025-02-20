@@ -47,14 +47,14 @@
 					store={teamSettingsMemberStore}
 					additionalClass="w-50"
 				/>
-				<TableHead>
+				<TableHead class="hidden md:table-cell">
 					{t('teamSettings.memberList.table.permissions.label')}
 				</TableHead>
 				<PageTableSortableHeader
 					label={t('teamSettings.memberList.table.joinedAt.label')}
 					field="createdAt"
 					store={teamSettingsMemberStore}
-					additionalClass="w-[fit-content]"
+					additionalClass="w-[fit-content] hidden md:table-cell"
 				/>
 				<TableHead class="w-[100px] cursor-default">
 					{t('teamSettings.memberList.table.actions.label')}
@@ -66,8 +66,8 @@
 				<TableRow>
 					<TableCell>{index + 1}</TableCell>
 					<TableCell>{entry.name}</TableCell>
-					<TableCell>{entry.permissions}</TableCell>
-					<TableCell>{new Date(entry.created_at).toLocaleDateString()}</TableCell>
+					<TableCell class="hidden md:table-cell">{entry.permissions}</TableCell>
+					<TableCell class="hidden md:table-cell">{new Date(entry.created_at).toLocaleDateString()}</TableCell>
 					<TableCell class="flex gap-2">
 						<Button
 							variant="destructive"

@@ -21,12 +21,12 @@
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamMembersStore } from '$lib/stores/teamMembersStore.svelte';
 	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
+	import { t } from '$lib/translations';
 	import { teamSettingsUpdateTimer } from '$lib/utils/timers/defaults';
 	import { teamSettingsUpdateSchemaValidator } from '$lib/validators/teamSettingsUpdateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
 	import PageSpinner from './PageSpinner.svelte';
-	import { t } from '$lib/translations';
 
 	const form = superForm(
 		{
@@ -174,19 +174,19 @@
 							field="email"
 							label={t('teamSettings.update.table.members.table.email.label')}
 							store={teamMembersStore}
-							additionalClass="w-64"
+							additionalClass="w-64 hidden md:table-cell"
 						/>
 						<PageTableSortableHeader
 							field="permissions"
 							label={t('teamSettings.update.table.members.table.permissions.label')}
 							store={teamMembersStore}
-							additionalClass="w-40"
+							additionalClass="w-40 hidden md:table-cell"
 						/>
 						<PageTableSortableHeader
 							field="created_at"
 							label={t('teamSettings.update.table.members.table.createdAt.label')}
 							store={teamMembersStore}
-							additionalClass="w-40"
+							additionalClass="w-40 hidden md:table-cell"
 						/>
 						<TableHead class="w-16">
 							{t('teamSettings.update.table.members.table.actions.label')}
@@ -198,9 +198,9 @@
 						<TableRow>
 							<TableCell>{index + 1}</TableCell>
 							<TableCell>{member.name}</TableCell>
-							<TableCell>{member.email}</TableCell>
-							<TableCell>{member.permissions}</TableCell>
-							<TableCell>{new Date(member.created_at).toLocaleDateString()}</TableCell>
+							<TableCell class="hidden md:table-cell">{member.email}</TableCell>
+							<TableCell class="hidden md:table-cell">{member.permissions}</TableCell>
+							<TableCell class="hidden md:table-cell">{new Date(member.created_at).toLocaleDateString()}</TableCell>
 							<TableCell>
 								<Button
 									variant="destructive"

@@ -6,5 +6,5 @@
 
 <FormLabel class="text-md {isTextWhite ? '!text-white' : '!text-black'}">{label}</FormLabel>
 {#if description}
-	<FormDescription class="mb-4 text-sm text-neutral-400">{description}</FormDescription>
+	<FormDescription class="mb-2 text-sm text-neutral-400">{description}</FormDescription>
 {/if}

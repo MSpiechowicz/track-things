@@ -50,7 +50,7 @@
 			class="text-black"
 		/>
 	</div>
-	<Table data-sveltekit-reload>
+	<Table data-sveltekit-reload class="max-w-full">
 		<TableHeader>
 			<TableRow class="hover:bg-transparent">
 				<TableHead class="w-[100px] cursor-default">
@@ -66,13 +66,13 @@
 					label={t('teamSettings.ownerList.table.members.label')}
 					field="members"
 					store={teamSettingsOwnerStore}
-					additionalClass="w-[fit-content]"
+					additionalClass="w-[fit-content] hidden md:table-cell"
 				/>
 				<PageTableSortableHeader
 					label={t('teamSettings.ownerList.table.createdAt.label')}
 					field="createdAt"
 					store={teamSettingsOwnerStore}
-					additionalClass="w-[fit-content]"
+					additionalClass="w-[fit-content] hidden md:table-cell"
 				/>
 				<TableHead class="w-[100px] cursor-default">
 					{t('teamSettings.ownerList.table.actions.label')}
@@ -84,8 +84,8 @@
 				<TableRow>
 					<TableCell>{index + 1}</TableCell>
 					<TableCell>{entry.name}</TableCell>
-					<TableCell>{entry.members}</TableCell>
-					<TableCell>{new Date(entry.updated_at).toLocaleDateString()}</TableCell>
+					<TableCell class="hidden md:table-cell">{entry.members}</TableCell>
+					<TableCell class="hidden md:table-cell">{new Date(entry.updated_at).toLocaleDateString()}</TableCell>
 					<TableCell class="flex gap-2">
 						<Button
 							variant="secondary"
