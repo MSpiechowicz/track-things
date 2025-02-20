@@ -17,6 +17,7 @@
 	} from '$lib/components/ui/table';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
+	import { t } from '$lib/translations';
 
 	function handleEdit(id: string, name: string) {
 		teamSettingsOwnerStore.currentTeamId = id;
@@ -38,14 +39,13 @@
 </script>
 
 <div class="py-6">
-	<h3 class="text-md mb-0 text-white">Owner</h3>
+	<h3 class="text-md mb-0 text-white">{t('teamSettings.ownerList.title')}</h3>
 	<p class="mb-4 text-sm text-neutral-400">
-		Here you can find a list of all the teams you have created. As an owner, you can manage each of
-		the individual team settings and its corresponding members.
+		{t('teamSettings.ownerList.description')}
 	</p>
 	<div class="mb-4 flex max-w-sm items-center gap-2">
 		<Input
-			placeholder="Search"
+			placeholder={t('teamSettings.ownerList.input.placeholder')}
 			oninput={(e) => teamSettingsOwnerStore.filterData((e.target as HTMLInputElement)?.value)}
 			class="text-black"
 		/>
@@ -53,26 +53,30 @@
 	<Table data-sveltekit-reload>
 		<TableHeader>
 			<TableRow class="hover:bg-transparent">
-				<TableHead class="w-[100px] cursor-default">ID</TableHead>
+				<TableHead class="w-[100px] cursor-default">
+					{t('teamSettings.ownerList.table.id.label')}
+				</TableHead>
 				<PageTableSortableHeader
-					label="Name"
+					label={t('teamSettings.ownerList.table.name.label')}
 					field="name"
 					store={teamSettingsOwnerStore}
 					additionalClass="w-50"
 				/>
 				<PageTableSortableHeader
-					label="Members"
+					label={t('teamSettings.ownerList.table.members.label')}
 					field="members"
 					store={teamSettingsOwnerStore}
 					additionalClass="w-[fit-content]"
 				/>
 				<PageTableSortableHeader
-					label="Created at"
+					label={t('teamSettings.ownerList.table.createdAt.label')}
 					field="createdAt"
 					store={teamSettingsOwnerStore}
 					additionalClass="w-[fit-content]"
 				/>
-				<TableHead class="w-[100px] cursor-default">Actions</TableHead>
+				<TableHead class="w-[100px] cursor-default">
+					{t('teamSettings.ownerList.table.actions.label')}
+				</TableHead>
 			</TableRow>
 		</TableHeader>
 		<TableBody>
@@ -105,7 +109,7 @@
 	{#if !data || data.length === 0}
 		<div class="flex h-[68.5px] w-full items-center justify-center">
 			<p class="text-sm text-neutral-400">
-				There are currently no teams where you are an active owner.
+				{t('teamSettings.ownerList.noData.label')}
 			</p>
 		</div>
 	{/if}
@@ -118,7 +122,7 @@
 			}}
 		>
 			<IconPlus additionalClass="!h-5 !w-5" />
-			Add Team
+			{t('teamSettings.ownerList.button.add.label')}
 		</Button>
 	</div>
 </div>

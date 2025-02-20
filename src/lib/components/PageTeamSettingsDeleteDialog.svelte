@@ -7,15 +7,9 @@
 	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
 	import { teamSettingsTimer } from '$lib/utils/timers/defaults';
 	import { toast } from 'svelte-sonner';
+	import { t } from '$lib/translations';
 
 	async function handleDelete(id: string | null) {
-		if (!id) {
-			toast.error('Error', {
-				description: 'We are unable to delete this team settings due to invalid ID.'
-			});
-			return;
-		}
-
 		const response = await fetch(`/api/v1/team-settings/delete?id=${id}`, {
 			method: 'POST'
 		});
@@ -30,12 +24,12 @@
 
 			invalidate('app:dashboard');
 
-			toast.success('Success', {
-				description: 'Your team settings has been deleted successfully.'
+			toast.success(t('teamSettings.dialog.delete.toast.success.title'), {
+				description: t('teamSettings.dialog.delete.toast.success.description')
 			});
 		} else {
-			toast.error('Error', {
-				description: 'We are unable to delete this team settings. Please try again later.'
+			toast.error(t('teamSettings.dialog.delete.toast.error.title'), {
+				description: t('teamSettings.dialog.delete.toast.error.description')
 			});
 		}
 	}
@@ -47,9 +41,10 @@
 		dialogStore.showTeamSettingsDeleteDialog = false;
 		teamSettingsOwnerStore.resetCurrentTeam();
 	}}
-	dialogTitle="Delete Team Settings"
-	dialogDescription="Are you sure you want to delete team <span class='font-bold'
-		>{teamSettingsOwnerStore.currentTeamName}</span> settings?"
+	dialogTitle={t('teamSettings.dialog.delete.title')}
+	dialogDescription={t('teamSettings.dialog.delete.description', {
+		1: teamSettingsOwnerStore.currentTeamName ?? ''
+	})}
 >
 	<PageDialogFooter
 		onCancelClick={() => {
@@ -58,7 +53,7 @@
 		}}
 	>
 		<Button variant="destructive" onclick={() => handleDelete(teamSettingsOwnerStore.currentTeamId)}
-			>Delete</Button
+			>{t('teamSettings.dialog.delete.button.delete.label')}</Button
 		>
 	</PageDialogFooter>
 </PageDialog>

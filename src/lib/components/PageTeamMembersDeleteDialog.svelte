@@ -5,16 +5,10 @@
 	import { Button } from '$lib/components/ui/button';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamMembersStore } from '$lib/stores/teamMembersStore.svelte';
+	import { t } from '$lib/translations';
 	import { toast } from 'svelte-sonner';
 
 	async function handleDelete(email: string | null, teamId: string | null) {
-		if (!email || !teamId) {
-			toast.error('Error', {
-				description: 'We are unable to delete this team member due to invalid email or team ID.'
-			});
-			return;
-		}
-
 		const response = await fetch(`/api/v1/team-members/delete?email=${email}&teamId=${teamId}`, {
 			method: 'DELETE'
 		});
@@ -29,12 +23,12 @@
 
 			invalidate('app:dashboard');
 
-			toast.success('Success', {
-				description: 'Your team member has been deleted successfully.'
+			toast.success(t('teamMembers.dialog.delete.toast.success.title'), {
+				description: t('teamMembers.dialog.delete.toast.success.description')
 			});
 		} else {
-			toast.error('Error', {
-				description: 'We are unable to delete this team member. Please try again later.'
+			toast.error(t('teamMembers.dialog.delete.toast.error.title'), {
+				description: t('teamMembers.dialog.delete.toast.error.description')
 			});
 		}
 	}
@@ -46,10 +40,10 @@
 		dialogStore.showTeamMembersDeleteDialog = false;
 		teamMembersStore.resetCurrentMember();
 	}}
-	dialogTitle="Delete Team Member"
-	dialogDescription="Are you sure that you want to delete member <span class='font-bold'
-		>{teamMembersStore.currentMemberName}</span>
-	from your team?"
+	dialogTitle={t('teamMembers.dialog.delete.title')}
+	dialogDescription={t('teamMembers.dialog.delete.description', {
+		1: teamMembersStore.currentMemberName ?? ''
+	})}
 >
 	<PageDialogFooter
 		onCancelClick={() => {
@@ -61,7 +55,7 @@
 			variant="destructive"
 			onclick={() =>
 				handleDelete(teamMembersStore.currentMemberEmail, teamMembersStore.currentMemberTeamId)}
-			>Delete</Button
+			>{t('teamMembers.dialog.delete.button.delete.label')}</Button
 		>
 	</PageDialogFooter>
 </PageDialog>

@@ -8,6 +8,7 @@
 	} from '$lib/components/ui/dropdown-menu';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { userStore } from '$lib/stores/userStore.svelte';
+	import { t } from '$lib/translations';
 </script>
 
 <DropdownMenuLabel>
@@ -25,13 +26,13 @@
 		class="flex items-center gap-2 text-base"
 	>
 		<IconUserConfig additionalClass="w-5 h-5" strokeColor="black" />
-		Account Settings
+		{t('userMenu.content.menuItem_1.label')}
 	</DropdownMenuItem>
 	<DropdownMenuItem
 		onclick={() => (dialogStore.showLogoutDialog = true)}
-		class="flex items-center gap-2 text-base mb-1"
+		class="mb-1 flex items-center gap-2 text-base"
 	>
 		<IconUserSignOut additionalClass="w-5 h-5" strokeColor="black" />
-		Sign Out
+		{t('userMenu.content.menuItem_2.label')}
 	</DropdownMenuItem>
 </div>

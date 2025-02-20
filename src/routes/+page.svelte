@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import IconHeroChart from '$lib/components/svg/IconHeroChart.svelte';
 	import { Button } from '$lib/components/ui/button';
+	import { t } from '$lib/translations';
 
 	const { data } = $props();
   const { userProfile } = $derived(data);
@@ -10,12 +11,11 @@
 <div class="flex flex-1 flex-col items-center justify-center gap-12 md:flex-row md:justify-between">
   <div class="flex max-w-2xl flex-col gap-6">
     <h1 class="flex flex-col text-4xl font-bold md:text-5xl lg:text-6xl">
-      <span>Effortless Tracking</span>
-      <span class="text-blue-600">Clear Insights</span>
+      <span>{t('page.home.title_1')}</span>
+      <span class="text-blue-600">{t('page.home.title_2')}</span>
     </h1>
     <p class="max-w-[60ch] text-lg text-gray-300 md:text-xl">
-      Simplify your tracking journey with a user-friendly platform that transforms your data
-      into meaningful charts. No technical skills or spreadsheets required.
+      {t('page.home.description')}
     </p>
     <div class="flex">
       <Button
@@ -23,7 +23,7 @@
         variant="default"
         aria-label={userProfile ? "Go to dashboard" : "Login to start tracking"}
       >
-        Start Tracking Now
+        {t('page.home.button.label')}
       </Button>
     </div>
   </div>

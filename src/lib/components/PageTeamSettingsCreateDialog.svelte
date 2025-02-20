@@ -7,6 +7,7 @@
 	import { FormControl, FormField, FormFieldErrors } from '$lib/components/ui/form';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
+	import { t } from '$lib/translations';
 	import { teamSettingsCreateSchemaValidator } from '$lib/validators/teamSettingsCreateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
@@ -35,13 +36,12 @@
 					dialogStore.showTeamSettingsCreateDialog = false;
 					form.reset();
 
-					toast.success('Success', {
-						description: 'Your team has been created successfully.'
+					toast.success(t('teamSettings.dialog.create.toast.success.title'), {
+						description: t('teamSettings.dialog.create.toast.success.description')
 					});
 				} else {
-					toast.error('Error', {
-						description:
-							'We were unable to add your team. Please try again or check if this team already exists.'
+					toast.error(t('teamSettings.dialog.create.toast.error.title'), {
+						description: t('teamSettings.dialog.create.toast.error.description')
 					});
 				}
 			}
@@ -57,8 +57,8 @@
 		dialogStore.showTeamSettingsCreateDialog = false;
 		form.reset();
 	}}
-	dialogTitle="Create New Team"
-	dialogDescription="Please fill out the required fields below in order to create a new team."
+	dialogTitle={t('teamSettings.dialog.create.title')}
+	dialogDescription={t('teamSettings.dialog.create.description')}
 >
 	<form
 		method="POST"
@@ -71,14 +71,14 @@
 		<FormField {form} name="name" let:errors>
 			<FormControl let:attrs>
 				<PageFormLabel
-					label="Team Name"
-					description="This is the name of the new team for your reference."
+					label={t('teamSettings.dialog.create.form.name.label')}
+					description={t('teamSettings.dialog.create.form.name.description')}
 				/>
 				<PageFormInput
 					bind:value={$formData.name}
 					{errors}
 					{attrs}
-					placeholder="Enter the team name"
+					placeholder={t('teamSettings.dialog.create.form.name.input.placeholder')}
 				/>
 			</FormControl>
 			<FormFieldErrors class="text-red-500" />
@@ -89,7 +89,9 @@
 				form.reset();
 			}}
 		>
-			<Button type="submit" disabled={!$formData.name}>Save changes</Button>
+			<Button type="submit" disabled={!$formData.name}>
+				{t('teamSettings.dialog.create.form.button.save.label')}
+			</Button>
 		</PageDialogFooter>
 	</form>
 </PageDialog>

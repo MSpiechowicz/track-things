@@ -7,11 +7,7 @@
 	import IconPlus from '$lib/components/svg/IconPlus.svelte';
 	import IconTrash from '$lib/components/svg/IconTrash.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import {
-		FormControl,
-		FormField,
-		FormFieldErrors
-	} from '$lib/components/ui/form';
+	import { FormControl, FormField, FormFieldErrors } from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import {
 		Table,
@@ -30,6 +26,7 @@
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
 	import PageSpinner from './PageSpinner.svelte';
+	import { t } from '$lib/translations';
 
 	const form = superForm(
 		{
@@ -66,13 +63,12 @@
 						name: event.result.data?.name ?? ''
 					});
 
-					toast.success('Success', {
-						description: 'Your team has been updated successfully.'
+					toast.success(t('teamSettings.update.toast.success.title'), {
+						description: t('teamSettings.update.toast.success.description')
 					});
 				} else {
-					toast.error('Error', {
-						description:
-							'We were unable to update your team. Please try again later or check if team with this name already exists.'
+					toast.error(t('teamSettings.update.toast.error.title'), {
+						description: t('teamSettings.update.toast.error.description')
 					});
 				}
 			}
@@ -131,8 +127,8 @@
 			<FormField {form} name="name" let:errors>
 				<FormControl let:attrs>
 					<PageFormLabel
-						label="Team Name"
-						description="This is your team's name that will be displayed as a identifier for your entire team."
+						label={t('teamSettings.update.form.name.label')}
+						description={t('teamSettings.update.form.name.description')}
 						isTextWhite={true}
 					/>
 					<div class="flex flex-row items-center gap-2">
@@ -140,20 +136,26 @@
 							bind:value={$formData.name}
 							{errors}
 							{attrs}
-							placeholder="Enter team name"
+							placeholder={t('teamSettings.update.form.name.input.placeholder')}
 						/>
-						<Button type="submit" variant="default" class="py-5 text-white">Save</Button>
+						<Button type="submit" variant="default" class="py-5 text-white">
+							{t('teamSettings.update.form.button.save.label')}
+						</Button>
 					</div>
 				</FormControl>
 				<FormFieldErrors class="text-red-500" />
 			</FormField>
 		</form>
 		<div class="mt-8">
-			<h3 class="text-md font-medium">Team Members</h3>
-			<p class="mb-4 text-sm text-neutral-400">You can manage your team members here.</p>
+			<h3 class="text-md font-medium">
+				{t('teamSettings.update.table.members.title')}
+			</h3>
+			<p class="mb-4 text-sm text-neutral-400">
+				{t('teamSettings.update.table.members.description')}
+			</p>
 			<div class="mb-4 flex max-w-sm items-center gap-2">
 				<Input
-					placeholder="Search"
+					placeholder={t('teamSettings.update.table.members.input.placeholder')}
 					oninput={(e) => teamMembersStore.filterData((e.target as HTMLInputElement)?.value)}
 					class="text-black"
 				/>
@@ -164,29 +166,31 @@
 						<TableHead class="w-16">ID</TableHead>
 						<PageTableSortableHeader
 							field="name"
-							label="Name"
+							label={t('teamSettings.update.table.members.table.name.label')}
 							store={teamMembersStore}
 							additionalClass="w-50"
 						/>
 						<PageTableSortableHeader
 							field="email"
-							label="Email"
+							label={t('teamSettings.update.table.members.table.email.label')}
 							store={teamMembersStore}
 							additionalClass="w-64"
 						/>
 						<PageTableSortableHeader
 							field="permissions"
-							label="Permissions"
+							label={t('teamSettings.update.table.members.table.permissions.label')}
 							store={teamMembersStore}
 							additionalClass="w-40"
 						/>
 						<PageTableSortableHeader
 							field="created_at"
-							label="Joined at"
+							label={t('teamSettings.update.table.members.table.createdAt.label')}
 							store={teamMembersStore}
 							additionalClass="w-40"
 						/>
-						<TableHead class="w-16">Actions</TableHead>
+						<TableHead class="w-16">
+							{t('teamSettings.update.table.members.table.actions.label')}
+						</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
@@ -219,7 +223,7 @@
 			{#if !teamMembersStore.data || teamMembersStore.data.length === 0}
 				<div class="flex h-[68.5px] w-full items-center justify-center">
 					<p class="text-sm text-neutral-400">
-						There are currently no team members assigned to your team.
+						{t('teamSettings.update.table.members.noData.label')}
 					</p>
 				</div>
 			{/if}
@@ -233,7 +237,7 @@
 					}}
 				>
 					<IconPlus additionalClass="!h-5 !w-5" />
-					Add Member
+					{t('teamSettings.update.table.members.button.add.label')}
 				</Button>
 			</div>
 		</div>

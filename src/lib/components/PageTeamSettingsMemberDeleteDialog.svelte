@@ -7,15 +7,9 @@
 	import { teamSettingsMemberStore } from '$lib/stores/teamSettingsMemberStore.svelte';
 	import { teamSettingsTimer } from '$lib/utils/timers/defaults';
 	import { toast } from 'svelte-sonner';
+	import { t } from '$lib/translations';
 
 	async function handleDelete(id: string | null) {
-		if (!id) {
-			toast.error('Error', {
-				description: 'We are unable to remove your from this team due to invalid ID.'
-			});
-			return;
-		}
-
 		const response = await fetch(
 			`/api/v1/team-settings/member/delete?teamId=${teamSettingsMemberStore.currentMemberTeamId}`,
 			{
@@ -35,12 +29,12 @@
 
 			invalidate('app:dashboard');
 
-			toast.success('Success', {
-				description: 'You have been removed from the selected team successfully.'
+			toast.success(t('teamSettings.dialog.member.delete.toast.success.title'), {
+				description: t('teamSettings.dialog.member.delete.toast.success.description')
 			});
 		} else {
-			toast.error('Error', {
-				description: 'We are unable to remove you from the selected team. Please try again later.'
+			toast.error(t('teamSettings.dialog.member.delete.toast.error.title'), {
+				description: t('teamSettings.dialog.member.delete.toast.error.description')
 			});
 		}
 	}
@@ -52,9 +46,10 @@
 		dialogStore.showTeamSettingsMemberDeleteDialog = false;
 		teamSettingsMemberStore.resetCurrentMember();
 	}}
-	dialogTitle="Delete Membership"
-	dialogDescription="Are you sure you want to remove yourself from the team <span class='font-bold'
-		>{teamSettingsMemberStore.currentMemberTeamName}</span>?"
+	dialogTitle={t('teamSettings.dialog.member.delete.title')}
+	dialogDescription={t('teamSettings.dialog.member.delete.description', {
+		1: teamSettingsMemberStore.currentMemberTeamName ?? ''
+	})}
 >
 	<PageDialogFooter
 		onCancelClick={() => {
@@ -64,7 +59,8 @@
 	>
 		<Button
 			variant="destructive"
-			onclick={() => handleDelete(teamSettingsMemberStore.currentMemberTeamId)}>Delete</Button
+			onclick={() => handleDelete(teamSettingsMemberStore.currentMemberTeamId)}
+			>{t('teamSettings.dialog.member.delete.button.delete.label')}</Button
 		>
 	</PageDialogFooter>
 </PageDialog>

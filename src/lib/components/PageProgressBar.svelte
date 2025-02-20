@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Progress } from "$lib/components/ui/progress";
+  import { t } from "$lib/translations";
 
   const { duration = 1500, timer } = $props();
 
@@ -35,7 +36,7 @@
   <div class="min-w-[200px] max-w-md">
     <Progress value={Math.round(timer.progress)} />
     <div class="mt-1 flex items-center justify-between">
-      <p class="text-sm text-gray-400">Loading...</p>
+      <p class="text-sm text-gray-400">{t('progressBar.label')}</p>
       <p class="text-sm text-gray-400">{timer.progress.toFixed(0)}%</p>
     </div>
   </div>

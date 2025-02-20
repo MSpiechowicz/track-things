@@ -11,6 +11,7 @@
 	import { teamMembersCreateSchemaValidator } from '$lib/validators/teamMembersCreateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
+	import { t } from '$lib/translations';
 
 	const form = superForm(
 		{
@@ -40,13 +41,12 @@
 
 					invalidate('app:dashboard');
 
-					toast.success('Success', {
-						description: 'Your team member has been added successfully.'
+					toast.success(t('teamMembers.dialog.create.toast.success.title'), {
+						description: t('teamMembers.dialog.create.toast.success.description')
 					});
 				} else {
-					toast.error('Error', {
-						description:
-							'We were unable to add your team member. Please try again or check if member with this email already exists.'
+					toast.error(t('teamMembers.dialog.create.toast.error.title'), {
+						description: t('teamMembers.dialog.create.toast.error.description')
 					});
 				}
 			}
@@ -70,8 +70,8 @@
 		teamMembersStore.resetCurrentMember();
 		form.reset();
 	}}
-	dialogTitle="Add Team Member"
-	dialogDescription="Below you can add a new team member to your team."
+	dialogTitle={t('teamMembers.dialog.create.title')}
+	dialogDescription={t('teamMembers.dialog.create.description')}
 >
 	<form
 		method="POST"
@@ -85,10 +85,15 @@
 		<FormField {form} name="email" let:errors>
 			<FormControl let:attrs>
 				<PageFormLabel
-					label="Email"
-					description="This is the email address of a new team member for your reference."
+					label={t('teamMembers.dialog.create.form.email.label')}
+					description={t('teamMembers.dialog.create.form.email.description')}
 				/>
-				<PageFormInput bind:value={$formData.email} {errors} {attrs} placeholder="Enter the email" />
+				<PageFormInput
+					bind:value={$formData.email}
+					{errors}
+					{attrs}
+					placeholder={t('teamMembers.dialog.create.form.email.input.placeholder')}
+				/>
 			</FormControl>
 			<FormFieldErrors class="text-red-500" />
 		</FormField>
@@ -99,7 +104,9 @@
 				form.reset();
 			}}
 		>
-			<Button type="submit" disabled={!$formData.email}>Save changes</Button>
+			<Button type="submit" disabled={!$formData.email}
+				>{t('teamMembers.dialog.create.form.button.save.label')}</Button
+			>
 		</PageDialogFooter>
 	</form>
 </PageDialog>

@@ -3,6 +3,7 @@
 	import PageUserMenu from '$lib/components/PageUserMenu.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { userStore } from '$lib/stores/userStore.svelte';
+	import { t } from '$lib/translations';
 	import { navigationTimer } from '$lib/utils/timers/defaults';
 	import IconFoots from './svg/IconFoots.svelte';
 
@@ -37,11 +38,8 @@
 	{/if}
 	{#if navigationTimer.isFinished && userStore.id}
 		<div class="flex items-center gap-2 text-white">
-			<Button
-				variant="link"
-				href="/dashboard"
-				class="text-white"
-				aria-label="Go to dashboard">Dashboard</Button
+			<Button variant="link" href="/dashboard" class="text-white" aria-label="Go to dashboard"
+				>{t('navigation.label')}</Button
 			>
 			<div class="hidden sm:block">
 				<PageUserMenu />
@@ -53,7 +51,7 @@
 	{/if}
 	{#if navigationTimer.isFinished && !userStore.id}
 		<Button variant="default" href="/auth/login" aria-label="Sign in to your account"
-			>Sign In</Button
+			>{t('navigation.button.signIn.label')}</Button
 		>
 	{/if}
 </nav>
