@@ -18,18 +18,18 @@
 	});
 </script>
 
-<div class="flex flex-1 gap-8">
-	<div class="w-[20%] min-w-[250px]">
-		<div class="flex flex-col items-start gap-1">
+<div class="flex flex-col xl:flex-row flex-1 gap-8">
+	<div class="md:w-[20%] md:min-w-[250px]">
+		<div class="flex xl:flex-col items-center md:items-start gap-1">
 			{#each [{ view: DASHBOARD_VIEWS.TRACKING, icon: IconEye }, { view: DASHBOARD_VIEWS.TEAM_SETTINGS, icon: IconUserGroup }] as { view, icon: Icon }}
 				<Button
 					variant="ghost"
-					class={`flex w-[200px] justify-start text-white hover:text-black [&_svg]:stroke-white hover:[&_svg]:stroke-black
+					class={`flex justify-center md:justify-start md:w-[200px] text-white hover:text-black [&_svg]:stroke-white hover:[&_svg]:stroke-black
 							${dashboardStore.currentView.startsWith(view) ? 'bg-white text-black [&_svg]:stroke-black' : ''}`}
 					onclick={() => (dashboardStore.currentView = view)}
 				>
 					<Icon additionalClass="h-5 w-5" />
-					<span class="text-lg font-medium">{view}</span>
+					<span class="hidden md:inline text-lg font-medium">{view}</span>
 				</Button>
 			{/each}
 		</div>
