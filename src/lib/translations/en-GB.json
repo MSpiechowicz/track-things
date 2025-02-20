@@ -122,5 +122,15 @@
   "page.home.title_1": "Effortless Tracking",
   "page.home.title_2": "Clear Insights",
   "page.home.description": "Simplify your tracking journey with a user-friendly platform that transforms your data into meaningful charts. No technical skills or spreadsheets required.",
-  "page.home.button.label": "Start Tracking Now"
+  "page.home.button.label": "Start Tracking Now",
+  "tracking.list.table.title": "List",
+  "tracking.list.table.description": "Here you can find a list of all the tracking data.",
+  "tracking.list.table.input.placeholder": "Search",
+  "tracking.list.table.id.label": "ID",
+  "tracking.list.table.name.label": "Name",
+  "tracking.list.table.createdAt.label": "Created at",
+  "tracking.list.table.updatedAt.label": "Updated at",
+  "tracking.list.table.actions.label": "Actions",
+  "tracking.list.noData.label": "There are currently no data to track.",
+  "tracking.list.button.add.label": "Add Tracking"
 }

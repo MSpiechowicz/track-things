@@ -7,5 +7,6 @@ export type DialogStoreType = {
 	showTeamSettingsMemberDeleteDialog: boolean;
 	showTeamMembersCreateDialog: boolean;
 	showTeamMembersDeleteDialog: boolean;
+	showTrackingDeleteDialog: boolean;
 	closeAll: () => void;
 };

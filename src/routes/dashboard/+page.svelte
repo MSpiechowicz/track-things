@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import PageDashboardTracking from '$lib/components/PageDashboardTracking.svelte';
+	import PageTracking from '$lib/components/PageTracking.svelte';
 	import PageTeamSettings from '$lib/components/PageTeamSettings.svelte';
 	import IconEye from '$lib/components/svg/IconEye.svelte';
 	import IconUserGroup from '$lib/components/svg/IconUserGroup.svelte';
@@ -35,7 +35,7 @@
 		</div>
 	</div>
 	{#if dashboardStore.currentView === DASHBOARD_VIEWS.TRACKING}
-		<PageDashboardTracking />
+		<PageTracking />
 	{/if}
 	{#if dashboardStore.currentView === DASHBOARD_VIEWS.TEAM_SETTINGS}
 		<PageTeamSettings />
