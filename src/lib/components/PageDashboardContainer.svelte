@@ -1,7 +1,8 @@
 <script lang="ts">
+	import IconArrowBack from '$lib/components/svg/IconArrowBack.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { dashboardStore } from '$lib/stores/dashboardStore.svelte';
-	import IconArrowBack from '$lib/components/svg/IconArrowBack.svelte';
+	import { t } from '$lib/translations';
 
 	const { title, children } = $props();
 </script>
@@ -18,7 +19,7 @@
 				}}
 			>
 				<IconArrowBack additionalClass="!h-5 !w-5" strokeColor="black" />
-				Go Back
+				{t('dashboard.container.button.label')}
 			</Button>
 		{/if}
 	</div>

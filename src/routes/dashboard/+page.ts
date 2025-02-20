@@ -1,5 +1,6 @@
 import { teamSettingsMemberStore } from '$lib/stores/teamSettingsMemberStore.svelte';
 import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
+import { redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
 async function loadTeamSettings(
@@ -30,6 +31,10 @@ async function loadTeamMembers(
 
 export const load: PageLoad = async ({ parent, fetch, depends }) => {
 	const { userProfile } = await parent();
+
+	if (!userProfile || !userProfile.id) {
+		redirect(302, '/auth/login');
+	}
 
 	await Promise.all([loadTeamSettings(fetch), loadTeamMembers(fetch)]);
 

@@ -5,6 +5,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { userStore } from '$lib/stores/userStore.svelte';
+	import { t } from '$lib/translations';
 	import { toast } from 'svelte-sonner';
 
 	async function handleDeleteAccount() {
@@ -16,14 +17,14 @@
 			dialogStore.closeAll();
 			userStore.clearData();
 
-			toast.success('Account deleted', {
-				description: 'Your account has been deleted successfully. We are sorry to see you go.'
+			toast.success(t('deleteAccount.toast.success.title'), {
+				description: t('deleteAccount.toast.success.description')
 			});
 
 			goto('/');
 		} else {
-			toast.error('Failed to delete account', {
-				description: 'We were unable to delete your account. Please try again later.'
+			toast.error(t('deleteAccount.toast.error.title'), {
+				description: t('deleteAccount.toast.error.description')
 			});
 		}
 	}
@@ -32,9 +33,11 @@
 <PageDialog
 	open={dialogStore.showDeleteAccountDialog}
 	onOpenChange={() => (dialogStore.showDeleteAccountDialog = false)}
-	dialogTitle="Delete Account"
-	dialogDescription="Are you sure you want to delete your account? This action cannot be undone and all your data will be lost."
+	dialogTitle={t('deleteAccount.dialog.title')}
+	dialogDescription={t('deleteAccount.dialog.description')}
 	><PageDialogFooter onCancelClick={() => (dialogStore.showDeleteAccountDialog = false)}>
-		<Button variant="destructive" onclick={handleDeleteAccount}>Delete Account</Button>
+		<Button variant="destructive" onclick={handleDeleteAccount}
+			>{t('deleteAccount.dialog.button.label')}</Button
+		>
 	</PageDialogFooter>
 </PageDialog>

@@ -6,6 +6,7 @@
 	import { FormControl, FormField, FormFieldErrors } from '$lib/components/ui/form';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { userStore } from '$lib/stores/userStore.svelte';
+	import { t } from '$lib/translations';
 	import { accountSettingsSchemaValidator } from '$lib/validators/accountSettingsSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
@@ -56,8 +57,8 @@
 		dialogStore.showAccountSettingsDialog = false;
 		form.reset();
 	}}
-	dialogTitle="Account Settings"
-	dialogDescription="Below you can adjust your personal account information."
+	dialogTitle={t('accountSettings.dialog.title')}
+	dialogDescription={t('accountSettings.dialog.description')}
 >
 	<form
 		method="POST"
@@ -73,23 +74,28 @@
 					label="Display Name"
 					description="This is your alternative name that will be displayed within the application."
 				/>
-				<PageFormInput bind:value={$formData.displayName} {errors} {attrs} placeholder="Enter your display name" />
+				<PageFormInput
+					bind:value={$formData.displayName}
+					{errors}
+					{attrs}
+					placeholder="Enter your display name"
+				/>
 			</FormControl>
 			<FormFieldErrors class="text-red-500" />
 		</FormField>
 		<div class="mt-2 border-t pt-2">
-			<span
-				>You can <Button
-					variant="link"
-					onclick={() => {
-						dialogStore.showDeleteAccountDialog = true;
-						dialogStore.showAccountSettingsDialog = false;
-					}}
-					class="cursor-pointer p-0 font-bold"
-				>
-					delete your account
-				</Button> and all of its associated data at any given time. Please note that this action is irreversible.</span
+			<span>{t('accountSettings.dialog.deleteAccount.label_1')}</span>
+			<Button
+				variant="link"
+				onclick={() => {
+					dialogStore.showDeleteAccountDialog = true;
+					dialogStore.showAccountSettingsDialog = false;
+				}}
+				class="cursor-pointer p-0 font-bold"
 			>
+				{t('accountSettings.dialog.deleteAccount.button.label')}
+			</Button>
+			<span>{t('accountSettings.dialog.deleteAccount.label_2')}</span>
 		</div>
 		<PageDialogFooter
 			onCancelClick={() => {
@@ -98,7 +104,7 @@
 			}}
 		>
 			<Button type="submit" disabled={!$formData.displayName || $formData.displayName.length < 3}
-				>Save changes</Button
+				>{t('accountSettings.dialog.button.save.label')}</Button
 			>
 		</PageDialogFooter>
 	</form>

@@ -3,16 +3,17 @@
 	import IconGithubBrand from '$lib/components/svg/IconGithubBrand.svelte';
 	import IconMail from '$lib/components/svg/IconMail.svelte';
 	import { Button } from '$lib/components/ui/button';
+	import { t } from '$lib/translations';
 
 	const socialLogins = [
 		{
 			icon: IconGithubBrand,
-			text: 'Continue with GitHub',
+			text: t('loginForm.button.github.label'),
 			href: '/auth/login/github'
 		},
 		{
 			icon: IconMail,
-			text: 'Continue with Google',
+			text: t('loginForm.button.google.label'),
 			href: '/auth/login/google'
 		}
 	];
@@ -38,12 +39,13 @@
 		</div>
 	</div>
 	<Button variant="outline" class="h-11 w-full font-normal" onclick={() => goto('/')}>
-		Return to Home Page
+		{t('loginForm.button.returnToHomePage.label')}
 	</Button>
 	<p class="text-muted-foreground text-center text-sm">
-		By signing in, you agree to our{' '}
+		<span>{t('loginForm.label_1')}</span>
+		<span>{' '}</span>
 		<a href="/terms-of-service" class="hover:text-primary underline underline-offset-4">
-			Terms of Service
+			{t('loginForm.label_2')}
 		</a>
 	</p>
 </div>
