@@ -23,6 +23,10 @@ export const trackingStore = $state({
     trackingStore.currentTrackingId = null;
     trackingStore.currentTrackingName = null;
   },
+  resetViews: () => {
+    trackingStore.showCreateView = false;
+    trackingStore.showUpdateView = false;
+  },
 	sortData: (field: string) => {
 		trackingStore.dataSorted.direction =
 			trackingStore.dataSorted.direction === 'asc' ? 'desc' : 'asc';

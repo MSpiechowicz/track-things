@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { DASHBOARD_VIEWS } from '$lib/constants';
+	import { dashboardStore } from '$lib/stores/dashboardStore.svelte';
 	import { trackingStore } from '$lib/stores/trackingStore.svelte';
 	import { trackingTimer } from '$lib/utils/timers/defaults';
 	import DashboardContainer from './PageDashboardContainer.svelte';
@@ -9,6 +10,8 @@
 
 	$effect(() => {
 		trackingTimer.start();
+		trackingStore.resetViews();
+		dashboardStore.resetViews();
 	});
 </script>
 
