@@ -13,8 +13,10 @@
 <Dialog {open} {onOpenChange}>
 	<DialogContent class="w-[325px] rounded-xl border sm:w-full">
 		<DialogHeader>
-			<DialogTitle class="text-xl text-left">{@html dialogTitle}</DialogTitle>
-			<DialogDescription class="text-base text-neutral-600 text-left">{@html dialogDescription}</DialogDescription>
+			<DialogTitle class="text-left text-xl">{@html dialogTitle}</DialogTitle>
+			<DialogDescription class="text-left text-base text-neutral-600"
+				>{@html dialogDescription}</DialogDescription
+			>
 		</DialogHeader>
 		{@render children()}
 	</DialogContent>
