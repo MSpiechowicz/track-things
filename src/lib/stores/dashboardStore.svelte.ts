@@ -16,7 +16,6 @@ export const dashboardStore = $state<DashboardStore>({
     dashboardStore.goBack = () => {};
   },
   resetViews: () => {
-    dashboardStore.currentView = DASHBOARD_VIEWS.TRACKING;
     dashboardStore.isChildView = false;
     dashboardStore.goBack = () => {};
   },

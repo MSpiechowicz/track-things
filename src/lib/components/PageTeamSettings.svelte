@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { DASHBOARD_VIEWS } from '$lib/constants';
+	import { dashboardStore } from '$lib/stores/dashboardStore.svelte';
 	import { teamSettingsOwnerStore } from '$lib/stores/teamSettingsOwnerStore.svelte';
 	import { teamSettingsTimer } from '$lib/utils/timers/defaults';
 	import DashboardContainer from './PageDashboardContainer.svelte';
@@ -10,6 +11,8 @@
 
   $effect(() => {
     teamSettingsTimer.start();
+    teamSettingsOwnerStore.resetViews();
+    dashboardStore.resetViews();
   });
 </script>
 

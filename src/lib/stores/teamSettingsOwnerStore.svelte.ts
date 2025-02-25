@@ -22,6 +22,9 @@ export const teamSettingsOwnerStore = $state({
 		teamSettingsOwnerStore.currentTeamId = null;
 		teamSettingsOwnerStore.currentTeamName = null;
 	},
+  resetViews: () => {
+    teamSettingsOwnerStore.showUpdateView = false;
+  },
 	sortData: (field: string) => {
 		teamSettingsOwnerStore.dataSorted.direction =
 			teamSettingsOwnerStore.dataSorted.direction === 'asc' ? 'desc' : 'asc';
