@@ -132,5 +132,13 @@
   "userMenu.content.menuItem_2.label": "Sign Out",
   "userMenu.dialog.button.signOut.label": "Sign Out",
   "userMenu.dialog.description": "Are you sure you want to sign out of your account?",
-  "userMenu.dialog.title": "Sign Out"
+  "userMenu.dialog.title": "Sign Out",
+  "tracking.create.form.button.save.label": "Save",
+  "tracking.create.form.name.description": "This is the name of the tracking for your reference.",
+  "tracking.create.form.name.input.placeholder": "Enter the tracking name",
+  "tracking.create.form.name.label": "Name",
+  "tracking.create.toast.error.description": "We were unable to create your tracking. Please try again later.",
+  "tracking.create.toast.error.title": "Error",
+  "tracking.create.toast.success.description": "Your tracking has been created successfully.",
+  "tracking.create.toast.success.title": "Success"
 }

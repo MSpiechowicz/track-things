@@ -116,7 +116,7 @@
 			variant="default"
 			class="py-5"
 			onclick={() => {
-				//dialogStore.showTeamSettingsCreateDialog = true;
+				trackingStore.showCreateView = true;
 			}}
 		>
 			<IconPlus additionalClass="!h-5 !w-5" />
