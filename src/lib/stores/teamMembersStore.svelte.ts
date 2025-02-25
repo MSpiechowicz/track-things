@@ -1,5 +1,6 @@
 import type { SortableDirectionType } from '$lib/types/sortableDirectionType';
 import type { TeamMemberType } from '$lib/types/teamMemberType';
+import { sortData } from '$lib/utils/sort';
 
 type SortField = 'name' | 'email' | 'created_at' | 'permissions';
 
@@ -31,24 +32,9 @@ export const teamMembersStore = $state({
 		teamMembersStore.dataSorted.direction =
 			teamMembersStore.dataSorted.direction === 'asc' ? 'desc' : 'asc';
 
-		teamMembersStore.data = [...teamMembersStore.data].sort((a, b) => {
-			const modifier = teamMembersStore.dataSorted.direction === 'asc' ? 1 : -1;
+		const modifier = teamMembersStore.dataSorted.direction === 'asc' ? 1 : -1;
 
-			switch (field) {
-				case 'name':
-					return modifier * a.name.localeCompare(b.name);
-				case 'email':
-					return modifier * a.email.localeCompare(b.email);
-				case 'created_at':
-					return modifier * a.created_at.localeCompare(b.created_at);
-				case 'permissions':
-					return modifier * a.permissions.localeCompare(b.permissions);
-				default:
-					return 0;
-			}
-		});
-
-		teamMembersStore.dataFiltered = [...teamMembersStore.data];
+		teamMembersStore.data = sortData(teamMembersStore.data, field, modifier);
 	},
 	filterData: (search: string) => {
 		if (search.length === 0) {

@@ -1,7 +1,8 @@
 import type { SortableDirectionType } from '$lib/types/sortableDirectionType';
 import type { TeamSettingMemberType } from '$lib/types/teamSettingsMemberType';
+import { sortData } from '$lib/utils/sort';
 
-type SortField = 'name' | 'createdAt';
+type SortField = 'name' | 'created_at';
 
 type SortItem = {
 	fields: SortField[];
@@ -11,8 +12,8 @@ type SortItem = {
 export const teamSettingsMemberStore = $state({
 	data: [] as TeamSettingMemberType[],
 	dataFiltered: [] as TeamSettingMemberType[],
-  dataSorted: {
-		fields: ['name', 'createdAt'] as SortField[],
+	dataSorted: {
+		fields: ['name', 'created_at'] as SortField[],
 		direction: 'desc' as SortableDirectionType
 	} as SortItem,
 	currentMemberTeamId: null as string | null,
@@ -25,24 +26,15 @@ export const teamSettingsMemberStore = $state({
 		teamSettingsMemberStore.dataSorted.direction =
 			teamSettingsMemberStore.dataSorted.direction === 'asc' ? 'desc' : 'asc';
 
-		teamSettingsMemberStore.data = [...teamSettingsMemberStore.data].sort((a, b) => {
-			const modifier = teamSettingsMemberStore.dataSorted.direction === 'asc' ? 1 : -1;
+		const modifier = teamSettingsMemberStore.dataSorted.direction === 'asc' ? 1 : -1;
 
-			switch (field) {
-				case 'name':
-					return modifier * a.name.localeCompare(b.name);
-				case 'createdAt':
-					return modifier * a.created_at.localeCompare(b.created_at);
-				default:
-					return 0;
-			}
-		});
+		teamSettingsMemberStore.data = sortData(teamSettingsMemberStore.data, field, modifier);
 	},
-  filterData: (search: string) => {
-    if (search.length === 0) {
-      teamSettingsMemberStore.dataFiltered = [];
-      return;
-    }
+	filterData: (search: string) => {
+		if (search.length === 0) {
+			teamSettingsMemberStore.dataFiltered = [];
+			return;
+		}
 
 		teamSettingsMemberStore.dataFiltered = teamSettingsMemberStore.data.filter((item) => {
 			return (

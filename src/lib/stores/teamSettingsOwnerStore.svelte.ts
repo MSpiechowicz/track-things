@@ -1,7 +1,8 @@
 import type { SortableDirectionType } from '$lib/types/sortableDirectionType';
 import type { TeamSettingOwnerType } from '$lib/types/teamSettingsOwnerType';
+import { sortData } from '$lib/utils/sort';
 
-type SortField = 'name' | 'members' | 'createdAt';
+type SortField = 'name' | 'members' | 'created_at';
 
 type SortItem = {
 	fields: SortField[];
@@ -12,7 +13,7 @@ export const teamSettingsOwnerStore = $state({
 	data: [] as TeamSettingOwnerType[],
 	dataFiltered: [] as TeamSettingOwnerType[],
 	dataSorted: {
-		fields: ['name', 'members', 'createdAt'] as SortField[],
+		fields: ['name', 'members', 'created_at'] as SortField[],
 		direction: 'desc' as SortableDirectionType
 	} as SortItem,
 	showUpdateView: false as boolean,
@@ -22,27 +23,16 @@ export const teamSettingsOwnerStore = $state({
 		teamSettingsOwnerStore.currentTeamId = null;
 		teamSettingsOwnerStore.currentTeamName = null;
 	},
-  resetViews: () => {
-    teamSettingsOwnerStore.showUpdateView = false;
-  },
+	resetViews: () => {
+		teamSettingsOwnerStore.showUpdateView = false;
+	},
 	sortData: (field: string) => {
 		teamSettingsOwnerStore.dataSorted.direction =
 			teamSettingsOwnerStore.dataSorted.direction === 'asc' ? 'desc' : 'asc';
 
-		teamSettingsOwnerStore.data = [...teamSettingsOwnerStore.data].sort((a, b) => {
-			const modifier = teamSettingsOwnerStore.dataSorted.direction === 'asc' ? 1 : -1;
+		const modifier = teamSettingsOwnerStore.dataSorted.direction === 'asc' ? 1 : -1;
 
-			switch (field) {
-				case 'name':
-					return modifier * a.name.localeCompare(b.name);
-				case 'members':
-					return modifier * (a.members - b.members);
-				case 'createdAt':
-					return modifier * a.updated_at.localeCompare(b.updated_at);
-				default:
-					return 0;
-			}
-		});
+		teamSettingsOwnerStore.data = sortData(teamSettingsOwnerStore.data, field, modifier);
 	},
 	filterData: (search: string) => {
 		if (search.length === 0) {
