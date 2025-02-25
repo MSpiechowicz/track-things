@@ -11,17 +11,17 @@ type SortItem = {
 export const teamSettingsOwnerStore = $state({
 	data: [] as TeamSettingOwnerType[],
 	dataFiltered: [] as TeamSettingOwnerType[],
-  dataSorted: {
+	dataSorted: {
 		fields: ['name', 'members', 'createdAt'] as SortField[],
 		direction: 'desc' as SortableDirectionType
 	} as SortItem,
 	showUpdateView: false as boolean,
 	currentTeamId: null as string | null,
 	currentTeamName: null as string | null,
-  resetCurrentTeam: () => {
-    teamSettingsOwnerStore.currentTeamId = null;
-    teamSettingsOwnerStore.currentTeamName = null;
-  },
+	resetCurrentTeam: () => {
+		teamSettingsOwnerStore.currentTeamId = null;
+		teamSettingsOwnerStore.currentTeamName = null;
+	},
 	sortData: (field: string) => {
 		teamSettingsOwnerStore.dataSorted.direction =
 			teamSettingsOwnerStore.dataSorted.direction === 'asc' ? 'desc' : 'asc';
@@ -41,11 +41,11 @@ export const teamSettingsOwnerStore = $state({
 			}
 		});
 	},
-  filterData: (search: string) => {
-    if (search.length === 0) {
-      teamSettingsOwnerStore.dataFiltered = [];
-      return;
-    }
+	filterData: (search: string) => {
+		if (search.length === 0) {
+			teamSettingsOwnerStore.dataFiltered = [];
+			return;
+		}
 
 		teamSettingsOwnerStore.dataFiltered = teamSettingsOwnerStore.data.filter((item) => {
 			return (
