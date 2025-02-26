@@ -12,11 +12,14 @@
 	import IconDeviceFloppy from './svg/IconDeviceFloppy.svelte';
 	import { Button } from './ui/button';
 	import { FormControl, FormField, FormFieldErrors } from './ui/form';
+	import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 
 	const form = superForm(
 		{
 			id: trackingStore.currentTrackingId ?? '',
-			name: trackingStore.currentTrackingName ?? ''
+			name: trackingStore.currentTrackingName ?? '',
+			type: trackingStore.currentTrackingType ?? '',
+			description: trackingStore.currentTrackingDescription ?? ''
 		},
 		{
 			validators: trackingCreateSchemaValidator,
@@ -33,7 +36,9 @@
 						id: event.result.data?.id,
 						name: event.result.data?.name,
 						created_at: event.result.data?.created_at,
-						updated_at: event.result.data?.updated_at
+						updated_at: event.result.data?.updated_at,
+						type: event.result.data?.type,
+						description: event.result.data?.description
 					};
 
 					// Update the current team name
@@ -43,7 +48,8 @@
 					form.reset({
 						id: event.result.data?.id ?? '',
 						// @ts-expect-error - This is a valid type
-						name: event.result.data?.name ?? ''
+						name: event.result.data?.name ?? '',
+						type: 'calendar_event'
 					});
 
 					toast.success(t('tracking.create.toast.success.title'), {
@@ -102,6 +108,33 @@
 				</FormControl>
 				<FormFieldErrors class="text-red-500" />
 			</FormField>
+
+			<FormField {form} name="type">
+				<FormControl let:attrs>
+					<PageFormLabel
+						label={t('tracking.create.form.type.label')}
+						description={t('tracking.create.form.type.description')}
+						isTextWhite={true}
+					/>
+					<div class="max-w-sm">
+						<Select onSelectedChange={(v) => v && ($formData.type = v.value as string)}>
+							<SelectTrigger
+								class="bg-background text-foreground [&>span[data-placeholder]]:text-muted-foreground w-full"
+								{...attrs}
+							>
+								<SelectValue placeholder={t('tracking.create.form.type.input.placeholder')} />
+							</SelectTrigger>
+							<SelectContent class="text-black">
+								<SelectItem class="text-md" value="calendar_event"
+									>{t('tracking.create.form.type.option.calendar_event')}</SelectItem
+								>
+							</SelectContent>
+						</Select>
+					</div>
+				</FormControl>
+				<FormFieldErrors class="text-red-500" />
+			</FormField>
+
 			<div class="flex flex-row items-center gap-2">
 				<Button type="submit" variant="default" class="py-5 text-white">
 					<IconDeviceFloppy additionalClass="w-5 h-5" />

@@ -19,9 +19,13 @@ export const trackingStore = $state({
 	showUpdateView: false as boolean,
 	currentTrackingId: null as string | null,
 	currentTrackingName: null as string | null,
+	currentTrackingType: null as string | null,
+	currentTrackingDescription: null as string | null,
 	resetCurrentTracking: () => {
 		trackingStore.currentTrackingId = null;
 		trackingStore.currentTrackingName = null;
+		trackingStore.currentTrackingType = null;
+		trackingStore.currentTrackingDescription = null;
 	},
 	resetViews: () => {
 		trackingStore.showCreateView = false;
@@ -46,7 +50,9 @@ export const trackingStore = $state({
 				item.id.toLowerCase().includes(search.toLowerCase()) ||
 				item.name.toLowerCase().includes(search.toLowerCase()) ||
 				item.created_at.toLowerCase().includes(search.toLowerCase()) ||
-				item.updated_at.toLowerCase().includes(search.toLowerCase())
+				item.updated_at.toLowerCase().includes(search.toLowerCase()) ||
+				item.type.toLowerCase().includes(search.toLowerCase()) ||
+				item.description.toLowerCase().includes(search.toLowerCase())
 			);
 		});
 	}

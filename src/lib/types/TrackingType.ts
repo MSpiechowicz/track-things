@@ -3,4 +3,6 @@ export type TrackingType = {
 	name: string;
 	created_at: string;
 	updated_at: string;
+  type: string;
+  description: string;
 };

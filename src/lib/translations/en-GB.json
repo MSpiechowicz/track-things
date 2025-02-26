@@ -140,5 +140,9 @@
   "tracking.create.toast.error.description": "We were unable to create your tracking. Please try again later.",
   "tracking.create.toast.error.title": "Error",
   "tracking.create.toast.success.description": "Your tracking has been created successfully.",
-  "tracking.create.toast.success.title": "Success"
+  "tracking.create.toast.success.title": "Success",
+  "tracking.create.form.type.description": "This is the type of the tracking for your reference.",
+  "tracking.create.form.type.label": "Type",
+  "tracking.create.form.type.input.placeholder": "Select the tracking type",
+  "tracking.create.form.type.option.calendar_event": "Calendar Event"
 }
