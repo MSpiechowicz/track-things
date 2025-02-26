@@ -5,9 +5,7 @@
 </script>
 
 <div class="flex flex-1 flex-col gap-4 md:flex-row">
-	<div class="flex flex-1 flex-row gap-4">
-		<PageCalendarLeftHeader />
-		<PageCalendarMiddleHeader />
-	</div>
+	<PageCalendarLeftHeader />
+	<PageCalendarMiddleHeader />
 	<PageCalendarRightHeader />
 </div>
