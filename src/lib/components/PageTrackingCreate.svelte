@@ -92,6 +92,8 @@
 			data-sveltekit-reload
 		>
 			<input type="hidden" name="id" value={trackingStore.currentTrackingId ?? ''} />
+			<input type="hidden" name="type" bind:value={$formData.type} />
+
 			<FormField {form} name="name" let:errors>
 				<FormControl let:attrs>
 					<PageFormLabel
@@ -118,10 +120,7 @@
 					/>
 					<div class="max-w-sm">
 						<Select onSelectedChange={(v) => v && ($formData.type = v.value as string)}>
-							<SelectTrigger
-								class="bg-background text-foreground [&>span[data-placeholder]]:text-muted-foreground w-full"
-								{...attrs}
-							>
+							<SelectTrigger {...attrs}>
 								<SelectValue placeholder={t('tracking.create.form.type.input.placeholder')} />
 							</SelectTrigger>
 							<SelectContent class="text-black">
