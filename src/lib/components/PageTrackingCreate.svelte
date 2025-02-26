@@ -6,6 +6,7 @@
 	import { trackingCreateSchemaValidator } from '$lib/validators/trackingCreateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
+	import PageCalendar from './PageCalendar.svelte';
 	import PageFormInput from './PageFormInput.svelte';
 	import PageFormLabel from './PageFormLabel.svelte';
 	import PageFormTextArea from './PageFormTextArea.svelte';
@@ -158,5 +159,6 @@
 				</Button>
 			</div>
 		</form>
+		<PageCalendar />
 	</div>
 {/if}
