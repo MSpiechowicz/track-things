@@ -39,45 +39,49 @@
 		};
 	}
 
-	// Initialize hours array
-	//$effect(() => {
-		// Generate hours from 0 to 23
-		hours.push(...Array.from({ length: 24 }, (_, i) => i));
-	//});
+	hours.push(...Array.from({ length: 24 }, (_, i) => i));
 </script>
 
-<div class="calendar-day-view mt-8">
-	<div class="calendar-day-grid">
+<div class="mt-4 flex h-full w-full flex-col rounded-md bg-white">
+	<!-- Calendar day header with date -->
+	<div class="border-b border-gray-200 p-3"></div>
+	<div class=" relative flex flex-1 overflow-y-auto">
 		<!-- Hours column -->
-		<div class="hours-column">
+		<div class="w-16 flex-shrink-0 border-r border-gray-200">
 			{#each hours as hour}
-				<div class="hour-cell" style="height: {hourHeight}px">
-					<span class="hour-label">{formatHour(hour)}</span>
+				<div class="relative border-b border-gray-200 p-1" style="height: {hourHeight}px">
+					<span class="absolute top-0 right-2 text-xs text-gray-500">{formatHour(hour)}</span>
 				</div>
 			{/each}
 		</div>
 
 		<!-- Events grid -->
-		<div class="events-grid">
-			<!-- Hour rows - using index only without declaring a variable -->
-			{#each Array(hours.length) as _, i}
-				<div class="hour-row" style="height: {hourHeight}px" data-hour={i}>
+		<div class="relative flex-1">
+			<!-- Hour rows -->
+			{#each hours as hour}
+				<div
+					class="relative border-b border-gray-200"
+					style="height: {hourHeight}px"
+					data-hour={hour}
+				>
 					<!-- Half-hour marker -->
-					<div class="half-hour-marker"></div>
+					<div class="absolute top-1/2 right-0 left-0 border-b border-dashed border-gray-200"></div>
 				</div>
 			{/each}
 
 			<!-- Events -->
 			{#each events as event (event.id)}
 				<div
-					class="event-item"
+					class="absolute right-1 left-1 cursor-pointer overflow-hidden rounded p-1 text-white transition-opacity hover:opacity-90"
 					style="top: {getEventStyle(event).top};
                  height: {getEventStyle(event).height};
                  background-color: {getEventStyle(event).backgroundColor};"
 				>
-					<div class="event-content">
-						<div class="event-title">{event.title}</div>
-						<div class="event-time">
+					<div class="flex h-full flex-col p-1">
+						<div class="overflow-hidden font-medium text-ellipsis whitespace-nowrap">
+							{event.title}
+						</div>
+						<div class="text-xs opacity-90">
 							{event.start.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })} -
 							{event.end.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
 						</div>
@@ -87,98 +91,3 @@
 		</div>
 	</div>
 </div>
-
-<style>
-	.calendar-day-view {
-		display: flex;
-		flex-direction: column;
-		height: 100%;
-		width: 100%;
-		background-color: white;
-		border-radius: 0.375rem;
-	}
-
-	.calendar-day-header {
-		padding: 0.75rem;
-		border-bottom: 1px solid #e5e7eb;
-	}
-
-	.calendar-day-grid {
-		display: flex;
-		flex: 1;
-		overflow-y: auto;
-		position: relative;
-	}
-
-	.hours-column {
-		width: 4rem;
-		border-right: 1px solid #e5e7eb;
-		flex-shrink: 0;
-	}
-
-	.hour-cell {
-		position: relative;
-		border-bottom: 1px solid #e5e7eb;
-		padding: 0.25rem;
-	}
-
-	.hour-label {
-		position: absolute;
-		top: 0rem;
-		right: 0.5rem;
-		font-size: 0.75rem;
-		color: #6b7280;
-	}
-
-	.events-grid {
-		flex: 1;
-		position: relative;
-	}
-
-	.hour-row {
-		position: relative;
-		border-bottom: 1px solid #e5e7eb;
-	}
-
-	.half-hour-marker {
-		position: absolute;
-		top: 50%;
-		left: 0;
-		right: 0;
-		border-bottom: 1px dashed #e5e7eb;
-	}
-
-	.event-item {
-		position: absolute;
-		left: 0.25rem;
-		right: 0.25rem;
-		border-radius: 0.25rem;
-		padding: 0.25rem 0.5rem;
-		overflow: hidden;
-		color: white;
-		cursor: pointer;
-		transition: opacity 0.2s;
-	}
-
-	.event-item:hover {
-		opacity: 0.9;
-	}
-
-	.event-content {
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-	}
-
-	.event-title {
-		font-weight: 500;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
-	.event-time {
-		font-size: 0.75rem;
-		opacity: 0.9;
-	}
-</style>
