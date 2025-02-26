@@ -8,6 +8,7 @@
 	import { superForm } from 'sveltekit-superforms';
 	import PageFormInput from './PageFormInput.svelte';
 	import PageFormLabel from './PageFormLabel.svelte';
+	import PageFormTextArea from './PageFormTextArea.svelte';
 	import PageSpinner from './PageSpinner.svelte';
 	import IconDeviceFloppy from './svg/IconDeviceFloppy.svelte';
 	import { Button } from './ui/button';
@@ -130,6 +131,22 @@
 							</SelectContent>
 						</Select>
 					</div>
+				</FormControl>
+				<FormFieldErrors class="text-red-500" />
+			</FormField>
+
+			<FormField {form} name="description">
+				<FormControl let:attrs>
+					<PageFormLabel
+						label={t('tracking.create.form.description.label')}
+						description={t('tracking.create.form.description.description')}
+						isTextWhite={true}
+					/>
+					<PageFormTextArea
+						bind:value={$formData.description}
+						placeholder={t('tracking.create.form.description.input.placeholder')}
+						{attrs}
+					/>
 				</FormControl>
 				<FormFieldErrors class="text-red-500" />
 			</FormField>

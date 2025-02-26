@@ -144,5 +144,8 @@
   "tracking.create.form.type.description": "This is the type of the tracking for your reference.",
   "tracking.create.form.type.label": "Type",
   "tracking.create.form.type.input.placeholder": "Select the tracking type",
-  "tracking.create.form.type.option.calendar_event": "Calendar Event"
+  "tracking.create.form.type.option.calendar_event": "Calendar Event",
+  "tracking.create.form.description.label": "Description",
+  "tracking.create.form.description.description": "This is the description of the tracking for your reference.",
+  "tracking.create.form.description.input.placeholder": "Enter the description"
 }
