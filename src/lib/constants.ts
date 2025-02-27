@@ -1,7 +1,7 @@
 export const DASHBOARD_VIEWS = {
   TRACKING: "Tracking",
+  EVENT_TYPES: "Event Types",
   TEAM_SETTINGS: "Team Settings",
-  TEAM_SETTINGS_CREATE: "Team Settings Create",
 } as const;
 
 export const CALENDAR_VIEWS = {
