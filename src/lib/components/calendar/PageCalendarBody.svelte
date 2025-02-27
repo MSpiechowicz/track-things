@@ -16,21 +16,21 @@
 			title: 'Team Meeting',
 			start: new Date(date.getFullYear(), date.getMonth(), date.getDate(), 9, 15),
 			end: new Date(date.getFullYear(), date.getMonth(), date.getDate(), 10, 10),
-			color: '#3b82f6' // blue
+			color: '#155dfc'
 		},
 		{
 			id: '2',
 			title: 'Lunch Break',
 			start: new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0),
 			end: new Date(date.getFullYear(), date.getMonth(), date.getDate(), 13, 0),
-			color: '#10b981' // green
+			color: '#155dfc'
 		},
 		{
 			id: '3',
 			title: 'Project Review',
 			start: new Date(date.getFullYear(), date.getMonth(), date.getDate(), 14, 0),
 			end: new Date(date.getFullYear(), date.getMonth(), date.getDate(), 15, 30),
-			color: '#f59e0b' // amber
+			color: '#155dfc'
 		}
 	]);
 
@@ -66,16 +66,13 @@
 	function handleAddEvent(event: CustomEvent<{ start: Date; end: Date }>) {
 		const { start, end } = event.detail;
 
-		// Generate a random color for the new event
-		const randomColor = eventColors[Math.floor(Math.random() * eventColors.length)];
-
-		// Create new event
+		// Create new event with default color
 		const newEvent = {
 			id: nanoid(), // Generate unique ID
 			title: 'New Event',
 			start,
 			end,
-			color: randomColor
+			color: '#155dfc'
 		};
 
 		// Add to events array

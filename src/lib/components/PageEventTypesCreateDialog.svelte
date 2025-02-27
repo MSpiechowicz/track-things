@@ -108,7 +108,10 @@
 					label={t('eventTypes.dialog.create.form.color.label')}
 					description={t('eventTypes.dialog.create.form.color.description')}
 				/>
-				<ColorPicker bind:value={$formData.color} />
+				<ColorPicker
+					value={$formData.color || '#155dfc'}
+					on:change={(e) => $formData.color = e.detail}
+				/>
 			</FormControl>
 			<FormFieldErrors class="text-red-500" />
 		</FormField>
