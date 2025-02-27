@@ -5,13 +5,14 @@
 	import PageFormInput from '$lib/components/PageFormInput.svelte';
 	import PageFormLabel from '$lib/components/PageFormLabel.svelte';
 	import { Button } from '$lib/components/ui/button';
+	import ColorPicker from '$lib/components/ui/color-picker/color-picker.svelte';
 	import { FormControl, FormField, FormFieldErrors } from '$lib/components/ui/form';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { eventTypesStore } from '$lib/stores/eventTypesStore.svelte';
+	import { t } from '$lib/translations';
 	import { eventTypesCreateSchemaValidator } from '$lib/validators/eventTypesCreateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
-	import { t } from '$lib/translations';
 
 	const form = superForm(
 		{
@@ -100,7 +101,17 @@
 			</FormControl>
 			<FormFieldErrors class="text-red-500" />
 		</FormField>
-    <!-- TODO: Add color picker -->
+
+		<FormField {form} name="color">
+			<FormControl>
+				<PageFormLabel
+					label={t('eventTypes.dialog.create.form.color.label')}
+					description={t('eventTypes.dialog.create.form.color.description')}
+				/>
+				<ColorPicker bind:value={$formData.color} />
+			</FormControl>
+			<FormFieldErrors class="text-red-500" />
+		</FormField>
     <!-- TODO: Add select for the collabolators. Under the view each of the collaborators should be displayed as a tag with X to remove it from the list -->
 		<PageDialogFooter
 			onCancelClick={() => {
