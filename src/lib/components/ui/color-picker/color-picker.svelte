@@ -1,15 +1,8 @@
 <script lang="ts">
-	import { cn } from '$lib/utils';
-	import { createEventDispatcher } from 'svelte';
 	import { hexToHSL, hslToHex } from './color-utils';
 
-	const dispatch = createEventDispatcher<{
-		change: string;
-	}>();
-
-	const { value = '#155dfc', class: className = undefined } = $props<{
+	let { value = $bindable() } = $props<{
 		value?: string;
-		class?: string;
 	}>();
 
 	// HSL state
@@ -17,8 +10,7 @@
 
 	// Update color when HSL changes
 	$effect(() => {
-		const newColor = hslToHex(hsl.h, hsl.s, hsl.l);
-		dispatch('change', newColor);
+		value = hslToHex(hsl.h, hsl.s, hsl.l);
 	});
 
 	// Update HSL when color changes externally
@@ -32,23 +24,23 @@
 	});
 </script>
 
-<div class={cn('flex flex-col gap-4 p-0 w-full max-w-sm', className)}>
+<div class="flex flex-col gap-4 p-0 w-full max-w-sm">
 	<!-- Color preview -->
 	<div
-		class="h-16 w-full rounded-lg border-2 transition-all text-white p-4"
+		class="h-16 w-full rounded-md border-2 transition-all text-white p-4"
 		style="background-color: {value}; border-color: {value};"
 		role="img"
 		aria-label="Color preview: {value}"
 	>Event Color Test</div>
 
 	<!-- HSL Sliders -->
-	<div class="space-y-4">
+	<div class="space-y-2">
 		<!-- Hue slider -->
 		<div class="space-y-2">
-			<label for="hue-slider" class="text-sm font-medium">
+			<label for="hue-slider" class="text-sm">
 				Hue: {Math.round(hsl.h)}°
 			</label>
-			<div class="relative h-4 rounded-full" style="background: linear-gradient(to right,
+			<div class="relative h-4 rounded-md" style="background: linear-gradient(to right,
 				hsl(0, 100%, 50%),
 				hsl(60, 100%, 50%),
 				hsl(120, 100%, 50%),
@@ -73,10 +65,10 @@
 
 		<!-- Saturation slider -->
 		<div class="space-y-2">
-			<label for="saturation-slider" class="text-sm font-medium">
+			<label for="saturation-slider" class="text-sm">
 				Saturation: {Math.round(hsl.s)}%
 			</label>
-			<div class="relative h-4 rounded-full" style="background: linear-gradient(to right,
+			<div class="relative h-4 rounded-md" style="background: linear-gradient(to right,
 				hsl({hsl.h}, 0%, {hsl.l}%),
 				hsl({hsl.h}, 100%, {hsl.l}%));">
 				<input
@@ -96,10 +88,10 @@
 
 		<!-- Lightness slider -->
 		<div class="space-y-2">
-			<label for="lightness-slider" class="text-sm font-medium">
+			<label for="lightness-slider" class="text-sm">
 				Lightness: {Math.round(hsl.l)}%
 			</label>
-			<div class="relative h-4 rounded-full" style="background: linear-gradient(to right,
+			<div class="relative h-4 rounded-md" style="background: linear-gradient(to right,
 				hsl({hsl.h}, {hsl.s}%, 0%),
 				hsl({hsl.h}, {hsl.s}%, 50%),
 				hsl({hsl.h}, {hsl.s}%, 100%));">
@@ -116,11 +108,6 @@
 					style="left: calc({hsl.l}% - 8px); background-color: hsl({hsl.h}, {hsl.s}%, {hsl.l}%);"
 				></div>
 			</div>
-		</div>
-
-		<!-- Hex value display -->
-		<div class="pt-2">
-			<span class="text-sm font-medium">Hex: {value}</span>
 		</div>
 	</div>
 </div>
