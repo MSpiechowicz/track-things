@@ -179,7 +179,7 @@
   "eventTypes.dialog.delete.toast.success.description": "Your event type has been deleted successfully.",
   "eventTypes.dialog.delete.toast.success.title": "Success",
   "eventTypes.dialog.delete.button.delete.label": "Delete",
-  "eventTypes.dialog.create.form.collaborators.label": "Collaborators",
-  "eventTypes.dialog.create.form.collaborators.description": "This is the collaborators of the event type for your reference.",
-  "eventTypes.dialog.create.form.collaborators.input.placeholder": "Select the collaborators"
+  "eventTypes.dialog.create.form.teams.label": "Teams",
+  "eventTypes.dialog.create.form.teams.description": "Here you can select the teams that will be able to see and edit this event type.",
+  "eventTypes.dialog.create.form.teams.input.placeholder": "Select the teams"
 }

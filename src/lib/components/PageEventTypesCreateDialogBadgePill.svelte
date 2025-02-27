@@ -3,15 +3,15 @@
 	import { eventTypesStore } from '$lib/stores/eventTypesStore.svelte';
 	import IconTrash from './svg/IconTrash.svelte';
 
-	let { label, collaborators = $bindable() } = $props();
+	let { label, teams = $bindable() } = $props();
 
 	function removeTeam(e: Event) {
 		e.preventDefault();
 
-		eventTypesStore.currentEventTypeCollaborators =
-			eventTypesStore.currentEventTypeCollaborators.filter((name) => name !== label);
+		eventTypesStore.currentEventTypeTeams =
+			eventTypesStore.currentEventTypeTeams.filter((name) => name !== label);
 
-		collaborators = collaborators.filter((name: string) => name !== label);
+		teams = teams.filter((name: string) => name !== label);
 	}
 </script>
 

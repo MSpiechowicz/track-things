@@ -26,7 +26,7 @@
 		{
 			title: eventTypesStore.currentEventTypeTitle ?? '',
 			color: eventTypesStore.currentEventTypeColor ?? '',
-			collaborators: eventTypesStore.currentEventTypeCollaborators ?? []
+			teams: eventTypesStore.currentEventTypeTeams ?? []
 		},
 		{
 			validators: eventTypesCreateSchemaValidator,
@@ -42,7 +42,7 @@
 						color: eventData?.color,
 						created_at: eventData?.created_at,
 						updated_at: eventData?.updated_at,
-						collaborators: eventData?.collaborators
+						teams: eventData?.teams
 					});
 					eventTypesStore.resetCurrentEventType();
 
@@ -65,23 +65,23 @@
 
 	const { form: formData, enhance } = form;
 
-	function getCollaborators({ isMobile }: { isMobile: boolean }) {
-		if ($formData.collaborators?.length > 0) {
-			let collaboratorsIndex = 0;
-			let collaborators: string[] = [];
+	function getTeams({ isMobile }: { isMobile: boolean }) {
+		if ($formData.teams?.length > 0) {
+			let teamsIndex = 0;
+			let teams: string[] = [];
 
-			const maxCollaborators = isMobile ? 1 : 2;
+			const maxTeams = isMobile ? 1 : 2;
 
-			$formData.collaborators.forEach((value, index) => {
-				if (index < maxCollaborators) {
-					collaborators.push(value);
+			$formData.teams.forEach((value, index) => {
+				if (index < maxTeams) {
+					teams.push(value);
 				} else {
-					collaboratorsIndex++;
-					collaborators[maxCollaborators] = `+${collaboratorsIndex} more`;
+					teamsIndex++;
+					teams[maxTeams] = `+${teamsIndex} more`;
 				}
 			});
 
-			return collaborators.join(', ');
+			return teams.join(', ');
 		}
 	}
 
@@ -109,8 +109,8 @@
 		data-sveltekit-reload
 	>
 		<input type="hidden" name="color" value={$formData.color} />
-		{#each $formData.collaborators as collaborator}
-			<input type="hidden" name="collaborators" value={collaborator?.trim()} />
+		{#each $formData.teams as team}
+			<input type="hidden" name="teams" value={team?.trim()} />
 		{/each}
 
 		<FormField {form} name="title" let:errors>
@@ -140,11 +140,11 @@
 			<FormFieldErrors class="text-red-500" />
 		</FormField>
 
-		<FormField {form} name="collaborators">
+		<FormField {form} name="teams">
 			<FormControl let:attrs>
 				<PageFormLabel
-					label={t('eventTypes.dialog.create.form.collaborators.label')}
-					description={t('eventTypes.dialog.create.form.collaborators.description')}
+					label={t('eventTypes.dialog.create.form.teams.label')}
+					description={t('eventTypes.dialog.create.form.teams.description')}
 				/>
 				<div class="max-w-sm">
 					<Select
@@ -154,34 +154,34 @@
 								v.forEach((entry) => {
 									const sanitizedEntry = entry.label?.trim();
 
-									if (!$formData.collaborators.includes(sanitizedEntry as string)) {
-										$formData.collaborators = [
-											...$formData.collaborators,
+									if (!$formData.teams.includes(sanitizedEntry as string)) {
+										$formData.teams = [
+											...$formData.teams,
 											sanitizedEntry as string
 										];
 									} else {
-										const filteredCollaborators = $formData.collaborators.filter(
-											(collaborator) => collaborator === sanitizedEntry
+										const filteredTeams = $formData.teams.filter(
+											(team) => team === sanitizedEntry
 										);
-										$formData.collaborators = [...filteredCollaborators];
+										$formData.teams = [...filteredTeams];
 									}
 								});
 							} else {
-								$formData.collaborators = [];
+								$formData.teams = [];
 							}
 						}}
 					>
 						<SelectTrigger {...attrs}>
-							{#if $formData.collaborators?.length > 0}
+							{#if $formData.teams?.length > 0}
 								<div class="hidden md:block">
-									{getCollaborators({ isMobile: false })}
+									{getTeams({ isMobile: false })}
 								</div>
 								<div class="block md:hidden">
-									{getCollaborators({ isMobile: true })}
+									{getTeams({ isMobile: true })}
 								</div>
 							{:else}
 								<span class="text-md text-muted-foreground">
-									{t('eventTypes.dialog.create.form.collaborators.input.placeholder')}
+									{t('eventTypes.dialog.create.form.teams.input.placeholder')}
 								</span>
 							{/if}
 						</SelectTrigger>

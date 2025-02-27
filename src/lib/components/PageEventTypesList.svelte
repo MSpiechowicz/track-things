@@ -19,20 +19,20 @@
 	import { eventTypesStore } from '$lib/stores/eventTypesStore.svelte';
 	import { t } from '$lib/translations';
 
-	function handleEdit(id: string, title: string, color: string, collaborators: string[]) {
+	function handleEdit(id: string, title: string, color: string, teams: string[]) {
 		eventTypesStore.currentEventTypeId = id;
 		eventTypesStore.currentEventTypeTitle = title;
 		eventTypesStore.currentEventTypeColor = color;
-		eventTypesStore.currentEventTypeCollaborators = collaborators;
+		eventTypesStore.currentEventTypeTeams = teams;
 
 		dialogStore.showEventTypesCreateDialog = true;
 	}
 
-	function handleDelete(id: string, title: string, color: string, collaborators: string[]) {
+	function handleDelete(id: string, title: string, color: string, teams: string[]) {
 		eventTypesStore.currentEventTypeId = id;
 		eventTypesStore.currentEventTypeTitle = title;
 		eventTypesStore.currentEventTypeColor = color;
-		eventTypesStore.currentEventTypeCollaborators = collaborators;
+		eventTypesStore.currentEventTypeTeams = teams;
 
 		dialogStore.showEventTypesDeleteDialog = true;
 	}
@@ -100,7 +100,7 @@
 					<TableCell>{index + 1}</TableCell>
 					<TableCell>{entry.title}</TableCell>
 					<TableCell>{entry.color}</TableCell>
-					<TableCell class="hidden md:table-cell">{entry.collaborators}</TableCell>
+					<TableCell class="hidden md:table-cell">{entry.teams}</TableCell>
 					<TableCell class="hidden md:table-cell"
 						>{new Date(entry.created_at).toLocaleDateString()}</TableCell
 					>
@@ -111,14 +111,14 @@
 						<Button
 							variant="secondary"
 							size="icon"
-							onclick={() => handleEdit(entry.id, entry.title, entry.color, entry.collaborators)}
+							onclick={() => handleEdit(entry.id, entry.title, entry.color, entry.teams)}
 						>
 							<IconPencil additionalClass="h-4 w-4" strokeColor="black" />
 						</Button>
 						<Button
 							variant="destructive"
 							size="icon"
-							onclick={() => handleDelete(entry.id, entry.title, entry.color, entry.collaborators)}
+							onclick={() => handleDelete(entry.id, entry.title, entry.color, entry.teams)}
 						>
 							<IconTrash additionalClass="h-4 w-4 text-white" />
 						</Button>

@@ -21,12 +21,12 @@ export const eventTypesStore = $state({
 	currentEventTypeId: null as string | null,
 	currentEventTypeTitle: null as string | null,
 	currentEventTypeColor: null as string | null,
-	currentEventTypeCollaborators: [] as string[],
+	currentEventTypeTeams: [] as string[],
 	resetCurrentEventType: () => {
 		eventTypesStore.currentEventTypeId = null;
 		eventTypesStore.currentEventTypeTitle = null;
 		eventTypesStore.currentEventTypeColor = null;
-		eventTypesStore.currentEventTypeCollaborators = [];
+		eventTypesStore.currentEventTypeTeams = [];
 	},
 	resetViews: () => {
 		eventTypesStore.showUpdateView = false;
