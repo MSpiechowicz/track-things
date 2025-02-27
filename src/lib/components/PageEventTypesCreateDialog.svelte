@@ -31,7 +31,6 @@
 
 	const form = superForm(
 		{
-			id: eventTypesStore.currentEventTypeId ?? '',
 			title: eventTypesStore.currentEventTypeTitle ?? '',
 			color: eventTypesStore.currentEventTypeColor ?? '',
 			collaborators: eventTypesStore.currentEventTypeCollaborators ?? []
@@ -76,9 +75,16 @@
 	$effect(() => {
 		// We want to revalidate this effect when the dialog is open
 		if (dialogStore.showEventTypesCreateDialog) {
-			$formData.id = eventTypesStore.currentEventTypeId ?? '';
+			//$formData.id = eventTypesStore.currentEventTypeId ?? '';
+			//$formData.title = eventTypesStore.currentEventTypeTitle ?? '';
+			//$formData.color = eventTypesStore.currentEventTypeColor ?? '';
 		}
+
+  console.log($formData);
 	});
+
+
+  $formData.collaborators = eventTypesStore.currentEventTypeCollaborators ?? [];
 </script>
 
 <PageDialog
@@ -99,13 +105,12 @@
 		id="create-event-type-form"
 		data-sveltekit-reload
 	>
-		<input type="hidden" name="id" value={eventTypesStore.currentEventTypeId ?? ''} />
-		<input type="hidden" name="color" value={eventTypesStore.currentEventTypeColor ?? ''} />
-		<!--<input
+		<input type="hidden" name="color" value={$formData.color} />
+		<input
 			type="hidden"
 			name="collaborators"
-			value={eventTypesStore.currentEventTypeCollaborators.join(',')}
-		/>-->
+			value={$formData.collaborators}
+		/>
 		<FormField {form} name="title" let:errors>
 			<FormControl let:attrs>
 				<PageFormLabel
@@ -144,6 +149,7 @@
 						onSelectedChange={(v) => {
 							if (!eventTypesStore.currentEventTypeCollaborators.includes(v?.label as string)) {
 								eventTypesStore.currentEventTypeCollaborators.push(v?.label as string);
+                $formData.collaborators = eventTypesStore.currentEventTypeCollaborators;
 							}
 						}}
 					>
@@ -161,9 +167,10 @@
 						</SelectContent>
 					</Select>
 					<div class="flex flex-wrap gap-2 mt-3">
-						{#each eventTypesStore.currentEventTypeCollaborators as collaborator}
+						{#each $formData.collaborators as collaborator}
 							<PageEventTypesCreateDialogBadgePill
 								label={collaborator}
+                bind:collaborators={$formData.collaborators}
 							/>
 						{/each}
 					</div>
