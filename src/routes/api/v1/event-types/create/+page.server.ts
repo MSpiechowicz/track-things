@@ -23,10 +23,9 @@ export const actions: Actions = {
 		}
 
 		try {
-			//const id = form.data.id;
 			const title = form.data.title;
 			const color = form.data.color;
-			const collaborators = form.data.collaborators;
+			const teams = form.data.teams || [];
 
 			if (!title || !color) {
 				return fail(400, {
@@ -48,33 +47,55 @@ export const actions: Actions = {
 				});
 			}
 
-			const { data, error } = await locals.supabase
+			const { data: eventTypesData, error: eventTypesError } = await locals.supabase
 				.from('event_types')
 				.insert({
 					title: title,
 					color: color,
-					collaborators: collaborators,
 					created_at: new Date(),
 					updated_at: new Date()
 				})
-				.select('id, title, color, collaborators, created_at, updated_at')
+				.select('id, title, color, created_at, updated_at')
 				.single();
 
-			if (error) {
+			if (eventTypesError) {
 				return fail(500, {
 					form,
 					message: 'Failed to create event type'
 				});
 			}
 
+			for (const team of teams) {
+				const { data: eventTypeTeamData, error: eventTypeTeamError } = await locals.supabase
+					.from('event_type_teams')
+					.insert({
+						event_type_id: eventTypesData.id,
+						team_id: team.id,
+						team_name: team.name,
+						created_at: new Date(),
+						updated_at: new Date()
+					});
+
+				if (eventTypeTeamError) {
+					return fail(500, {
+						form,
+						message: 'Failed to create event type team'
+					});
+				}
+
+				if (eventTypeTeamData) {
+					teams.push(eventTypeTeamData);
+				}
+			}
+
 			return {
 				success: true,
-				id: data.id,
-				title: data.title,
-				color: data.color,
-				collaborators: data.collaborators,
-				created_at: data.created_at,
-				updated_at: data.updated_at,
+				id: eventTypesData.id,
+				title: eventTypesData.title,
+				color: eventTypesData.color,
+				teams: teams,
+				created_at: eventTypesData.created_at,
+				updated_at: eventTypesData.updated_at,
 				form
 			};
 		} catch (error) {

@@ -113,6 +113,13 @@
       "when": 1739869714249,
       "tag": "0015_freezing_vargas",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1740673550255,
+      "tag": "0016_cool_gauntlet",
+      "breakpoints": true
     }
   ]
 }

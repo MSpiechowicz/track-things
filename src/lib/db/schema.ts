@@ -1,4 +1,4 @@
-import { boolean, date, pgTable, text, timestamp, uuid, integer } from 'drizzle-orm/pg-core';
+import { boolean, date, integer, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 
 export const profilesTable = pgTable('profiles', {
 	id: uuid('id').primaryKey(),
@@ -94,6 +94,27 @@ export const teamMembersTable = pgTable('team_members', {
 	name: text('name'),
 	email: text('email').notNull(),
 	permissions: text('permissions').notNull().default('edit'),
+	createdAt: timestamp('created_at').notNull().defaultNow(),
+	updatedAt: timestamp('updated_at').notNull().defaultNow()
+}).enableRLS();
+
+export const eventTypesTable = pgTable('event_types', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	title: text('title').notNull(),
+	color: text('color').notNull(),
+	createdAt: timestamp('created_at').notNull().defaultNow(),
+	updatedAt: timestamp('updated_at').notNull().defaultNow()
+}).enableRLS();
+
+export const eventTypeTeamsTable = pgTable('event_type_teams', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	eventTypeId: uuid('event_type_id')
+		.references(() => eventTypesTable.id, { onDelete: 'cascade' })
+		.notNull(),
+	teamId: uuid('team_id')
+		.references(() => teamSettingsTable.id, { onDelete: 'cascade' })
+		.notNull(),
+	teamName: text('team_name').notNull(),
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	updatedAt: timestamp('updated_at').notNull().defaultNow()
 }).enableRLS();
