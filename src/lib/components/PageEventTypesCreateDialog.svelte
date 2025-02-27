@@ -72,9 +72,9 @@
 
 			const maxTeams = isMobile ? 1 : 2;
 
-			$formData.teams.forEach((value, index) => {
+			$formData.teams.forEach((entry, index) => {
 				if (index < maxTeams) {
-					teams.push(value);
+					teams.push(entry.name);
 				} else {
 					teamsIndex++;
 					teams[maxTeams] = `+${teamsIndex} more`;
@@ -110,7 +110,7 @@
 	>
 		<input type="hidden" name="color" value={$formData.color} />
 		{#each $formData.teams as team}
-			<input type="hidden" name="teams" value={team?.trim()} />
+			<input type="hidden" name="teams" value={JSON.stringify(team)} />
 		{/each}
 
 		<FormField {form} name="title" let:errors>
@@ -151,21 +151,10 @@
 						multiple
 						onSelectedChange={(v) => {
 							if (v && v.length > 0) {
-								v.forEach((entry) => {
-									const sanitizedEntry = entry.label?.trim();
-
-									if (!$formData.teams.includes(sanitizedEntry as string)) {
-										$formData.teams = [
-											...$formData.teams,
-											sanitizedEntry as string
-										];
-									} else {
-										const filteredTeams = $formData.teams.filter(
-											(team) => team === sanitizedEntry
-										);
-										$formData.teams = [...filteredTeams];
-									}
-								});
+								$formData.teams = v.map((entry) => ({
+									id: entry.value as string,
+									name: entry.label?.trim() ?? ''
+								}));
 							} else {
 								$formData.teams = [];
 							}

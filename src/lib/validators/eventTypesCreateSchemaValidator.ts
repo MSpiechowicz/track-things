@@ -4,7 +4,7 @@ import { z } from 'zod';
 export const eventTypesCreateSchema = z.object({
 	title: z.string().min(3, 'Please enter a valid title (min 3 characters)'),
 	color: z.string().min(3, 'Please enter a valid color (min 3 characters)'),
-	teams: z.array(z.string()).optional()
+	teams: z.array(z.object({ id: z.string(), name: z.string() })).optional()
 });
 
 export const eventTypesCreateSchemaValidator = zod(eventTypesCreateSchema);

@@ -21,7 +21,7 @@ export const eventTypesStore = $state({
 	currentEventTypeId: null as string | null,
 	currentEventTypeTitle: null as string | null,
 	currentEventTypeColor: null as string | null,
-	currentEventTypeTeams: [] as string[],
+	currentEventTypeTeams: [] as { id: string; name: string }[],
 	resetCurrentEventType: () => {
 		eventTypesStore.currentEventTypeId = null;
 		eventTypesStore.currentEventTypeTitle = null;
