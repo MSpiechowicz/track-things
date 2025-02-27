@@ -65,17 +65,19 @@
 
 	const { form: formData, enhance } = form;
 
-	function getCollaborators() {
-		if ($formData.collaborators.length > 0) {
+	function getCollaborators({ isMobile }: { isMobile: boolean }) {
+		if ($formData.collaborators?.length > 0) {
 			let collaboratorsIndex = 0;
 			let collaborators: string[] = [];
 
+			const maxCollaborators = isMobile ? 1 : 2;
+
 			$formData.collaborators.forEach((value, index) => {
-				if (index < 2) {
+				if (index < maxCollaborators) {
 					collaborators.push(value);
 				} else {
 					collaboratorsIndex++;
-					collaborators[2] = `+${collaboratorsIndex} more`;
+					collaborators[maxCollaborators] = `+${collaboratorsIndex} more`;
 				}
 			});
 
@@ -110,6 +112,7 @@
 		{#each $formData.collaborators as collaborator}
 			<input type="hidden" name="collaborators" value={collaborator?.trim()} />
 		{/each}
+
 		<FormField {form} name="title" let:errors>
 			<FormControl let:attrs>
 				<PageFormLabel
@@ -168,11 +171,14 @@
 							}
 						}}
 					>
-						<SelectTrigger {...attrs} class="w-full">
-							{#if $formData.collaborators.length > 0}
-								<span class="block truncate">
-									{getCollaborators()}
-								</span>
+						<SelectTrigger {...attrs}>
+							{#if $formData.collaborators?.length > 0}
+								<div class="hidden md:block">
+									{getCollaborators({ isMobile: false })}
+								</div>
+								<div class="block md:hidden">
+									{getCollaborators({ isMobile: true })}
+								</div>
 							{:else}
 								<span class="text-md text-muted-foreground">
 									{t('eventTypes.dialog.create.form.collaborators.input.placeholder')}

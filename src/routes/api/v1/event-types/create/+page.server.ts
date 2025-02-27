@@ -28,7 +28,7 @@ export const actions: Actions = {
 			const color = form.data.color;
 			const collaborators = form.data.collaborators;
 
-			if (!title || !color || !collaborators) {
+			if (!title || !color) {
 				return fail(400, {
 					form,
 					message: 'Missing required fields'

@@ -2,9 +2,8 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { z } from 'zod';
 
 export const eventTypesCreateSchema = z.object({
-	//id: z.string().min(1, 'Please select a team'),
-	title: z.string().min(1, 'Please enter a title'),
-	color: z.string().min(1, 'Please enter a color'),
+	title: z.string().min(3, 'Please enter a valid title (min 3 characters)'),
+	color: z.string().min(3, 'Please enter a valid color (min 3 characters)'),
 	collaborators: z.array(z.string()).optional()
 });
 
