@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { nanoid } from 'nanoid';
-	import EventDialog from './EventDialog.svelte';
 	import PageCalendarBodyDay from './PageCalendarBodyDay.svelte';
 
 	// Define props using Svelte 5 runes
@@ -146,13 +145,4 @@
 			Month view coming soon
 		</div>
 	{/if}
-
-	<!-- Event Dialog -->
-	<EventDialog
-		open={dialogState.isOpen}
-		event={dialogState.currentEvent}
-		on:close={() => dialogState.close()}
-		on:save={handleSaveEvent}
-		on:delete={handleDeleteEvent}
-	/>
 </div>

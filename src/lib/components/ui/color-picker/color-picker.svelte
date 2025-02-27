@@ -32,14 +32,14 @@
 	});
 </script>
 
-<div class={cn('flex flex-col gap-4 p-4 w-full max-w-sm', className)}>
+<div class={cn('flex flex-col gap-4 p-0 w-full max-w-sm', className)}>
 	<!-- Color preview -->
 	<div
-		class="h-16 w-full rounded-lg border-2 transition-all"
+		class="h-16 w-full rounded-lg border-2 transition-all text-white p-4"
 		style="background-color: {value}; border-color: {value};"
 		role="img"
 		aria-label="Color preview: {value}"
-	></div>
+	>Event Color Test</div>
 
 	<!-- HSL Sliders -->
 	<div class="space-y-4">
