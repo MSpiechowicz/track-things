@@ -22,14 +22,12 @@
 	import { superForm } from 'sveltekit-superforms';
 	import PageEventTypesCreateDialogBadgePill from './PageEventTypesCreateDialogBadgePill.svelte';
 
-	const mockTeams = [
+	const mockTeams = $state([
 		{ id: '1', name: 'Engineering Team' },
 		{ id: '2', name: 'Design Team' },
 		{ id: '3', name: 'Marketing Team' },
 		{ id: '4', name: 'Product Team' }
-	];
-
-  const visiblelist=[];
+	]);
 
 	const form = superForm(
 		{
@@ -103,11 +101,11 @@
 	>
 		<input type="hidden" name="id" value={eventTypesStore.currentEventTypeId ?? ''} />
 		<input type="hidden" name="color" value={eventTypesStore.currentEventTypeColor ?? ''} />
-		<input
+		<!--<input
 			type="hidden"
 			name="collaborators"
-			value={eventTypesStore.currentEventTypeCollaborators ?? ''}
-		/>
+			value={eventTypesStore.currentEventTypeCollaborators.join(',')}
+		/>-->
 		<FormField {form} name="title" let:errors>
 			<FormControl let:attrs>
 				<PageFormLabel
@@ -144,9 +142,9 @@
 				<div class="max-w-sm">
 					<Select
 						onSelectedChange={(v) => {
-              if (!$formData.collaborators.includes(v?.label as string)) {
-                $formData.collaborators.push(v?.label as string);
-              }
+							if (!eventTypesStore.currentEventTypeCollaborators.includes(v?.label as string)) {
+								eventTypesStore.currentEventTypeCollaborators.push(v?.label as string);
+							}
 						}}
 					>
 						<SelectTrigger {...attrs}>
@@ -162,11 +160,10 @@
 							{/each}
 						</SelectContent>
 					</Select>
-					<div class="flex flex-wrap gap-2">
-						{#each $formData.collaborators as collaborator}
+					<div class="flex flex-wrap gap-2 mt-3">
+						{#each eventTypesStore.currentEventTypeCollaborators as collaborator}
 							<PageEventTypesCreateDialogBadgePill
 								label={collaborator}
-								bind:teams={$formData.collaborators}
 							/>
 						{/each}
 					</div>

@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { defaultStrokeColor, defaultAdditionalClass } from './defaults';
+	import { defaultStrokeColor, defaultAdditionalClass } from './defaults';
 
-  export let strokeColor: string = defaultStrokeColor;
-  export let additionalClass: string = defaultAdditionalClass;
+	const { strokeColor = defaultStrokeColor, additionalClass = defaultAdditionalClass } = $props();
 </script>
 
 <svg
