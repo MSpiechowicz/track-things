@@ -1,4 +1,5 @@
 import { CALENDAR_VIEWS } from "$lib/constants";
+import type { CalendarEventType } from "$lib/types/calendarEventType";
 
 type ViewType = typeof CALENDAR_VIEWS[keyof typeof CALENDAR_VIEWS];
 
@@ -11,6 +12,33 @@ export const calendarStore = $state({
   },
   month: new Date().getMonth(),
   year: new Date().getFullYear(),
+  events: [{
+    id: '1',
+    title: 'Event 1',
+    color: '#000000',
+    duration: 1,
+    description: 'Event 1 description',
+    date: new Date(),
+    type: {
+      id: '1',
+      title: 'Event 1',
+      color: '#000000',
+    },
+  },
+  {
+    id: '2',
+    title: 'Event 2',
+    color: '#E0E0E0',
+    duration: 1,
+    description: 'Event 2 description',
+    date: new Date().setDate(new Date().getDate() + 1),
+    type: {
+      id: '2',
+      title: 'Event 2',
+      color: '#E0E0E0',
+    },
+  },
+] as CalendarEventType[],
   viewType: CALENDAR_VIEWS.DAY as ViewType,
   setTodayDate: () => {
     calendarStore.date = new Date();
