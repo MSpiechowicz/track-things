@@ -27,7 +27,7 @@
 <div class="flex flex-col gap-4 p-0 w-full max-w-sm">
 	<!-- Color preview -->
 	<div
-		class="h-16 w-full rounded-md border-2 transition-all text-white p-4"
+		class="h-16 w-full rounded-md border-2 transition-all text-white p-4 flex items-center"
 		style="background-color: {value}; border-color: {value};"
 		role="img"
 		aria-label="Color preview: {value}"

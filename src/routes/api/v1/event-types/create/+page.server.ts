@@ -1,7 +1,7 @@
+import { eventTypesCreateSchemaValidator } from '$lib/validators/eventTypesCreateSchemaValidator';
 import { fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import type { Actions } from './$types';
-import { eventTypesCreateSchemaValidator } from '$lib/validators/eventTypesCreateSchemaValidator';
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {

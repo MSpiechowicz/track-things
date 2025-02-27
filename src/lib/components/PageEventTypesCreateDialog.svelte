@@ -72,19 +72,7 @@
 
 	const { form: formData, enhance } = form;
 
-	$effect(() => {
-		// We want to revalidate this effect when the dialog is open
-		if (dialogStore.showEventTypesCreateDialog) {
-			//$formData.id = eventTypesStore.currentEventTypeId ?? '';
-			//$formData.title = eventTypesStore.currentEventTypeTitle ?? '';
-			//$formData.color = eventTypesStore.currentEventTypeColor ?? '';
-		}
-
-  console.log($formData);
-	});
-
-
-  $formData.collaborators = eventTypesStore.currentEventTypeCollaborators ?? [];
+	$formData.collaborators = eventTypesStore.currentEventTypeCollaborators ?? [];
 </script>
 
 <PageDialog
@@ -106,11 +94,9 @@
 		data-sveltekit-reload
 	>
 		<input type="hidden" name="color" value={$formData.color} />
-		<input
-			type="hidden"
-			name="collaborators"
-			value={$formData.collaborators}
-		/>
+		{#each $formData.collaborators as collaborator}
+			<input type="hidden" name="collaborators" value={collaborator.trim()} />
+		{/each}
 		<FormField {form} name="title" let:errors>
 			<FormControl let:attrs>
 				<PageFormLabel
@@ -149,7 +135,7 @@
 						onSelectedChange={(v) => {
 							if (!eventTypesStore.currentEventTypeCollaborators.includes(v?.label as string)) {
 								eventTypesStore.currentEventTypeCollaborators.push(v?.label as string);
-                $formData.collaborators = eventTypesStore.currentEventTypeCollaborators;
+								$formData.collaborators = eventTypesStore.currentEventTypeCollaborators;
 							}
 						}}
 					>
@@ -166,11 +152,11 @@
 							{/each}
 						</SelectContent>
 					</Select>
-					<div class="flex flex-wrap gap-2 mt-3">
+					<div class="mt-3 flex flex-wrap gap-2">
 						{#each $formData.collaborators as collaborator}
 							<PageEventTypesCreateDialogBadgePill
 								label={collaborator}
-                bind:collaborators={$formData.collaborators}
+								bind:collaborators={$formData.collaborators}
 							/>
 						{/each}
 					</div>
