@@ -7,20 +7,13 @@
 	import { Button } from '$lib/components/ui/button';
 	import ColorPicker from '$lib/components/ui/color-picker/color-picker.svelte';
 	import { FormControl, FormField, FormFieldErrors } from '$lib/components/ui/form';
-	import {
-		Select,
-		SelectContent,
-		SelectItem,
-		SelectTrigger,
-		SelectValue
-	} from '$lib/components/ui/select';
+	import { Select, SelectContent, SelectItem, SelectTrigger } from '$lib/components/ui/select';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { eventTypesStore } from '$lib/stores/eventTypesStore.svelte';
 	import { t } from '$lib/translations';
 	import { eventTypesCreateSchemaValidator } from '$lib/validators/eventTypesCreateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
-	import PageEventTypesCreateDialogBadgePill from './PageEventTypesCreateDialogBadgePill.svelte';
 
 	const mockTeams = $state([
 		{ id: '1', name: 'Engineering Team' },
@@ -72,7 +65,27 @@
 
 	const { form: formData, enhance } = form;
 
-	$formData.collaborators = eventTypesStore.currentEventTypeCollaborators ?? [];
+	function getCollaborators() {
+		if ($formData.collaborators.length > 0) {
+			let collaboratorsIndex = 0;
+			let collaborators: string[] = [];
+
+			$formData.collaborators.forEach((value, index) => {
+				if (index < 2) {
+					collaborators.push(value);
+				} else {
+					collaboratorsIndex++;
+					collaborators[2] = `+${collaboratorsIndex} more`;
+				}
+			});
+
+			return collaborators.join(', ');
+		}
+	}
+
+	$effect(() => {
+		console.log('form data', $formData);
+	});
 </script>
 
 <PageDialog
@@ -95,7 +108,7 @@
 	>
 		<input type="hidden" name="color" value={$formData.color} />
 		{#each $formData.collaborators as collaborator}
-			<input type="hidden" name="collaborators" value={collaborator.trim()} />
+			<input type="hidden" name="collaborators" value={collaborator?.trim()} />
 		{/each}
 		<FormField {form} name="title" let:errors>
 			<FormControl let:attrs>
@@ -132,17 +145,39 @@
 				/>
 				<div class="max-w-sm">
 					<Select
+						multiple
 						onSelectedChange={(v) => {
-							if (!eventTypesStore.currentEventTypeCollaborators.includes(v?.label as string)) {
-								eventTypesStore.currentEventTypeCollaborators.push(v?.label as string);
-								$formData.collaborators = eventTypesStore.currentEventTypeCollaborators;
+							if (v && v.length > 0) {
+								v.forEach((entry) => {
+									const sanitizedEntry = entry.label?.trim();
+
+									if (!$formData.collaborators.includes(sanitizedEntry as string)) {
+										$formData.collaborators = [
+											...$formData.collaborators,
+											sanitizedEntry as string
+										];
+									} else {
+										const filteredCollaborators = $formData.collaborators.filter(
+											(collaborator) => collaborator === sanitizedEntry
+										);
+										$formData.collaborators = [...filteredCollaborators];
+									}
+								});
+							} else {
+								$formData.collaborators = [];
 							}
 						}}
 					>
-						<SelectTrigger {...attrs}>
-							<SelectValue
-								placeholder={t('eventTypes.dialog.create.form.collaborators.input.placeholder')}
-							/>
+						<SelectTrigger {...attrs} class="w-full">
+							{#if $formData.collaborators.length > 0}
+								<span class="block truncate">
+									{getCollaborators()}
+								</span>
+							{:else}
+								<span class="text-md text-muted-foreground">
+									{t('eventTypes.dialog.create.form.collaborators.input.placeholder')}
+								</span>
+							{/if}
 						</SelectTrigger>
 						<SelectContent class="text-black">
 							{#each mockTeams as team}
@@ -152,19 +187,10 @@
 							{/each}
 						</SelectContent>
 					</Select>
-					<div class="mt-3 flex flex-wrap gap-2">
-						{#each $formData.collaborators as collaborator}
-							<PageEventTypesCreateDialogBadgePill
-								label={collaborator}
-								bind:collaborators={$formData.collaborators}
-							/>
-						{/each}
-					</div>
 				</div>
 			</FormControl>
 			<FormFieldErrors class="text-red-500" />
 		</FormField>
-		<!-- TODO: Add select for the collabolators. Under the view each of the collaborators should be displayed as a tag with X to remove it from the list -->
 		<PageDialogFooter
 			onCancelClick={() => {
 				dialogStore.showEventTypesCreateDialog = false;
