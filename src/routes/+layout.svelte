@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
-	import { page } from '$app/state';
 	import { Toaster } from '$lib/components/ui/sonner';
 	import { userStore } from '$lib/stores/userStore.svelte';
-
 	import PageFooter from '$lib/components/PageFooter.svelte';
 	import PageNavigation from '$lib/components/PageNavigation.svelte';
 	import PageSeparator from '$lib/components/PageSeparator.svelte';
 	import PageTransition from '$lib/components/PageTransition.svelte';
+	import { page } from '$app/state';
 	import '../app.css';
 
 	const { data, children } = $props();

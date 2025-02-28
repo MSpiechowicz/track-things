@@ -4,11 +4,14 @@
 	const { pathname, children } = $props();
 </script>
 
-{#key pathname}
-	<div
-		in:fade={{ duration: 150, delay: 0 }}
-    class="flex flex-1 w-full h-full"
-	>
+{#if pathname.includes('dashboard')}
+	<div class="flex h-full w-full flex-1">
 		{@render children()}
 	</div>
-{/key}
+{:else}
+	{#key pathname}
+		<div in:fade={{ duration: 150, delay: 0 }} class="flex h-full w-full flex-1">
+			{@render children()}
+		</div>
+	{/key}
+{/if}
