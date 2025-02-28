@@ -180,6 +180,7 @@
   "eventTypes.dialog.delete.toast.success.title": "Success",
   "eventTypes.dialog.delete.button.delete.label": "Delete",
   "eventTypes.dialog.create.form.teams.label": "Teams",
-  "eventTypes.dialog.create.form.teams.description": "Here you can select the teams that will be able to see and edit this event type.",
-  "eventTypes.dialog.create.form.teams.input.placeholder": "Select the teams"
+  "eventTypes.dialog.create.form.teams.description": "Please select the teams that will be able to see and edit this event type.",
+  "eventTypes.dialog.create.form.teams.input.placeholder": "Select the teams",
+  "eventTypes.dialog.create.form.teams.input.placeholder_disabled": "There are no teams available"
 }

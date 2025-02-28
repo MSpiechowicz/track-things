@@ -78,6 +78,8 @@
 			return teams.join(', ');
 		}
 	}
+
+	const isDisabled = $derived(eventTypesStore.availableTeams.length === 0);
 </script>
 
 <PageDialog
@@ -149,6 +151,7 @@
 								$formData.teams = [];
 							}
 						}}
+						disabled={isDisabled}
 					>
 						<SelectTrigger {...attrs}>
 							{#if $formData.teams?.length > 0}
@@ -160,7 +163,9 @@
 								</div>
 							{:else}
 								<span class="text-md text-muted-foreground">
-									{t('eventTypes.dialog.create.form.teams.input.placeholder')}
+									{isDisabled
+										? t('eventTypes.dialog.create.form.teams.input.placeholder_disabled')
+										: t('eventTypes.dialog.create.form.teams.input.placeholder')}
 								</span>
 							{/if}
 						</SelectTrigger>
