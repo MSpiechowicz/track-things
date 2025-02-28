@@ -35,3 +35,19 @@ ALTER TABLE
   "event_type_teams"
 ADD
   CONSTRAINT "event_type_teams_team_id_team_settings_id_fk" FOREIGN KEY ("team_id") REFERENCES "public"."team_settings"("id") ON DELETE cascade ON UPDATE no action;
+
+--> statement-breakpoint
+-- Add RLS policies for event_types
+CREATE POLICY "Enable all operations for authenticated users" ON "public"."event_types"
+  FOR ALL
+  TO authenticated
+  USING (true)
+  WITH CHECK (true);
+
+--> statement-breakpoint
+-- Add RLS policies for event_type_teams
+CREATE POLICY "Enable all operations for authenticated users" ON "public"."event_type_teams"
+  FOR ALL
+  TO authenticated
+  USING (true)
+  WITH CHECK (true);

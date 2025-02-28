@@ -1,6 +1,6 @@
 import { eventTypesCreateSchemaValidator } from '$lib/validators/eventTypesCreateSchemaValidator';
 import { fail } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms';
+import { superValidate } from 'sveltekit-superforms/client';
 import type { Actions } from './$types';
 
 export const actions: Actions = {

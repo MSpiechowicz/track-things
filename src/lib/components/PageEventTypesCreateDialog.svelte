@@ -29,6 +29,7 @@
 			teams: eventTypesStore.currentEventTypeTeams ?? []
 		},
 		{
+      dataType: 'json' ,
 			validators: eventTypesCreateSchemaValidator,
 			onResult: async (event) => {
 				const eventType = event.result?.type;
