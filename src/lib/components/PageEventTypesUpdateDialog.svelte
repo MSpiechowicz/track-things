@@ -18,6 +18,7 @@
 
 	const form = superForm(
 		{
+			id: eventTypesStore.currentEventTypeId ?? '',
 			title: eventTypesStore.currentEventTypeTitle ?? '',
 			color: eventTypesStore.currentEventTypeColor ?? '',
 			teams: eventTypesStore.currentEventTypeTeams ?? []
@@ -41,19 +42,19 @@
 					});
 					eventTypesStore.resetCurrentEventType();
 
-					dialogStore.showEventTypesCreateDialog = false;
+					dialogStore.showEventTypesUpdateDialog = false;
 					form.reset();
 
-					eventTypesTimer.reset();
+          eventTypesTimer.reset();
 
 					invalidateAll();
 
-					toast.success(t('eventTypes.dialog.create.toast.success.title'), {
-						description: t('eventTypes.dialog.create.toast.success.description')
+					toast.success(t('eventTypes.dialog.update.toast.success.title'), {
+						description: t('eventTypes.dialog.update.toast.success.description')
 					});
 				} else {
-					toast.error(t('eventTypes.dialog.create.toast.error.title'), {
-						description: t('eventTypes.dialog.create.toast.error.description')
+					toast.error(t('eventTypes.dialog.update.toast.error.title'), {
+						description: t('eventTypes.dialog.update.toast.error.description')
 					});
 				}
 			}
@@ -83,26 +84,34 @@
 	}
 
 	const isDisabled = $derived(eventTypesStore.availableTeams.length === 0);
+
+  $effect(() => {
+    $formData.id = eventTypesStore.currentEventTypeId ?? '';
+    $formData.title = eventTypesStore.currentEventTypeTitle ?? '';
+    $formData.color = eventTypesStore.currentEventTypeColor ?? '';
+    $formData.teams = eventTypesStore.currentEventTypeTeams ?? [];
+  });
 </script>
 
 <PageDialog
-	open={dialogStore.showEventTypesCreateDialog}
+	open={dialogStore.showEventTypesUpdateDialog}
 	onOpenChange={() => {
-		dialogStore.showEventTypesCreateDialog = false;
+		dialogStore.showEventTypesUpdateDialog = false;
 		eventTypesStore.resetCurrentEventType();
 		form.reset();
 	}}
-	dialogTitle={t('eventTypes.dialog.create.title')}
-	dialogDescription={t('eventTypes.dialog.create.description')}
+	dialogTitle={t('eventTypes.dialog.update.title')}
+	dialogDescription={t('eventTypes.dialog.update.description')}
 >
 	<form
 		method="POST"
-		action="/api/v1/event-types/create"
+		action="/api/v1/event-types/update"
 		class="mt-2 space-y-8"
 		use:enhance
-		id="create-event-type-form"
+		id="update-event-type-form"
 		data-sveltekit-reload
 	>
+		<input type="hidden" name="id" value={$formData.id} />
 		<input type="hidden" name="color" value={$formData.color} />
 		{#each $formData.teams as team}
 			<input type="hidden" name="teams" value={JSON.stringify(team)} />
@@ -111,14 +120,14 @@
 		<FormField {form} name="title" let:errors>
 			<FormControl let:attrs>
 				<PageFormLabel
-					label={t('eventTypes.dialog.create.form.title.label')}
-					description={t('eventTypes.dialog.create.form.title.description')}
+					label={t('eventTypes.dialog.update.form.title.label')}
+					description={t('eventTypes.dialog.update.form.title.description')}
 				/>
 				<PageFormInput
 					bind:value={$formData.title}
 					{errors}
 					{attrs}
-					placeholder={t('eventTypes.dialog.create.form.title.input.placeholder')}
+					placeholder={t('eventTypes.dialog.update.form.title.input.placeholder')}
 				/>
 			</FormControl>
 			<FormFieldErrors class="text-red-500" />
@@ -127,8 +136,8 @@
 		<FormField {form} name="color">
 			<FormControl>
 				<PageFormLabel
-					label={t('eventTypes.dialog.create.form.color.label')}
-					description={t('eventTypes.dialog.create.form.color.description')}
+					label={t('eventTypes.dialog.update.form.color.label')}
+					description={t('eventTypes.dialog.update.form.color.description')}
 				/>
 				<ColorPicker bind:value={$formData.color} />
 			</FormControl>
@@ -138,8 +147,8 @@
 		<FormField {form} name="teams">
 			<FormControl let:attrs>
 				<PageFormLabel
-					label={t('eventTypes.dialog.create.form.teams.label')}
-					description={t('eventTypes.dialog.create.form.teams.description')}
+					label={t('eventTypes.dialog.update.form.teams.label')}
+					description={t('eventTypes.dialog.update.form.teams.description')}
 				/>
 				<div class="max-w-sm">
 					<Select
@@ -167,8 +176,8 @@
 							{:else}
 								<span class="text-md text-muted-foreground">
 									{isDisabled
-										? t('eventTypes.dialog.create.form.teams.input.placeholder_disabled')
-										: t('eventTypes.dialog.create.form.teams.input.placeholder')}
+										? t('eventTypes.dialog.update.form.teams.input.placeholder_disabled')
+										: t('eventTypes.dialog.update.form.teams.input.placeholder')}
 								</span>
 							{/if}
 						</SelectTrigger>
@@ -186,13 +195,13 @@
 		</FormField>
 		<PageDialogFooter
 			onCancelClick={() => {
-				dialogStore.showEventTypesCreateDialog = false;
+				dialogStore.showEventTypesUpdateDialog = false;
 				eventTypesStore.resetCurrentEventType();
 				form.reset();
 			}}
 		>
 			<Button type="submit" disabled={!$formData.title}
-				>{t('eventTypes.dialog.create.form.button.save.label')}</Button
+				>{t('eventTypes.dialog.update.form.button.save.label')}</Button
 			>
 		</PageDialogFooter>
 	</form>

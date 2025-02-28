@@ -1,6 +1,7 @@
 <script lang="ts">
 	import PageEventTypesCreateDialog from '$lib/components/PageEventTypesCreateDialog.svelte';
 	import PageEventTypesDeleteDialog from '$lib/components/PageEventTypesDeleteDialog.svelte';
+	import PageEventTypesUpdateDialog from '$lib/components/PageEventTypesUpdateDialog.svelte';
 	import PageTableSortableHeader from '$lib/components/PageTableSortableHeader.svelte';
 	import IconPencil from '$lib/components/svg/IconPencil.svelte';
 	import IconPlus from '$lib/components/svg/IconPlus.svelte';
@@ -25,7 +26,7 @@
 		eventTypesStore.currentEventTypeColor = color;
 		eventTypesStore.currentEventTypeTeams = teams;
 
-		dialogStore.showEventTypesCreateDialog = true;
+		dialogStore.showEventTypesUpdateDialog = true;
 	}
 
 	function handleDelete(id: string, title: string, color: string, teams: { id: string; team_name: string }[]) {
@@ -152,4 +153,5 @@
 </div>
 
 <PageEventTypesCreateDialog />
+<PageEventTypesUpdateDialog />
 <PageEventTypesDeleteDialog />

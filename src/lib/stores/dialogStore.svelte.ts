@@ -6,6 +6,7 @@ export const dialogStore = $state<DialogStoreType>({
   showDeleteAccountDialog: false,
   showEventTypesCreateDialog: false,
   showEventTypesDeleteDialog: false,
+	showEventTypesUpdateDialog: false,
 	showTeamSettingsCreateDialog: false,
 	showTeamSettingsDeleteDialog: false,
 	showTeamSettingsMemberDeleteDialog: false,
@@ -18,6 +19,7 @@ export const dialogStore = $state<DialogStoreType>({
 		dialogStore.showDeleteAccountDialog = false;
 		dialogStore.showEventTypesCreateDialog = false;
 		dialogStore.showEventTypesDeleteDialog = false;
+		dialogStore.showEventTypesUpdateDialog = false;
 		dialogStore.showTeamSettingsCreateDialog = false;
 		dialogStore.showTeamSettingsDeleteDialog = false;
 		dialogStore.showTeamSettingsMemberDeleteDialog = false;
