@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { invalidate } from '$app/navigation';
+	import { invalidateAll } from '$app/navigation';
 	import PageDialog from '$lib/components/PageDialog.svelte';
 	import PageDialogFooter from '$lib/components/PageDialogFooter.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { eventTypesStore } from '$lib/stores/eventTypesStore.svelte';
 	import { t } from '$lib/translations';
+	import { eventTypesTimer } from '$lib/utils/timers/defaults';
 	import { toast } from 'svelte-sonner';
 
 	async function handleDelete(id: string | null) {
@@ -21,7 +22,9 @@
 
 			dialogStore.showEventTypesDeleteDialog = false;
 
-			invalidate('app:dashboard');
+			eventTypesTimer.reset();
+
+			invalidateAll();
 
 			toast.success(t('eventTypes.dialog.delete.toast.success.title'), {
 				description: t('eventTypes.dialog.delete.toast.success.description')

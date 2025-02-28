@@ -71,7 +71,7 @@ export const actions: Actions = {
 					.insert({
 						event_type_id: eventTypesData.id,
 						team_id: team.id,
-						team_name: team.name,
+						team_name: team.team_name,
 						created_at: new Date(),
 						updated_at: new Date()
 					});
