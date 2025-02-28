@@ -157,7 +157,7 @@
   "eventTypes.list.table.id.label": "ID",
   "eventTypes.list.table.title.label": "Title",
   "eventTypes.list.table.color.label": "Color",
-  "eventTypes.list.table.collaborators.label": "Collaborators",
+  "eventTypes.list.table.teams.label": "Teams",
   "eventTypes.list.table.createdAt.label": "Created at",
   "eventTypes.list.table.updatedAt.label": "Updated at",
   "eventTypes.dialog.create.title": "Create Event Type",

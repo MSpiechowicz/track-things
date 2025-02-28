@@ -19,7 +19,7 @@
 	import { eventTypesStore } from '$lib/stores/eventTypesStore.svelte';
 	import { t } from '$lib/translations';
 
-	function handleEdit(id: string, title: string, color: string, teams: string[]) {
+	function handleEdit(id: string, title: string, color: string, teams: { id: string; name: string }[]) {
 		eventTypesStore.currentEventTypeId = id;
 		eventTypesStore.currentEventTypeTitle = title;
 		eventTypesStore.currentEventTypeColor = color;
@@ -28,7 +28,7 @@
 		dialogStore.showEventTypesCreateDialog = true;
 	}
 
-	function handleDelete(id: string, title: string, color: string, teams: string[]) {
+	function handleDelete(id: string, title: string, color: string, teams: { id: string; name: string }[]) {
 		eventTypesStore.currentEventTypeId = id;
 		eventTypesStore.currentEventTypeTitle = title;
 		eventTypesStore.currentEventTypeColor = color;
@@ -75,7 +75,7 @@
 					additionalClass="w-[fit-content] hidden md:table-cell"
 				/>
 				<TableHead class="hidden w-[fit-content] md:table-cell">
-					{t('eventTypes.list.table.collaborators.label')}
+					{t('eventTypes.list.table.teams.label')}
 				</TableHead>
 				<PageTableSortableHeader
 					label={t('eventTypes.list.table.createdAt.label')}
@@ -100,7 +100,7 @@
 					<TableCell>{index + 1}</TableCell>
 					<TableCell>{entry.title}</TableCell>
 					<TableCell>{entry.color}</TableCell>
-					<TableCell class="hidden md:table-cell">{entry.teams}</TableCell>
+					<TableCell class="hidden md:table-cell">{entry.teams.map((team) => team.name).join(', ')}</TableCell>
 					<TableCell class="hidden md:table-cell"
 						>{new Date(entry.created_at).toLocaleDateString()}</TableCell
 					>

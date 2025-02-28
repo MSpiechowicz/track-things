@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { invalidate } from '$app/navigation';
+	import { invalidateAll } from '$app/navigation';
 	import PageDialog from '$lib/components/PageDialog.svelte';
 	import PageDialogFooter from '$lib/components/PageDialogFooter.svelte';
 	import PageFormInput from '$lib/components/PageFormInput.svelte';
@@ -15,13 +15,6 @@
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
 
-	const mockTeams = $state([
-		{ id: '1', name: 'Engineering Team' },
-		{ id: '2', name: 'Design Team' },
-		{ id: '3', name: 'Marketing Team' },
-		{ id: '4', name: 'Product Team' }
-	]);
-
 	const form = superForm(
 		{
 			title: eventTypesStore.currentEventTypeTitle ?? '',
@@ -29,7 +22,7 @@
 			teams: eventTypesStore.currentEventTypeTeams ?? []
 		},
 		{
-      dataType: 'json' ,
+			dataType: 'json',
 			validators: eventTypesCreateSchemaValidator,
 			onResult: async (event) => {
 				const eventType = event.result?.type;
@@ -47,10 +40,10 @@
 					});
 					eventTypesStore.resetCurrentEventType();
 
-					dialogStore.showTeamMembersCreateDialog = false;
+					dialogStore.showEventTypesCreateDialog = false;
 					form.reset();
 
-					invalidate('app:dashboard');
+					invalidateAll();
 
 					toast.success(t('eventTypes.dialog.create.toast.success.title'), {
 						description: t('eventTypes.dialog.create.toast.success.description')
@@ -85,10 +78,6 @@
 			return teams.join(', ');
 		}
 	}
-
-	$effect(() => {
-		console.log('form data', $formData);
-	});
 </script>
 
 <PageDialog
@@ -176,7 +165,7 @@
 							{/if}
 						</SelectTrigger>
 						<SelectContent class="text-black">
-							{#each mockTeams as team}
+							{#each eventTypesStore.availableTeams as team}
 								<SelectItem value={team.id}>
 									{team.name}
 								</SelectItem>

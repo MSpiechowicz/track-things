@@ -1,6 +1,5 @@
 import type { EventType } from '$lib/types/eventType';
 import type { SortableDirectionType } from '$lib/types/sortableDirectionType';
-
 import { sortData } from '$lib/utils/sort';
 
 type SortField = 'title' | 'color' | 'created_at' | 'updated_at';
@@ -22,6 +21,7 @@ export const eventTypesStore = $state({
 	currentEventTypeTitle: null as string | null,
 	currentEventTypeColor: null as string | null,
 	currentEventTypeTeams: [] as { id: string; name: string }[],
+  availableTeams: [] as { id: string; name: string }[],
 	resetCurrentEventType: () => {
 		eventTypesStore.currentEventTypeId = null;
 		eventTypesStore.currentEventTypeTitle = null;
