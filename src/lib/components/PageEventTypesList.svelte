@@ -1,7 +1,5 @@
 <script lang="ts">
-	import PageEventTypesCreateDialog from '$lib/components/PageEventTypesCreateDialog.svelte';
 	import PageEventTypesDeleteDialog from '$lib/components/PageEventTypesDeleteDialog.svelte';
-	import PageEventTypesUpdateDialog from '$lib/components/PageEventTypesUpdateDialog.svelte';
 	import PageTableSortableHeader from '$lib/components/PageTableSortableHeader.svelte';
 	import IconPencil from '$lib/components/svg/IconPencil.svelte';
 	import IconPlus from '$lib/components/svg/IconPlus.svelte';
@@ -26,7 +24,7 @@
 		eventTypesStore.currentEventTypeColor = color;
 		eventTypesStore.currentEventTypeTeams = teams;
 
-		dialogStore.showEventTypesUpdateDialog = true;
+		eventTypesStore.showUpdateView = true;
 	}
 
 	function handleDelete(id: string, title: string, color: string, teams: { team_id: string; team_name: string }[]) {
@@ -143,7 +141,7 @@
 			variant="default"
 			class="py-5"
 			onclick={() => {
-				dialogStore.showEventTypesCreateDialog = true;
+				eventTypesStore.showCreateView = true;
 			}}
 		>
 			<IconPlus additionalClass="!h-5 !w-5" />
@@ -152,6 +150,4 @@
 	</div>
 </div>
 
-<PageEventTypesCreateDialog />
-<PageEventTypesUpdateDialog />
 <PageEventTypesDeleteDialog />

@@ -4,7 +4,9 @@
 	import { eventTypesStore } from '$lib/stores/eventTypesStore.svelte';
 	import { eventTypesTimer } from '$lib/utils/timers/defaults';
 	import DashboardContainer from './PageDashboardContainer.svelte';
+	import PageEventTypesCreate from './PageEventTypesCreate.svelte';
 	import PageEventTypesList from './PageEventTypesList.svelte';
+	import PageEventTypesUpdate from './PageEventTypesUpdate.svelte';
 	import PageSpinner from './PageSpinner.svelte';
 
   $effect(() => {
@@ -21,6 +23,12 @@
 		</div>
 	{/if}
 	{#if eventTypesTimer.isFinished}
-		<PageEventTypesList />
+		{#if eventTypesStore.showCreateView}
+			<PageEventTypesCreate />
+    {:else if eventTypesStore.showUpdateView}
+      <PageEventTypesUpdate />
+    {:else}
+			<PageEventTypesList />
+		{/if}
 	{/if}
 </DashboardContainer>

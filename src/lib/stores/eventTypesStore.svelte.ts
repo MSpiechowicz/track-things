@@ -16,6 +16,7 @@ export const eventTypesStore = $state({
 		fields: ['title', 'color', 'created_at', 'updated_at'] as SortField[],
 		direction: 'desc' as SortableDirectionType
 	} as SortItem,
+	showCreateView: false as boolean,
 	showUpdateView: false as boolean,
 	currentEventTypeId: null as string | null,
 	currentEventTypeTitle: null as string | null,

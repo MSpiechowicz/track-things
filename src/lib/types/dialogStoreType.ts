@@ -2,9 +2,7 @@ export type DialogStoreType = {
 	showLogoutDialog: boolean;
 	showAccountSettingsDialog: boolean;
 	showDeleteAccountDialog: boolean;
-	showEventTypesCreateDialog: boolean;
 	showEventTypesDeleteDialog: boolean;
-	showEventTypesUpdateDialog: boolean;
 	showTeamSettingsCreateDialog: boolean;
 	showTeamSettingsDeleteDialog: boolean;
 	showTeamSettingsMemberDeleteDialog: boolean;
