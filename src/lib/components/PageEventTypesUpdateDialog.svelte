@@ -7,7 +7,6 @@
 	import { Button } from '$lib/components/ui/button';
 	import ColorPicker from '$lib/components/ui/color-picker/color-picker.svelte';
 	import { FormControl, FormField, FormFieldErrors } from '$lib/components/ui/form';
-	import { Select, SelectContent, SelectItem, SelectTrigger } from '$lib/components/ui/select';
 	import { dialogStore } from '$lib/stores/dialogStore.svelte';
 	import { eventTypesStore } from '$lib/stores/eventTypesStore.svelte';
 	import { t } from '$lib/translations';
@@ -91,6 +90,8 @@
     $formData.color = eventTypesStore.currentEventTypeColor ?? '';
     $formData.teams = eventTypesStore.currentEventTypeTeams ?? [];
   });
+
+  console.log($formData.teams);
 </script>
 
 <PageDialog
@@ -151,44 +152,37 @@
 					description={t('eventTypes.dialog.update.form.teams.description')}
 				/>
 				<div class="max-w-sm">
-					<Select
+					<select
 						multiple
-						onSelectedChange={(v) => {
-							if (v && v.length > 0) {
-								$formData.teams = v.map((entry) => ({
-									id: entry.value as string,
-									team_name: entry.label?.trim() ?? ''
-								}));
-							} else {
-								$formData.teams = [];
-							}
-						}}
+						class="w-full min-h-[80px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+						{...attrs}
 						disabled={isDisabled}
+						bind:value={$formData.teams}
 					>
-						<SelectTrigger {...attrs}>
-							{#if $formData.teams?.length > 0}
-								<div class="hidden md:block">
-									{getTeams({ isMobile: false })}
-								</div>
-								<div class="block md:hidden">
-									{getTeams({ isMobile: true })}
-								</div>
-							{:else}
-								<span class="text-md text-muted-foreground">
-									{isDisabled
-										? t('eventTypes.dialog.update.form.teams.input.placeholder_disabled')
-										: t('eventTypes.dialog.update.form.teams.input.placeholder')}
-								</span>
-							{/if}
-						</SelectTrigger>
-						<SelectContent class="text-black">
-							{#each eventTypesStore.availableTeams as team}
-								<SelectItem value={team.id}>
-									{team.team_name}
-								</SelectItem>
-							{/each}
-						</SelectContent>
-					</Select>
+						{#each eventTypesStore.availableTeams as team}
+							<option
+								value={{ id: team.id, team_name: team.team_name }}
+							>
+								{team.team_name}
+							</option>
+						{/each}
+					</select>
+					<div class="mt-2 text-sm text-muted-foreground">
+						{#if $formData.teams?.length > 0}
+							<div class="hidden md:block">
+								{getTeams({ isMobile: false })}
+							</div>
+							<div class="block md:hidden">
+								{getTeams({ isMobile: true })}
+							</div>
+						{:else}
+							<span>
+								{isDisabled
+									? t('eventTypes.dialog.update.form.teams.input.placeholder_disabled')
+									: t('eventTypes.dialog.update.form.teams.input.placeholder')}
+							</span>
+						{/if}
+					</div>
 				</div>
 			</FormControl>
 			<FormFieldErrors class="text-red-500" />
