@@ -159,7 +159,7 @@
 						{#each eventTypesStore.availableTeams as team}
 							<Button
 								variant="secondary"
-								class="flex w-[98%] items-center justify-between"
+								class="flex w-[98%] items-center justify-between hover:bg-neutral-300"
 								onclick={() => {
 									const isSelected = $formData.teams?.some((t) => t.team_id === team.team_id);
 

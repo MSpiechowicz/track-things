@@ -100,8 +100,8 @@
 				<TableRow>
 					<TableCell>{index + 1}</TableCell>
 					<TableCell>{entry.title}</TableCell>
-					<TableCell class="flex items-center gap-2">
-						<div class="h-4 w-4 rounded" style:background-color={entry.color}></div>
+					<TableCell class="flex-row items-center gap-2 hidden md:flex">
+						<div class="h-4 w-4 rounded-md" style:background-color={entry.color}></div>
 						<span>{entry.color}</span>
 					</TableCell>
 					<TableCell class="hidden md:table-cell">{entry.teams?.map((team) => team.team_name).join(', ')}</TableCell>
