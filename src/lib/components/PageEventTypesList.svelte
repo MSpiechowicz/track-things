@@ -19,7 +19,7 @@
 	import { eventTypesStore } from '$lib/stores/eventTypesStore.svelte';
 	import { t } from '$lib/translations';
 
-	function handleEdit(id: string, title: string, color: string, teams: { id: string; name: string }[]) {
+	function handleEdit(id: string, title: string, color: string, teams: { id: string; team_name: string }[]) {
 		eventTypesStore.currentEventTypeId = id;
 		eventTypesStore.currentEventTypeTitle = title;
 		eventTypesStore.currentEventTypeColor = color;
@@ -28,7 +28,7 @@
 		dialogStore.showEventTypesCreateDialog = true;
 	}
 
-	function handleDelete(id: string, title: string, color: string, teams: { id: string; name: string }[]) {
+	function handleDelete(id: string, title: string, color: string, teams: { id: string; team_name: string }[]) {
 		eventTypesStore.currentEventTypeId = id;
 		eventTypesStore.currentEventTypeTitle = title;
 		eventTypesStore.currentEventTypeColor = color;
@@ -37,7 +37,7 @@
 		dialogStore.showEventTypesDeleteDialog = true;
 	}
 
-	const data = $derived(
+  const data = $derived(
 		eventTypesStore.dataFiltered && eventTypesStore.dataFiltered.length > 0
 			? eventTypesStore.dataFiltered
 			: eventTypesStore.data
@@ -59,14 +59,14 @@
 	<Table data-sveltekit-reload class="max-w-full">
 		<TableHeader>
 			<TableRow class="hover:bg-transparent">
-				<TableHead class="w-[100px] cursor-default">
+				<TableHead class="w-[50px] cursor-default">
 					{t('eventTypes.list.table.id.label')}
 				</TableHead>
 				<PageTableSortableHeader
 					label={t('eventTypes.list.table.title.label')}
 					field="title"
 					store={eventTypesStore}
-					additionalClass="w-50"
+					additionalClass="min-w-25"
 				/>
 				<PageTableSortableHeader
 					label={t('eventTypes.list.table.color.label')}
@@ -99,8 +99,11 @@
 				<TableRow>
 					<TableCell>{index + 1}</TableCell>
 					<TableCell>{entry.title}</TableCell>
-					<TableCell>{entry.color}</TableCell>
-					<TableCell class="hidden md:table-cell">{entry.teams.map((team) => team.name).join(', ')}</TableCell>
+					<TableCell class="flex items-center gap-2">
+						<div class="h-4 w-4 rounded" style:background-color={entry.color}></div>
+						<span>{entry.color}</span>
+					</TableCell>
+					<TableCell class="hidden md:table-cell">{entry.teams?.map((team) => team.team_name).join(', ')}</TableCell>
 					<TableCell class="hidden md:table-cell"
 						>{new Date(entry.created_at).toLocaleDateString()}</TableCell
 					>

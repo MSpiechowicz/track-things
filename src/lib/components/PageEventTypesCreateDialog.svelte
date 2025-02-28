@@ -68,7 +68,7 @@
 
 			$formData.teams.forEach((entry, index) => {
 				if (index < maxTeams) {
-					teams.push(entry.name);
+					teams.push(entry.team_name);
 				} else {
 					teamsIndex++;
 					teams[maxTeams] = `+${teamsIndex} more`;
@@ -143,7 +143,7 @@
 							if (v && v.length > 0) {
 								$formData.teams = v.map((entry) => ({
 									id: entry.value as string,
-									name: entry.label?.trim() ?? ''
+									team_name: entry.label?.trim() ?? ''
 								}));
 							} else {
 								$formData.teams = [];
@@ -167,7 +167,7 @@
 						<SelectContent class="text-black">
 							{#each eventTypesStore.availableTeams as team}
 								<SelectItem value={team.id}>
-									{team.name}
+									{team.team_name}
 								</SelectItem>
 							{/each}
 						</SelectContent>
