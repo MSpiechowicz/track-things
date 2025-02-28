@@ -20,7 +20,7 @@
 	import { eventTypesStore } from '$lib/stores/eventTypesStore.svelte';
 	import { t } from '$lib/translations';
 
-	function handleEdit(id: string, title: string, color: string, teams: { id: string; team_name: string }[]) {
+	function handleEdit(id: string, title: string, color: string, teams: { team_id: string; team_name: string }[]) {
 		eventTypesStore.currentEventTypeId = id;
 		eventTypesStore.currentEventTypeTitle = title;
 		eventTypesStore.currentEventTypeColor = color;
@@ -29,7 +29,7 @@
 		dialogStore.showEventTypesUpdateDialog = true;
 	}
 
-	function handleDelete(id: string, title: string, color: string, teams: { id: string; team_name: string }[]) {
+	function handleDelete(id: string, title: string, color: string, teams: { team_id: string; team_name: string }[]) {
 		eventTypesStore.currentEventTypeId = id;
 		eventTypesStore.currentEventTypeTitle = title;
 		eventTypesStore.currentEventTypeColor = color;

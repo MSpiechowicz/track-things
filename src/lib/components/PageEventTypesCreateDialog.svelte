@@ -147,7 +147,7 @@
 						onSelectedChange={(v) => {
 							if (v && v.length > 0) {
 								$formData.teams = v.map((entry) => ({
-									id: entry.value as string,
+									team_id: entry.value as string,
 									team_name: entry.label?.trim() ?? ''
 								}));
 							} else {
@@ -174,7 +174,7 @@
 						</SelectTrigger>
 						<SelectContent class="text-black">
 							{#each eventTypesStore.availableTeams as team}
-								<SelectItem value={team.id}>
+								<SelectItem value={team.team_id}>
 									{team.team_name}
 								</SelectItem>
 							{/each}

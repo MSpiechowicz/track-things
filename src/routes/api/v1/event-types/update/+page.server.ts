@@ -71,7 +71,7 @@ export const actions: Actions = {
 				const { error: insertError } = await locals.supabase.from('event_type_teams').insert(
 					teams.map((team) => ({
 						event_type_id: updateData.id,
-						team_id: team.id,
+						team_id: team.team_id,
 						team_name: team.team_name,
 						created_at: new Date(),
 						updated_at: new Date()

@@ -12,7 +12,6 @@ async function loadEventTypes(fetch: (input: RequestInfo, init?: RequestInit) =>
 	}
 
 	const result = await response.json();
-  console.log('result', result);
 	eventTypesStore.data = result.data;
 	return result.data;
 }
@@ -26,14 +25,14 @@ export const load: PageLoad = async ({ parent, fetch, depends }) => {
 
 	eventTypesStore.availableTeams = [
 		...teamSettingsOwnerStore.data.map((team) => ({
-			id: team.id,
+			team_id: team.id,
 			team_name: team.name
 		})),
 		...teamSettingsMemberStore.data.map((team) => ({
-			id: team.team_id,
+			team_id: team.team_id,
 			team_name: team.name
 		}))
-	].filter((team, index, self) => index === self.findIndex((t) => t.id === team.id));
+	].filter((team, index, self) => index === self.findIndex((t) => t.team_id === team.team_id));
 
 	const eventTypes = await loadEventTypes(fetch);
 

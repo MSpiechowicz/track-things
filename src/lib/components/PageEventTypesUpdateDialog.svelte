@@ -14,6 +14,8 @@
 	import { eventTypesCreateSchemaValidator } from '$lib/validators/eventTypesCreateSchemaValidator';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
+	import IconCheck from './svg/IconCheck.svelte';
+	import IconUserGroup from './svg/IconUserGroup.svelte';
 
 	const form = superForm(
 		{
@@ -44,7 +46,7 @@
 					dialogStore.showEventTypesUpdateDialog = false;
 					form.reset();
 
-          eventTypesTimer.reset();
+					eventTypesTimer.reset();
 
 					invalidateAll();
 
@@ -84,14 +86,12 @@
 
 	const isDisabled = $derived(eventTypesStore.availableTeams.length === 0);
 
-  $effect(() => {
+	$effect(() => {
     $formData.id = eventTypesStore.currentEventTypeId ?? '';
-    $formData.title = eventTypesStore.currentEventTypeTitle ?? '';
-    $formData.color = eventTypesStore.currentEventTypeColor ?? '';
-    $formData.teams = eventTypesStore.currentEventTypeTeams ?? [];
-  });
-
-  console.log($formData.teams);
+		$formData.title = eventTypesStore.currentEventTypeTitle ?? '';
+		$formData.color = eventTypesStore.currentEventTypeColor ?? '';
+		$formData.teams = eventTypesStore.currentEventTypeTeams ?? [];
+	});
 </script>
 
 <PageDialog
@@ -152,28 +152,44 @@
 					description={t('eventTypes.dialog.update.form.teams.description')}
 				/>
 				<div class="max-w-sm">
-					<select
-						multiple
-						class="w-full min-h-[80px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+					<div
+						class="border-input bg-background flex h-[154px] w-full flex-col items-start gap-2 overflow-y-auto rounded-md border p-2 focus-within:ring-3 focus-within:ring-blue-600 focus-within:ring-offset-0"
 						{...attrs}
-						disabled={isDisabled}
-						bind:value={$formData.teams}
 					>
 						{#each eventTypesStore.availableTeams as team}
-							<option
-								value={{ id: team.id, team_name: team.team_name }}
+							<Button
+								variant="secondary"
+								class="flex w-[98%] items-center justify-between"
+								onclick={() => {
+									const isSelected = $formData.teams?.some((t) => t.team_id === team.team_id);
+
+									if (isSelected) {
+										$formData.teams = ($formData.teams || []).filter((t) => t.team_id !== team.team_id);
+									} else {
+										$formData.teams = [
+											...($formData.teams || []),
+											{ team_id: team.team_id, team_name: team.team_name }
+										];
+									}
+								}}
 							>
-								{team.team_name}
-							</option>
+								<div class="flex items-center justify-center">
+									<IconUserGroup additionalClass="w-4 h-4 mr-2" strokeColor="black" />
+									<span>{team.team_name}</span>
+								</div>
+								{#if $formData.teams?.some((t) => t.team_id === team.team_id)}
+									<IconCheck additionalClass="w-4 h-4" strokeColor="black" />
+								{/if}
+							</Button>
 						{/each}
-					</select>
-					<div class="mt-2 text-sm text-muted-foreground">
+					</div>
+					<div class="text-muted-foreground mt-2 min-h-[1.5rem] text-sm">
 						{#if $formData.teams?.length > 0}
 							<div class="hidden md:block">
-								{getTeams({ isMobile: false })}
+								Selected: {getTeams({ isMobile: false })}
 							</div>
 							<div class="block md:hidden">
-								{getTeams({ isMobile: true })}
+								Selected: {getTeams({ isMobile: true })}
 							</div>
 						{:else}
 							<span>
