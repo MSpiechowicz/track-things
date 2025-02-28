@@ -51,7 +51,7 @@
 	<Table data-sveltekit-reload class="max-w-full">
 		<TableHeader>
 			<TableRow class="hover:bg-transparent">
-				<TableHead class="w-[100px] cursor-default">
+				<TableHead class="w-[50px] cursor-default">
 					{t('tracking.list.table.id.label')}
 				</TableHead>
 				<PageTableSortableHeader
